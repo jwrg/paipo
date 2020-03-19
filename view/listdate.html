@@ -1,0 +1,35 @@
+<h2>Query Date</h2>
+<p>The date queried is <%= year %>/<%= parseInt(month) + 1 %>/<%= day %>.</p>
+<table>
+  <tr>
+    <th>Created</th>
+    <th>ID</th>
+    <th>Brand</th>
+    <th>Model</th>
+    <th>Release</th>
+    <th>Price</th>
+  </tr>
+  <% var datapoints = 0; %>
+  <% for (let key in data) { %>
+    <% let checkdate = new Date(data[key].release); %>
+    <% let ryear = checkdate.getFullYear(); %>
+    <% let rmonth = checkdate.getMonth(); %>
+    <% let rday = checkdate.getDate(); %>
+    <% if (year == ryear && month == rmonth && day == rday) { %>
+      <% datapoints++; %>
+      <tr>
+        <td><a href = "/editrelease/<%= key %>"><%= new Date(data[key].created) %></a></td>
+        <td><a href = "/editrelease/<%= key %>"><%= key %></td>
+        <td><a href = "/editrelease/<%= key %>"><%= data[key].brand %></a></td>
+        <td><a href = "/editrelease/<%= key %>"><%= data[key].model %></a></td>
+        <td><a href = "/editrelease/<%= key %>"><%= new Date(data[key].release) %></a></td>
+        <td><a href = "/editrelease/<%= key %>"><%= data[key].expected %></a></td>
+      </tr>
+    <% } %>
+  <% } %>
+</table>
+<br />
+<p>
+<a href="/newrelease/<%= year %>/<%= month %>/<%= day %>">New Entry for This Date</a>
+</p>
+<br />

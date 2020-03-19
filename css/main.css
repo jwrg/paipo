@@ -1,0 +1,290 @@
+/**
+ * Colour scheme
+ *
+ * These colours are used throughout the file to provide
+ * a somewhat consistent way to set the colours of elements
+ *
+ * This will eventually be moved to external files where
+ * each external file represents a different colour scheme,
+ * i.e., you include only one, and it sets the following
+ * values:
+ *
+ * Background Colours          Foreground Colours
+ *---------------------------|-----------------------------
+ *                           
+ * --body-bg                    
+ * --content-bg                 --content-fg
+ * --alt-bg                     --link-fg
+ * --header-bg                  --header-fg
+ * --footer-bg                  --footer-fg
+ *
+ * Accent Colours              Hover Colours 
+ *---------------------------|-----------------------------
+ * 
+ * --alt-fg                    --link-hover 
+ *
+ */
+:root {
+  /**
+   * Background colours
+   */
+  --content-bg:   #ffffff;
+  --body-bg:      #bca0fc;
+  --alt-bg:       #ffc563;
+  --footer-bg:    #431d99;
+  --header-bg:    #431d99;
+
+  /**
+   * Foreground (text) colours
+   */
+  --content-fg:   #431d99;
+  --link-fg:      #111111;
+  --header-fg:    #ffffff;
+  --footer-fg:    #ffffff;
+
+  /**
+   * Accent colours
+   */
+  --alt-fg:       #eeeeee;
+  --content-border:  #b294f2;
+
+  /**
+   * Hover colours
+   */
+  --link-hover:   #a7bbff;
+}
+
+/**
+ * Top-level settings
+ */
+
+html {
+  box-sizing: border-box;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-kerning: auto;
+}
+
+body {
+  background-color: var(--body-bg);
+  color: var(--content-fg);
+  font-family: sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+/**
+ * Colours and decorations
+ */
+
+a {
+  color: var(--link-fg);
+  text-decoration: none;
+}
+
+a:hover {
+  color: var(--link-hover);
+}
+
+/**
+ * Anything that you want to confine to the same dimensions
+ * as the content div can go/mimic here
+ */
+div.content, div.header div {
+  max-width: 1200px;
+  margin: auto;
+}
+
+div.content {
+  background-color: var(--content-bg);
+  min-width: 900px;
+  border-left: 1px solid var(--content-border);
+  border-right: 1px solid var(--content-border);
+  margin-top: 4em;
+}
+
+p, h2, h3, input, label, ul, table {
+  margin: 5px;
+  padding: 1ex;
+}
+
+h1 {
+  font-family: sans-serif;
+  padding: 1ex;
+  background-color: var(--header-bg);
+  color: var(--header-fg);
+  padding-top: 20px;
+  margin-bottom: 1em;
+}
+
+th {
+  background-color: var(--alt-bg);
+}
+
+/**
+ * Display & alignment
+ */
+
+/**
+ * Fix elements to other elements
+ *
+ * Useful for fixing elements to top/bottom of the page
+ */
+.fixed-top, .fixed-bottom {
+  position:fixed;
+  width:100%;
+  z-index:1
+  left: 0;
+}
+
+.fixed-top {
+  top: 0;
+}
+
+.fixed-bottom {
+  bottom: 0;
+}
+
+/**
+ * Make an object stick to the top of the window
+ */
+div.sticky {
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0
+}
+
+/**
+ * Header and footer which stick to the top/bottom of the
+ * content
+ */
+.header, .footer {
+  margin: 0;
+  padding: 0;
+}
+
+.header {
+  background-color: var(--header-bg);
+  min-height: 10px;
+}
+
+.header p {
+  display: inline-block;
+  padding: 1ex;
+}
+
+.header a {
+  color: var(--alt-fg);
+}
+
+.header a:hover {
+  color: var(--link-hover);
+}
+
+.header button {
+  height: 6ex;
+  width: 6ex;
+  float: right;
+}
+
+.footer {
+  background-color: var(--footer-bg);
+  background-image: linear-gradient(#120225,var(--footer-bg));
+  color: var(--alt-fg);
+  margin: 0;
+  padding: 0;
+  min-height: 300px;
+  width: 100%;
+  text-align: center;
+  top: 0;
+  bottom: 0;
+}
+
+.footer a {
+  color: var(--alt-fg);
+}
+
+.footer a:hover {
+  color: var(--link-hover);
+}
+
+.footer div.vrule {
+  display: inline-block;
+  width: 1px;
+  height: 300px;
+  border-left: 1px solid var(--content-fg);
+  margin-top: 50px;
+}
+
+.footer div.fgroup {
+  display: inline-block;
+  width: 30%;
+  min-height: 300px;
+  margin: 0.5%;
+  padding-top: 3em;
+  vertical-align: top;
+}
+
+.footer div.fgroup hr {
+  border: none;
+  margin: 1em;
+  margin-bottom: 2em;
+}
+
+.footer div.fgroup a {
+  display: block;
+  margin-top: 1em;
+  text-align: left;
+  padding-left: 60px;
+  padding-right: 60px;
+}
+
+.footer div.credit {
+  padding: 10px;
+  text-align: left;
+}
+
+/**
+ * Keep images in the realm of sanity
+ */
+img {
+  display: block;
+  max-width: 90%;
+  margin-top: 1em;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 1em;
+}
+
+tr, td {
+  padding: 1em;
+  margin: 0px;
+}
+
+div.fieldvalue, div.fieldkey {
+  display: inline-block;
+  width: 40%;
+  text-align: right;
+}
+
+div.fieldvalue input, div.fieldkey input {
+  margin-left: auto;
+  margin-right:auto;
+}
+
+div.want {
+  margin-top: 40px;
+  display: flex;
+  flex-wrap: wrap;
+  align-content: space-between;
+}
+
+div.want div {
+  width: 50%
+}
+
+div.want div label,
+div.want div input {
+  width: 90%;
+}

@@ -1,0 +1,19 @@
+{
+  "name": "stack-test",
+  "version": "1.0.0",
+  "description": "The second in a series",
+  "main": "stack.js",
+  "dependencies": {
+    "koa": "^2.11.0",
+    "koa-tree-router": "^0.5.0",
+    "koa-ejs": "^4.3.0",
+    "koa-static": "^5.0.0",
+    "koa-mount": "^4.0.0",
+    "koa-bodyparser": "^4.2.1",
+    "pg": "^7.18.2"
+  },
+  "engines": {
+    "node": ">= 7.6.0",
+    "npm": ">= 3.0.0"
+  }
+}

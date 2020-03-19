@@ -1,0 +1,54 @@
+<h1>Calendar</h1>
+<p>This is a basic calendar view which you can use to build
+something more impressive.  Use this view to visualize data
+which is date-stamped (most data is, anyway).</p>
+<p>Today is <%= now %></p>
+
+<div class="month">
+  <ul>
+    <% if (month == 0) { %>
+    <li class="previous"><a href="/calendar/<%= parseInt(year) - 1 %>/11">&#10094;</a></li>
+    <li class="next"><a href="/calendar/<%= parseInt(year) %>/1">&#10095;</a></li>
+    <% } else if (month == 11) { %>
+    <li class="previous"><a href="/calendar/<%= parseInt(year) %>/10">&#10094;</a></li>
+    <li class="next"><a href="/calendar/<%= parseInt(year) + 1 %>/0">&#10095;</a></li>
+    <% } else { %>
+    <li class="previous"><a href="/calendar/<%= parseInt(year) %>/<%= parseInt(month) - 1 %>">&#10094;</a></li>
+    <li class="next"><a href="/calendar/<%= parseInt(year) %>/<%= parseInt(month) + 1 %>">&#10095;</a></li>
+    <% } %>
+    <% let months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]; %>
+    <li><%= months[parseInt(month)] %><br><%= year %></li>
+  </ul>
+</div>
+
+<ul class="weekdays">
+  <li>S</li>
+  <li>M</li>
+  <li>T</li>
+  <li>W</li>
+  <li>T</li>
+  <li>F</li>
+  <li>S</li>
+</ul>
+
+<ul class="days">
+  <% let date = new Date(year,month); %>
+  <% for (let j = 0; j < date.getDay(); j++) { %>
+    <li>&nbsp;</li>
+  <% } %>
+  <% for (let i = 1; i <= new Date(year,parseInt(month)+1,0).getDate(); i++, date.setDate(date.getDate() + 1)) { %>
+    <% let datapoints = 0; %>
+    <% if (datapoints > 0) { %>
+    <li class="hot"><a href="/querydate/<%= year %>/<%= month %>/<%= i %>"><%= i %></a></li>
+    <% } else { %>
+    <li><a href="/newentry/<%= year %>/<%= month %>/<%= i %>"><%= i %></a></li>
+  <% } %>
+<% } %>
+</ul>
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />

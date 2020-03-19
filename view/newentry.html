@@ -1,0 +1,29 @@
+<h1>New Entry</h1>
+<p>As of <%= now %> there are <%= datapoints %> datapoints
+in the dataset.<p>
+<script src="/js/editentry.js"></script>
+<form action="/saveentry" method="post">
+  <div id="main">
+    <input type="hidden" id="id" name="id" value=null />
+    <input type="hidden" id="created" name="created" />
+    <input type="hidden" id="actual" name="actual" />
+    <label for="date">Entry Date:</label>
+    <% datestring = year + (month < 10 ? '-0' : '-') + (parseInt(month) + 1) + (day < 10 ? '-0' : '-') + day; %>
+    <input type="date" id="date" name="date" value="<%= datestring %>" />&nbsp;
+    <label for="time">Entry Time (GMT):</label>
+    <input type="time" id="time" name="time" />
+    <div id="datafields">
+      <input type="button" onclick="addField()" value="Add a datafield" /><br />
+      <div id="field_1_key" class="fieldkey">
+        <label for="field_1_key">Data Field 1 Key:</label>
+        <input type="text" id="field_1_key" name="field_1_key" />
+      </div><div id="field_1" class="fieldvalue">
+        <label for="field_1">Data Field 1 Value:</label>
+        <input type="text" id="field_1" name="field_1" />
+      </div>
+    </div>
+    <input type="submit" id="submit" value="Save!" />
+    <input type="button" id="cancel" onclick="window.history.back()" value="Cancel" />
+  </div>
+</form>
+
