@@ -66,19 +66,23 @@ html {
   font-kerning: auto;
 }
 
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+
 body {
   background-color: var(--body-bg);
   color: var(--content-fg);
-  font-family: sans-serif;
+  font-family: Verdana, Geneva, sans-serif;
   margin: 0;
   padding: 0;
 }
 
 /**
- * Colours and decorations
+ * Link colours and decorations
  */
 
-a {
+a:link {
   color: var(--link-fg);
   text-decoration: none;
 }
@@ -87,44 +91,97 @@ a:hover {
   color: var(--link-hover);
 }
 
+a:active {
+  color: var(--alt-fg);
+}
+
 /**
- * Anything that you want to confine to the same dimensions
- * as the content div can go/mimic here
+ * Top-level elements
  */
-div.content, div.header div {
-  max-width: 1200px;
-  margin: auto;
-}
 
-div.content {
-  background-color: var(--content-bg);
-  min-width: 900px;
-  border-left: 1px solid var(--content-border);
-  border-right: 1px solid var(--content-border);
-  margin-top: 4em;
-}
-
-p, h2, h3, input, label, ul, table {
+p, tr, td, th, h2, h3, h4, h5, h6, button, input, fieldset, textarea, select, label, legend, ol, ul, table, menu, dir, dl, address {
   margin: 5px;
-  padding: 1ex;
+  padding: 10px;
+  border-color: var(--body-bg);
+  border-radius: 4px;
+  border-width: 1px;
+  hyphens: auto;
+}
+
+ol, ul, menu, dir, dl, table {
+  margin-top: 0;
+  padding-top: 0;
+  margin-bottom: 10px;
+}
+
+ul li, menu, dir {
+  list-style-type: disc;
+}
+
+h2, h3, h4, h5, h6, legend {
+  font-family: "Trebuchet MS", Helvetica, sans-serif;
+  padding-bottom: 0.5ex;
+  padding-top: 1.5ex;
+  /** This is a hack for making section
+   * links not get messed up by the
+   * presence of the top sticky bar
+   */
+  border-top: 50px solid transparent;
+  margin-top: -50px;
+  -webkit-background-clip: padding-box;
+  -moz-background-clip: padding;
+  background-clip: padding-box;
+}
+
+p {
+  padding-top: 0.5ex;
+  padding-bottom: 1.5ex;
 }
 
 h1 {
-  font-family: sans-serif;
+  font-family: "Trebuchet MS", Helvetica, sans-serif;
   padding: 1ex;
   background-color: var(--header-bg);
   color: var(--header-fg);
   padding-top: 20px;
-  margin-bottom: 1em;
+  margin-bottom: 10px;
+}
+
+blockquote {
+  border-left: 3px solid var(--body-bg);
+  margin-left: 1em;
+  padding-top: 1ex;
+  padding-bottom: 1ex;
+}
+
+code, kbd, samp, tt {
+  font-family: "Hack", "Consolas", "Lucida Console", Monaco, monospace;
 }
 
 th {
   background-color: var(--alt-bg);
 }
 
+li {
+  padding: 5px;
+  margin-left: 1em;
+}
+
+dt {
+  margin-top: 10px;
+}
+
 /**
- * Display & alignment
+ * Keep images in the realm of sanity
  */
+img {
+  display: block;
+  max-width: 90%;
+  margin-top: 1em;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 1em;
+}
 
 /**
  * Fix elements to other elements
@@ -147,12 +204,40 @@ th {
 }
 
 /**
+ * Anything that you want to confine to the same dimensions
+ * as the content div can go/mimic here
+ */
+div.content, div.header div {
+  max-width: 1200px;
+  margin: auto;
+}
+
+div.content {
+  background-color: var(--content-bg);
+  min-width: 900px;
+  border-left: 1px solid var(--content-border);
+  border-right: 1px solid var(--content-border);
+  margin-top: 4em;
+}
+
+/**
  * Make an object stick to the top of the window
  */
 div.sticky {
   position: -webkit-sticky;
   position: sticky;
   top: 0
+}
+
+/**
+ * Some classes for specifying block widths
+ */
+.half-width {
+  width: 50%;
+}
+
+.quarter-width {
+  width: 25%;
 }
 
 /**
@@ -200,8 +285,7 @@ div.sticky {
   top: 0;
   bottom: 0;
 }
-
-.footer a {
+.footer a:link, .footer a:visited {
   color: var(--alt-fg);
 }
 
@@ -246,22 +330,8 @@ div.sticky {
 }
 
 /**
- * Keep images in the realm of sanity
+ * Input styling
  */
-img {
-  display: block;
-  max-width: 90%;
-  margin-top: 1em;
-  margin-left: auto;
-  margin-right: auto;
-  margin-bottom: 1em;
-}
-
-tr, td {
-  padding: 1em;
-  margin: 0px;
-}
-
 div.fieldvalue, div.fieldkey {
   display: inline-block;
   width: 40%;
