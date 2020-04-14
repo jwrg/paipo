@@ -1,23 +1,50 @@
 <h1>Dashboard</h1>
 <p>The time and date are as follows: <%= now %></p>
+<p>This app scaffold supports basic timestamped JSON
+data stored in PostgreSQL in a bespoke database and
+data table.  The table is organized into three columns;
+one each for an ID, a timestamp, and the actual JSON
+data.  In this way, the data is uniquely ID'ed and
+can be sorted easily by timestamp and visualized using a
+<a href="/calendar/<%= now.getFullYear() %>/<%= now.getMonth() %>">
+  calendar view</a>.</p>
 <p>The following is a summary of the data:</p>
 <ul>
-  <li>Releases in dataset: <%= now %></li>
+  <li>Data in dataset: <%= count %></li>
 </ul>
-<% if (now) { %>
-<h3>Next 5 data</h3>
+<% if (data.upcoming.length > 0) { %>
+<h3>Next (upcoming) 5 data</h3>
 <table>
   <tr>
     <th>ID</th>
-    <th>Data field 1</th>
-    <th>Data field 2</th>
-    <th>Model</th>
-    <th>Release</th>
-    <th>Price</th>
+    <th>Timestamp</th>
+    <th>Data</th>
   </tr>
-
+  <% data.upcoming.forEach(datum => { %>
+  <tr>
+    <td><%= datum.id %></td>
+    <td><%= datum.date %></td>
+    <td><%= JSON.stringify(datum.data) %></td>
+  </tr>
+  <% }); %>
 </table>
-<h3>Previous 5 data:</h3>
+<% } %>
+<% if (data.past.length > 0) { %>
+<h3>Past (previous) 5 data:</h3>
+<table>
+  <tr>
+    <th>ID</th>
+    <th>Timestamp</th>
+    <th>Data</th>
+  </tr>
+  <% data.past.forEach(datum => { %>
+  <tr>
+    <td><%= datum.id %></td>
+    <td><%= datum.date %></td>
+    <td><%= JSON.stringify(datum.data) %></td>
+  </tr>
+  <% }); %>
+</table>
 <% } %>
 <h2>Every Map Has a Four-Colouring</h2>
 <p>Here's a world map as a four-colouring:</p>

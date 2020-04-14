@@ -6,7 +6,6 @@ const mount = require('koa-mount');
 const parse = require('koa-bodyparser');
 const path = require('path');
 const fs = require('fs');
-const { Pool } = require('pg');
 
 const app = new Koa();
 const router = new Router();
@@ -50,24 +49,11 @@ router.post('/saveentry', view.saveEntry);
  *
  * Any middleware that does not deserve its own module
  * can go below here; anything that does can go in lib/
+ * or db/
  */
 async function initNamespace(ctx, next) {
   ctx.state = ctx.state || {};
   ctx.state.now = new Date();
-  return next();
-}
-
-/**
- * Database client
- */
-async function dbClient(ctx, next) {
-  app.pool = new Pool({
-    user: 'kcats',
-    host: 'localhost',
-    database: 'kcats',
-    password: 'stackbackwards',
-    port: 6899,
-  });
   return next();
 }
 
@@ -86,7 +72,6 @@ async function dbClient(ctx, next) {
  * inside this namespace
  */
 app.use(initNamespace);
-app.use(dbClient);
 
 /**
  * Mount static content
