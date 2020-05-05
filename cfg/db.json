@@ -1,7 +1,7 @@
 {
   "user": "kcats",
   "host": "localhost",
-  "database": "kcats",
+  "database": "kcatsdb",
   "password": "stackbackwards",
   "port": 6899
 }
