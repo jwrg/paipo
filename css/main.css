@@ -7,7 +7,8 @@
  * This will eventually be moved to external files where
  * each external file represents a different colour scheme,
  * i.e., you include only one, and it sets the following
- * values:
+ * values (subject to change, but this legend will have
+ * to become set and will thus always be included here):
  *
  * Background Colours          Foreground Colours
  *---------------------------|-----------------------------
@@ -32,6 +33,7 @@
   --body-bg:      #bca0fc;
   --alt-bg:       #ffc563;
   --footer-bg:    #431d99;
+  --footer-bg-alt #120225;
   --header-bg:    #431d99;
 
   /**
@@ -47,11 +49,13 @@
    */
   --alt-fg:       #eeeeee;
   --content-border:  #b294f2;
+  --header-border: #222222;
 
   /**
    * Hover colours
    */
   --link-hover:   #a7bbff;
+  --link-active:  #ffffff;
 }
 
 /**
@@ -252,6 +256,8 @@ div.sticky {
 .header {
   background-color: var(--header-bg);
   min-height: 10px;
+  border-bottom: 1px solid var(--header-border);
+  box-shadow: 0 -1.5em 2em 2em var(--header-bg);
 }
 
 .header p {
@@ -263,14 +269,50 @@ div.sticky {
   color: var(--alt-fg);
 }
 
-.header a:hover {
-  color: var(--link-hover);
+.header button.nav {
+  background-color: var(--header-bg);
+  border: 0;
+  padding: 0;
+  margin: 0;
+  margin-top: 0.8ex;
+  margin-right: 1.2ex;
+  height: 0;
+  width: 1.8em;
+  float: right;
+  border-top: 0.12em solid white;
+  border-bottom: 0.12em solid white;
+  border-radius: 0.12ex;
 }
 
-.header button {
-  height: 6ex;
-  width: 6ex;
-  float: right;
+.header button.nav:before,
+.header button.nav:after {
+  margin-top: 0.8ex;
+  display: block;
+  color: #000000;
+  border-top: 0.12em solid white;
+  border-bottom: 0.12em solid white;
+  border-radius: 0.12ex;
+  content: "";
+}
+
+.header button.nav:after {
+  margin-top: 0.7ex;
+}
+
+.header a:hover, 
+.header button:hover,
+.header button:hover:before,
+.header button:hover:after {
+  color: var(--link-hover);
+  border-color: var(--link-hover);
+}
+
+.header a:active, 
+.header button:active,
+.header button:active:before,
+.header button:active:after {
+  color: var(--link-active);
+  border-color: var(--link-active);
 }
 
 .footer {
@@ -291,6 +333,10 @@ div.sticky {
 
 .footer a:hover {
   color: var(--link-hover);
+}
+
+.footer a:active {
+  color: var(--link-active);
 }
 
 .footer div.vrule {
