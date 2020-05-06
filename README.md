@@ -1,17 +1,18 @@
 # Koa Stack Prototype
 
-This is nothing more than a prototype web app stack
-built on Koa and middleware for said.  This is a test
-bed project for a higher-quality project which will
-serve as a springboard for all future node web apps.
+This a springboard/scaffold/prototype web app stack
+built on Koa and middleware for said.  This project
+intends to provide a small codebase for starting a
+node web app using Koa and Postgres, and attempts to
+make a few sane choices for some starting middleware.
 
 ## Overview
 
-The project will be little more than an example
-data entry app with a calendar view.  Hopefully one can
-use this example to figure out how to build what they
-are looking for (or if they just want a task scheduling
-app to build on).
+The project aims to be lightweight and OOTB is a simple
+data entry app with a calendar view.  The intention is that
+one use this example to figure out how to build what they
+are looking for (or better yet, if they just want to do
+a variation on a task scheduling app).
 
 The stack will necessarily be split more or less along
 MVC lines, with a directory each for views/layouts,
@@ -25,25 +26,38 @@ The views included by default are as follows:
 * View Entry
 * New Entry
 * Edit Entry
+* Settings
+* Elements (for display testing)
 
-Minimal styling is included.
+Minimal styling is included.  A system for swapping out
+CSS-variable based colour schemes.
 
-Data and models are handled using Postgres.  A local
-instance may be included in the initial scaffold,
-usable OOTB.  It also serves as an example should one
-wish to use a remote instance of Postgres.  The success
-of this bit will dictate whether we keep going with
-Postgres or use some kind of ORM to further abstract the
-data fetch/update process and use other DBMS's.
+Data and models are handled using Postgres.  The user
+is expected to have a working, running instance of
+Postgres (listening on port 6899).  A database schema
+is included to be run using psql; this adds the necessary
+user, database, and tables.  The schema is left quite
+simple so that it can be easily adapted.
 
 ## Requirements
 
-The stack has to do stuff, each stuff should require
+The app, and by extension, the middleware stack, has 
+to do stuff, and each of those stuffs ought to require
 a component or components (i.e., middleware) to deal
-with said stuffs.  All middleware are expected to be
-compatible with Koa v2.
+with and/or accomplish said stuffs.  All middleware one
+adds are expected to be compatible with Koa v2.
 
-### High Priority
+### Current Components
+
+The following comprise the current components of the stack.
+Some functions are currently not addressed, but will be
+in the future, once prerequisite functionality is
+established.
+
+Requirements and their corresponding components are
+categorized according to functionality priority.
+
+#### High Priority
 
 Requirement | Middleware | Dependencies
 --- | --- | ---
@@ -54,7 +68,7 @@ Web content is generated using templates | Template system | koa-ejs
 Content can be served via remote store | Database | node-postgresql
 Users can log in to access more content | Authentication |
 
-### Low Priority
+#### Low Priority
 
 Requirement | Middleware | Dependencies
 --- | --- | ---
