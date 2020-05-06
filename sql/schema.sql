@@ -1,5 +1,10 @@
-create user kcats with password 'stackbackwards';
-create database kcatsdb owner kcats;
+CREATE USER kcats WITH PASSWORD 'stackbackwards';
+CREATE DATABASE kcatsdb OWNER kcats;
 \c kcatsdb;
-create table json (id integer not null,date timestamp,data jsonb,primary key (id) );
-grant all privileges on json to kcats;
+CREATE TABLE json (
+  id SERIAL PRIMARY KEY,
+  date TIMESTAMP,
+  data JSONB
+);
+GRANT ALL PRIVILEGES ON json TO kcats;
+GRANT USAGE, SELECT ON SEQUENCE json_id_seq TO kcats;
