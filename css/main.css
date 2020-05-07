@@ -4,59 +4,34 @@
  * These colours are used throughout the file to provide
  * a somewhat consistent way to set the colours of elements
  *
- * This will eventually be moved to external files where
- * each external file represents a different colour scheme,
- * i.e., you include only one, and it sets the following
- * values (subject to change, but this legend will have
- * to become set and will thus always be included here):
+ * Colour schemes are located in individual files in the
+ * css/colours directory, and are expected to be included
+ * as stylesheets before this one in any HTML using this
+ * stylesheet.
+ *
+ * The following colours should be expected to be
+ * available, i.e., declared in every colour scheme
+ * under the following names:
  *
  * Background Colours          Foreground Colours
  *---------------------------|-----------------------------
  *                           
  * --body-bg                    
  * --content-bg                 --content-fg
- * --alt-bg                     --link-fg
+ * --alt-bg                     --alt-fg
+ *                              --link-fg
  * --header-bg                  --header-fg
  * --footer-bg                  --footer-fg
+ * --footer-bg-alt
  *
  * Accent Colours              Hover Colours 
  *---------------------------|-----------------------------
  * 
- * --alt-fg                    --link-hover 
+ * --content-border             --link-hover 
+ * --header-border              --link-active
  *
  */
-:root {
-  /**
-   * Background colours
-   */
-  --content-bg:   #ffffff;
-  --body-bg:      #bca0fc;
-  --alt-bg:       #ffc563;
-  --footer-bg:    #431d99;
-  --footer-bg-alt #120225;
-  --header-bg:    #431d99;
 
-  /**
-   * Foreground (text) colours
-   */
-  --content-fg:   #431d99;
-  --link-fg:      #111111;
-  --header-fg:    #ffffff;
-  --footer-fg:    #ffffff;
-
-  /**
-   * Accent colours
-   */
-  --alt-fg:       #eeeeee;
-  --content-border:  #b294f2;
-  --header-border: #222222;
-
-  /**
-   * Hover colours
-   */
-  --link-hover:   #a7bbff;
-  --link-active:  #ffffff;
-}
 
 /**
  * Top-level settings
@@ -104,7 +79,7 @@ a:active {
  */
 
 p, tr, td, th, h2, h3, h4, h5, h6, button, input, fieldset, textarea, select, label, legend, ol, ul, table, menu, dir, dl, address {
-  margin: 5px;
+  margin: 8px 16px 8px 16px;
   padding: 10px;
   border-color: var(--body-bg);
   border-radius: 4px;
@@ -144,11 +119,10 @@ p {
 
 h1 {
   font-family: "Trebuchet MS", Helvetica, sans-serif;
-  padding: 1ex;
+  margin: 0px 0px 10px 0px;
+  padding: 10px 26px 10px 26px;
   background-color: var(--header-bg);
   color: var(--header-fg);
-  padding-top: 20px;
-  margin-bottom: 10px;
 }
 
 blockquote {
@@ -279,8 +253,8 @@ div.sticky {
   height: 0;
   width: 1.8em;
   float: right;
-  border-top: 0.12em solid white;
-  border-bottom: 0.12em solid white;
+  border-top: 0.12em solid var(--alt-fg);
+  border-bottom: 0.12em solid var(--alt-fg);
   border-radius: 0.12ex;
 }
 
@@ -289,8 +263,8 @@ div.sticky {
   margin-top: 0.8ex;
   display: block;
   color: #000000;
-  border-top: 0.12em solid white;
-  border-bottom: 0.12em solid white;
+  border-top: 0.12em solid var(--alt-fg);
+  border-bottom: 0.12em solid var(--alt-fg);
   border-radius: 0.12ex;
   content: "";
 }

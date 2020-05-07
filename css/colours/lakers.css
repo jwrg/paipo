@@ -1,0 +1,39 @@
+/**
+ * Lakers colour scheme
+ *
+ * Purple and gold, a la the Lakers
+ * and the pre-Raiders L.A. Kings.
+ */
+:root {
+  /**
+   * Background colours
+   */
+  --content-bg:   #ffffff;
+  --body-bg:      #bca0fc;
+  --alt-bg:       #ffc563;
+  --footer-bg:    #431d99;
+  --footer-bg-alt #120225;
+  --header-bg:    #431d99;
+
+  /**
+   * Foreground (text) colours
+   */
+  --content-fg:   #431d99;
+  --alt-fg:       #eeeeee;
+  --link-fg:      #fdba21;
+  --header-fg:    #ffffff;
+  --footer-fg:    #ffffff;
+
+  /**
+   * Accent colours
+   */
+  --content-border:  #b294f2;
+  --header-border: #222222;
+
+  /**
+   * Hover colours
+   */
+  --link-hover:   #a7bbff;
+  --link-active:  #ffffff;
+}
+
