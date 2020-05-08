@@ -62,7 +62,7 @@
 .weekdays {
   margin: 0;
   padding: 1em 0;
-  background-color:var(--header-bg);;
+  background-color: var(--header-bg);;
   border-radius: 0;
 }
 
@@ -76,18 +76,19 @@
 
 /* Days (1-31) */
 .days {
-  padding: 10px 0;
-  background: var(--content-bg);
-  margin: 2em 0 3em 0;
+  margin: 1ex 0 1.5ex 0;
+  padding: 1ex 0 1.5ex 0;
 }
 
 .days li {
-  margin: 1em 0;
   display: inline-block;
   width: 14.2857%;
+  height: 4em;
   text-align: center;
   font-size:12pt;
   color: var(--alt-bg);
+  background: var(--content-bg);
+  border: 4px solid var(--content-bg);
 }
 
 /* Highlight the "current" day */
@@ -105,7 +106,7 @@
 }
 
 .days a:hover {
-  color: var(--header-bg);
+  color: var(--content-fg);
 }
 
 .days a:active {
