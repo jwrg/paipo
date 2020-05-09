@@ -34,14 +34,14 @@ render(app, {
 router.get('/', view.dashboard);
 router.get('/elements', view.elements);
 router.get('/calendar/:year/:month', view.calendar);
-router.get('/list/date/:year/:month', view.list.date);
+router.get('/list/date/:year/:month/:day', view.list.date);
 router.get('/list/range/:start/:end', view.list.range);
 
 /**
  * Routes for editing data
  */
 router.get('/newentry/:year/:month/:day', view.newEntry);
-//router.get('/editentry/:year/:month/:day', view.editEntry);
+router.get('/editentry/:id', view.editEntry);
 router.post('/saveentry', view.saveEntry);
 
 /**

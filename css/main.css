@@ -79,7 +79,7 @@ a:active {
  */
 
 p, tr, td, th, h2, h3, h4, h5, h6, button, input, fieldset, textarea, select, label, legend, ol, ul, table, menu, dir, dl, address {
-  margin: 8px 16px 8px 16px;
+  margin: 16px 46px 12px 46px;
   padding: 10px;
   border-color: var(--body-bg);
   border-radius: 4px;
@@ -120,7 +120,7 @@ p {
 h1 {
   font-family: "Trebuchet MS", Helvetica, sans-serif;
   margin: 0px 0px 10px 0px;
-  padding: 10px 26px 10px 26px;
+  padding: 20px 56px 20px 56px;
   background-color: var(--header-bg);
   color: var(--header-fg);
 }
@@ -159,6 +159,7 @@ img {
   margin-left: auto;
   margin-right: auto;
   margin-bottom: 1em;
+  border: 1px solid var(--content-fg);
 }
 
 /**
@@ -192,10 +193,9 @@ div.content, div.header div {
 
 div.content {
   background-color: var(--content-bg);
-  min-width: 900px;
   border-left: 1px solid var(--content-border);
   border-right: 1px solid var(--content-border);
-  margin-top: 4em;
+  margin-top: 6em;
 }
 
 /**

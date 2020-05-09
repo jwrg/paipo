@@ -9,7 +9,7 @@
 
 /* Reset everything */
 .calendar ul li {
-  margin: 1em 0;
+  margin: 0;
   padding: 0;
   list-style-type: none;
 }
@@ -76,8 +76,8 @@
 
 /* Days (1-31) */
 .days {
-  margin: 1ex 0 1.5ex 0;
-  padding: 1ex 0 1.5ex 0;
+  margin: 1em 0;
+  padding: 0;
 }
 
 .days li {

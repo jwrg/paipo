@@ -21,5 +21,33 @@ const queries = module.exports = {
           "date <= '" + year + "-" + (Math.floor(parseInt(month)/10) ? (parseInt(month) + 2) : "0" + (parseInt(month) + 2)) + "-01'"
       };
     }
+  },
+  list: {
+    date: (year, month, day) => {
+      return {
+        text: "SELECT * FROM json WHERE " + 
+          "date >= '" + year + "-" + 
+          (Math.floor(parseInt(month)/10) ? 
+            (parseInt(month) + 1) : 
+            "0" + (parseInt(month) + 1)) + 
+          "-" + (Math.floor(parseInt(day)/10) ? day : "0" + day) +
+          "' AND " +
+          "date < '" + year + "-" + 
+          (Math.floor(parseInt(month)/10) ? 
+            (parseInt(month) + 1) : 
+            "0" + (parseInt(month) + 1)) +
+          "-" + (Math.floor(parseInt(day + 1)/10) ? 
+            parseInt(day) + 1 : 
+            "0" + (parseInt(day) + 1)) + "'"
+      };
+    }
+  },
+  edit: {
+    byId: (id) => {
+      return {
+        text: "SELECT * FROM json WHERE " +
+        "id = " + id 
+      };
+    }
   }
 }
