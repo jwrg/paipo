@@ -1,14 +1,10 @@
 <h1>New Entry</h1>
-<p>As of <%= now %> there are <%= datapoints %> datapoints
-in the dataset.<p>
 <script src="/js/editentry.js"></script>
 <form action="/saveentry" method="post">
   <div id="main">
     <input type="hidden" id="id" name="id" value=null />
-    <input type="hidden" id="created" name="created" />
-    <input type="hidden" id="actual" name="actual" />
     <label for="date">Entry Date:</label>
-    <% datestring = year + (month < 10 ? '-0' : '-') + (parseInt(month) + 1) + (day < 10 ? '-0' : '-') + day; %>
+    <% let datestring = year + (month < 10 ? '-0' : '-') + (parseInt(month) + 1) + (day < 10 ? '-0' : '-') + day; %>
     <input type="date" id="date" name="date" value="<%= datestring %>" />&nbsp;
     <label for="time">Entry Time (GMT):</label>
     <input type="time" id="time" name="time" />
@@ -26,4 +22,3 @@ in the dataset.<p>
     <input type="button" id="cancel" onclick="window.history.back()" value="Cancel" />
   </div>
 </form>
-

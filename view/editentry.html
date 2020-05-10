@@ -1,54 +1,30 @@
-<h2>Edit Release</h2>
-<p>Editing release id number <%= id %>
-<% var datum = data[id]; %>
-<p>Created <%= datum.created %>
-<script src="/js/editrelease.js"></script>
-<form action="/saverelease" method="post">
+<h1>Edit Entry</h1>
+<h2>Editing entry id number <%= id %></h2>
+<script src="/js/editentry.js"></script>
+<form action="/saveentry" method="post">
   <div id="main">
-  <input type="hidden" id="id" name="id" value="<%= id %>">
-  <input type="hidden" id="created" name="created" value="<%= datum.created %>">
-  <input type="hidden" id="actual" name="actual" value="<%= datum.actual  %>">
-  <label for="releasedate">Release Date:</label>
-  <input type="date" id="releasedate" name="releasedate" value="<%= datum.release.substring(0,10) %>">&nbsp;
-  <label for="releasetime">Release Time (GMT):</label>
-  <input type="time" id="releasetime" name="releasetime" value="<%= datum.release.substring(11,16) %>"><br /><br />
-  <label for="brand">Brand Name:</label>
-  <input type="text" id="brand" name="brand" value="<%= datum.brand %>"><br /><br />
-  <label for="model">Model Name:</label>
-  <input type="text" id="model" name="model" value="<%= datum.model %>"><br /><br />
-  <label for="expected">Expected price:</label>
-  <input type="number" id="expected" name="expected" step="0.01" value="<%= datum.expected %>"><br /><br />
-  <label for="comment">Comment:</label>
-  <input type="text" id="comment" name="comment" value="<%= datum.comment %>" /><br /><br />
-  <input type="button" onclick="addWant()" value="Add an item" />
-  </div>
-  <div id="wants">
-    <% for (let key in datum.want) { %>
-    <div class="want">
-      <p>Want #<%= key %></p>
-    <label for="colour<%= key %>">Color:</label>
-    <input type="text" id="colour<%= key %>" name="colour<%= key %>" value="<%= datum.want[key].colour %>"/>
-    <label for="style<%= key %>">Style:</label>
-    <input type="text" id="style<%= key %>" name="style<%= key %>" value="<%= datum.want[key].style %>"/>
-      <div class="size">
-      <input type="button" onclick="addSize(this)" value="Add a size" />
-      <% for (let size in datum.want[key].sizes) { %>
-      <label for="size<%= key %>_<%= size %>">Size <%= size %></label>
-      <input type="number" id="size<%= key %>_<%= size %>" name="size<%= key %>_<%= size %>" value="<%= datum.want[key].sizes[size] %>"/>
-      <% } %>
+    <input type="hidden" id="id" name="id" value=null />
+    <label for="date">Entry Date:</label>
+    <% let datestring = entry.date.getFullYear() + (entry.date.getMonth() < 10 ? '-0' : '-') + (parseInt(entry.date.getMonth()) + 1) + (entry.date.getDate() < 10 ? '-0' : '-') + entry.date.getDate() %>
+    <input type="date" id="date" name="date" value="<%= datestring %>" />&nbsp;
+    <label for="time">Entry Time (GMT):</label>
+    <% let timestring = entry.date.getHours() + ':' + entry.date.getMinutes() %>
+    <input type="time" id="time" name="time" value="<%= timestring %>" />
+    <div id="datafields">
+      <input type="button" onclick="addField()" value="Add a datafield" /><br />
+      <% var numData = 0;
+      Object.keys(entry.data).forEach(key => { 
+      numData++; %>
+      <div id="field_<%= numData %>_key" class="fieldkey">
+        <label for="field_<%= numData %>_key">Data Field <%= numData %> Key:</label>
+        <input type="text" id="field_<%= numData %>_key" name="field_<%= numData %>_key" value=<%= key %> />
+      </div><div id="field_<%= numData %>" class="fieldvalue">
+        <label for="field_<%= numData %>">Data Field <%= numData %> Value:</label>
+        <input type="text" id="field_<%= numData %>" name="field_<%= numData %>" value="<%= entry.data[key] %>" />
       </div>
-      <div class="store">
-      <input type="button" onclick="addStore(this)" value="Add a store" />
-      <% for (let store in datum.want[key].stores) { %>
-      <label for="store<%= key %>_<%= store %>">Store <%= store %></label>
-      <input type="text" id="store<%= key %>_<%= store %>" name="store<%= key %>_<%= store %>" value="<%= datum.want[key].stores[store] %>"/>
-      <% } %>
-      </div>
+      <% }); %>
     </div>
-    <% } %>
-  </div>
-  <div id="submit">
-  <input type="submit" id="submit" value="Save!" />
-  <input type="button" id="cancel" onclick="window.history.back()" value="Cancel" />
+    <input type="submit" id="submit" value="Save!" />
+    <input type="button" id="cancel" onclick="window.history.back()" value="Cancel" />
   </div>
 </form>
