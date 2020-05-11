@@ -352,15 +352,36 @@ div.sticky {
 /**
  * Input styling
  */
-div.fieldvalue, div.fieldkey {
+div.datatier {
+  display: block;
+  width: 100%;
+}
+
+p.corridor {
   display: inline-block;
-  width: 40%;
-  text-align: right;
+  margin: 0;
+  padding: 0;
+  font-size: 48pt;
+}
+
+div.fieldvalue, div.fieldkey {
+  margin: 0;
+  padding: 0;
+  display: inline-block;
+  text-align: justify;
+  vertical-align: 1em;
+}
+
+div.fieldvalue label, div.fieldkey label {
+  margin: 0 1em;
+  font-size: 8pt;
 }
 
 div.fieldvalue input, div.fieldkey input {
-  margin-left: auto;
-  margin-right:auto;
+  margin: 0;
+  font-size: 8pt;
+  width: 12em;
+
 }
 
 div.want {

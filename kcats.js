@@ -19,7 +19,7 @@ const view = require('./lib/view.js');
 render(app, {
   root: path.join(__dirname,'view'),
   layout: 'template',
-  viewExt: 'html',
+  viewExt: 'ejs',
   cache: false,
   debug: false
 });
