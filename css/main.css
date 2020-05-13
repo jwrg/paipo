@@ -373,15 +373,22 @@ div.fieldvalue, div.fieldkey {
 }
 
 div.fieldvalue label, div.fieldkey label {
-  margin: 0 1em;
+  margin: 0 1ex;
   font-size: 8pt;
+  text-align: right;
 }
 
 div.fieldvalue input, div.fieldkey input {
-  margin: 0;
+  margin: 0 1ex;
   font-size: 8pt;
   width: 12em;
+}
 
+div.fieldvalue input.button, div.fieldkey input.button {
+  margin: 0 1ex;
+  font-size: 8pt;
+  width: 6ex;
+  height: 6ex;
 }
 
 div.want {
