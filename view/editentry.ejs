@@ -60,7 +60,7 @@
       /* Always spit out a label, despite whether the data is an object */
      -%><div id="field_<%= numString %>_key" class="fieldkey"><%
      -%><label class="fieldkey" for="field_<%= numString %>_key">Data Field <%= numStringFormatted %> Key:</label><%
-     -%><input class="fieldkey" type="text" id="field_<%= numString %>_key" name="field_<%= numString %>_key" value="<%= key %>" /><%
+     -%><input class="fieldkey" type="text" id="field_<%= numString %>_key_input" name="field_<%= numString %>_key" value="<%= key %>" /><%
 
           /* If value is an object, call self on all constituents of value */
         if (value && typeof value === 'object' && value.constructor === Object) {
@@ -80,15 +80,14 @@
           /* Otherwise, just spit out the value to go with the key */
         } else { 
 
-        %></div><div id="field_<%= numString %>" class="fieldvalue">
-<label class="fieldvalue" for="field_<%= numString %>">Data Field <%= numStringFormatted %> Value:</label>
-<input class="fieldvalue" type="text" id="field_<%= numString %>" name="field_<%= numString %>" value="<%= value %>" />
-<input class="button" type="button" onclick="expandField(this)" aria-label="Expand this field" title="Expand this field" value="&#x21b3;" />
-<input class="button" type="button" onclick="deleteField(this)" aria-label="Delete this field" title="Delete this field" value="&#x232B;" />
-          </div> 
-          <%
+        -%></div><div id="field_<%= numString %>" class="fieldvalue"><%
+        -%><label class="fieldvalue" for="field_<%= numString %>">Data Field <%= numStringFormatted %> Value:</label><%
+        -%><input class="fieldvalue" type="text" id="field_<%= numString %>_input" name="field_<%= numString %>" value="<%= value %>" /><%
+        -%><input class="button" type="button" onclick="expandField(this)" aria-label="Expand this field" title="Expand this field" value="&#x21b3;" /><%
+        -%><input class="button" type="button" onclick="deleteField(this)" aria-label="Delete this field" title="Delete this field" value="&#x232B;" /><%
+      -%></div><%
           };
-          %></div><%
+         -%></div><%
 
     }
 let numData = 1;
@@ -102,7 +101,7 @@ Object.keys(entry.data).forEach(key => {
 
 %>
 </div>
-<input type="button" onclick="addField(this)" value="Add a datafield" />
+<input type="button" onclick="addField()" value="Add a datafield" />
 <input type="submit" id="submit" value="Save!" />
 <input type="button" id="cancel" onclick="window.history.back()" value="Cancel" />
   </div>
