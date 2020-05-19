@@ -143,12 +143,10 @@ function addField(caller) {
   let newCorridor = oldCorridor.cloneNode(true);
   if (oldCorridor.lastElementChild.textContent == '└┬') {
     newCorridor.lastElementChild.textContent = '└─';
-    parentDiv.lastElementChild.lastElementChild.firstElementChild.firstElementChild.textContent = '│';
-    let subject = parentDiv.lastElementChild.lastElementChild;
-    while (subject.firstElementChild.firstElementChild) {
-      subject.firstElementChild.firstElementChild.textContent = '│';
-      subject = subject.lastElementChild;
-    }
+    /* Adjust children of child tier we're appending after 
+     * so they have corridors connecting to the new item */
+    document.querySelectorAll('[id^="' + parentDiv.lastElementChild.id + '_"]')
+      .forEach(tier => {tier.firstElementChild.childNodes[oldCorridor.childElementCount - 1].textContent ='│'});
     oldCorridor.lastElementChild.textContent = '├┬';
   } else {
     oldCorridor.lastElementChild.textContent = '├─';
