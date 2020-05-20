@@ -96,7 +96,7 @@ function createDatatier(number, key = '', value = '') {
   newValueInput.setAttribute('value', value);
   newValueDiv.appendChild(newValueLabel);
   newValueDiv.appendChild(newValueInput);
-  
+
   /* Create buttons for data manipulation and append
    * to fieldvalue div*/
   let newExpandButton = document.createElement('input');
@@ -163,28 +163,39 @@ function expandField(caller) {
 
   /* Get current field's value for use as new field's key */
   let value = document.getElementById('field_' + number + '_value_input').value;
+  console.log(value);
+  let values = document.getElementById('field_' + number + '_value_input').value.split(',');
+  console.log(values);
 
-  /* Create datatier div to encase new KV pair */
-  let newTier = createDatatier(number + '_1', value, '');
+  values.forEach(value => {
+    /* Create datatier div to encase new KV pair */
+    let newTier = createDatatier(number + '_1', value, '');
 
-  /* Duplicate and adjust parent's corridor */
-  let topCorridor = caller.parentNode.parentNode.firstElementChild;
-  let newCorridor = topCorridor.cloneNode(true);
-  /* New corridor is contingent on old one */
-  if (topCorridor.lastElementChild.textContent == '└─') {
-    newCorridor.lastElementChild.textContent = '\xa0';
-  } else {
-    newCorridor.lastElementChild.textContent = '│';
-  }
-  let newPipe = document.createElement('tt');
-  newPipe.appendChild(document.createTextNode('└─'));
-  newCorridor.appendChild(newPipe);
-  newTier.prepend(newCorridor);
+    /* Duplicate and adjust parent's corridor */
+    let topCorridor = caller.parentNode.parentNode.firstElementChild;
+    let newCorridor = topCorridor.cloneNode(true);
+    /* New corridor is contingent on old one */
+    if (topCorridor.lastElementChild.textContent == '└─') {
+      newCorridor.lastElementChild.textContent = '\xa0';
+    } else {
+      newCorridor.lastElementChild.textContent = '│';
+    }
+    let newPipe = document.createElement('tt');
+    newPipe.appendChild(document.createTextNode('└─'));
+    newCorridor.appendChild(newPipe);
+    newTier.prepend(newCorridor);
 
-  /* Change parent corridor to branch down */
-  topCorridor.lastElementChild.textContent = topCorridor.lastElementChild.textContent.slice(0,1) + '┬';
+    /* Change parent corridor to branch down */
+    topCorridor.lastElementChild.textContent = topCorridor.lastElementChild.textContent.slice(0,1) + '┬';
 
+    /* If appending multiple tiers, make them connect */
+    if (caller.parentNode.parentNode.lastElementChild.firstElementChild.lastElementChild)
+      caller.parentNode.parentNode.lastElementChild.firstElementChild.lastElementChild.textContent = '├─';
 
+    /* Append new subtier */
+    caller.parentNode.parentNode.appendChild(newTier);
+
+  });
   /* Create buttons for key div and append */
   let newAddButton = createEditorButton('addField');
   let newCollapseButton = createEditorButton('collapseLevel');
@@ -193,8 +204,6 @@ function expandField(caller) {
   caller.parentNode.appendChild(newCollapseButton);
   caller.parentNode.appendChild(newDeleteButton);
   /* Change old value to be new sub-key */
-  /* Append new subtier */
-  caller.parentNode.parentNode.appendChild(newTier);
 
   /* Delete old value div (and children) */
   caller.nextElementSibling.remove();
