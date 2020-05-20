@@ -14,7 +14,8 @@
   %><input type="date" id="date" name="date" value="<%= datestring %>" />&nbsp;
   <label for="time">Entry Time (GMT):</label><% 
 
-  let timestring = entry.date.getHours() + ':' + entry.date.getMinutes();
+  let timestring = (entry.date.getHours() < 10 ? '0' : '' ) + entry.date.getHours() + ':';
+  timestring += (entry.date.getMinutes() < 10 ? '0' : '' ) + entry.date.getMinutes();
 
   %><input type="time" id="time" name="time" value="<%= timestring %>" />
   <hr class="corridor" />
