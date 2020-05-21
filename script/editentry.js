@@ -163,19 +163,20 @@ function expandField(caller) {
 
   /* Get current field's value for use as new field's key */
   let value = document.getElementById('field_' + number + '_value_input').value;
-  console.log(value);
   let values = document.getElementById('field_' + number + '_value_input').value.split(',');
-  console.log(values);
 
+  let counter = 1;
   values.forEach(value => {
     /* Create datatier div to encase new KV pair */
-    let newTier = createDatatier(number + '_1', value, '');
+    let newTier = createDatatier(number + '_' + counter++, value, '');
 
     /* Duplicate and adjust parent's corridor */
     let topCorridor = caller.parentNode.parentNode.firstElementChild;
     let newCorridor = topCorridor.cloneNode(true);
-    /* New corridor is contingent on old one */
-    if (topCorridor.lastElementChild.textContent == '└─') {
+    /* New corridor is contingent on old one, in
+     * particular, whether it has children */
+    if (topCorridor.lastElementChild.textContent == '└─'
+      || topCorridor.lastElementChild.textContent == '└┬') {
       newCorridor.lastElementChild.textContent = '\xa0';
     } else {
       newCorridor.lastElementChild.textContent = '│';
@@ -213,5 +214,61 @@ function expandField(caller) {
 }
 
 function deleteField() {}
-function collapseLevel() {}
+function collapseLevel(caller) {
+  /* Extract number from caller's parent id */
+  let number = extractIdentifier(caller);
+
+  /* Condense all keys into an array */
+  let values = [];
+  document.querySelectorAll('[id^="field_' + number + '_"][id$="_key_input"]')
+    .forEach(el => values.push(el.value));
+  /* Join array into a comma-separated string */
+  let value = values.slice(1).join(',');
+
+  /* Turn the parent datatier back into a KV pair */
+
+  /* Create fieldvalue div for value label/input pair */
+  let newValueDiv = document.createElement('div');
+  newValueDiv.setAttribute('id', 'field_' + number + '_value');
+  newValueDiv.setAttribute('class', 'fieldvalue');
+
+  /* Create label/input pair and append to fieldvalue div */
+  let newValueLabel = document.createElement('label');
+  newValueLabel.setAttribute('class', 'fieldvalue');
+  newValueLabel.setAttribute('for', 'field_' + number + '_value');
+  newValueLabel.appendChild(document.createTextNode('Data Field ' + number.split('_').join(', ') + ' Value:'));
+  let newValueInput = document.createElement('input');
+  newValueInput.setAttribute('id', 'field_' + number + '_value_input');
+  newValueInput.setAttribute('class', 'fieldvalue');
+  newValueInput.setAttribute('type', 'text');
+  newValueInput.setAttribute('name', 'field_' + number + '_value');
+  newValueInput.setAttribute('value', value);
+  newValueDiv.appendChild(newValueLabel);
+  newValueDiv.appendChild(newValueInput);
+
+  /* Add back the value label and field */
+  /* Add the necessary two buttons */
+  let newExpandButton = createEditorButton('expandField');
+  let newDeleteButton = createEditorButton('deleteField');
+  newValueDiv.appendChild(newExpandButton);
+  newValueDiv.appendChild(newDeleteButton);
+
+  /* Delete all children */
+  document.querySelectorAll('[id^="datatier_' + number + '_"]')
+    .forEach(el => el.remove(el.value));
+  /* Append new value div to caller's parent */
+  caller.parentNode.parentNode.appendChild(newValueDiv);
+
+  /* Adjust corridor to reflect lack of children */
+  if (caller.parentNode.parentNode.nextElementSibling) {
+    caller.parentNode.parentNode.firstElementChild.lastElementChild.textContent = '├─';
+  } else {
+    caller.parentNode.parentNode.firstElementChild.lastElementChild.textContent = '└─';
+  }
+
+  /* Delete the three seashells (buttons) */
+  caller.previousElementSibling.remove();
+  caller.nextElementSibling.remove();
+  caller.remove();
+}
 function deleteLevel() {}
