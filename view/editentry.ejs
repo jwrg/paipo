@@ -65,6 +65,7 @@
 
           /* If value is an object, call self on all constituents of value */
         if (value && typeof value === 'object' && value.constructor === Object) {
+        -%></div><div id="field_<%= numString %>_value" class="fieldvalue"><%
         -%><input class="button expand" type="button" onclick="addField(this)" aria-label="Add a subfield" title="Add a subfield" value="&#x2203" /><%
         -%><input class="button delete" type="button" onclick="collapseLevel(this)" aria-label="Collapse this level" title="Collapse this level" value="&#x21b0" /><%
         -%><input class="button delete" type="button" onclick="deleteLevel(this)" aria-label="Delete this level" title="Delete this level" value="&#x232b;" /><%

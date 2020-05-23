@@ -213,7 +213,28 @@ function expandField(caller) {
   caller.remove();
 }
 
-function deleteField() {}
+function deleteField(caller) {
+  /* Check whether the caller is the only child */
+  if (caller.parentNode.parentNode.parentNode.childElementCount === 4) {
+  /* If yes, change parent corridor to no longer
+   * branch off */
+    if (caller.parentNode.parentNode.parentNode.nextElementSibling) {
+      caller.parentNode.parentNode.parentNode.firstElementChild.lastElementChild.textContent = '├─';
+    } else {
+      caller.parentNode.parentNode.parentNode.firstElementChild.lastElementChild.textContent = '└─';
+    }
+    collapseLevel(caller.parentNode.parentNode.parentNode.firstElementChild.nextElementSibling.nextElementSibling.lastElementChild.previousElementSibling);
+  /* Check whether the caller is the last child */
+  } else if (caller.parentNode.parentNode.firstElementChild.lastElementChild.textContent == '└─') {
+  /* If yes, change previous sibling's corridor
+   * to reflect its new last-child status */
+    caller.parentNode.parentNode.previousElementSibling.firstElementChild.lastElementChild.textContent = '└─';
+  caller.parentNode.parentNode.remove();
+  } else {
+    caller.parentNode.parentNode.remove();
+  }
+}
+
 function collapseLevel(caller) {
   /* Extract number from caller's parent id */
   let number = extractIdentifier(caller);
@@ -228,6 +249,7 @@ function collapseLevel(caller) {
   /* Turn the parent datatier back into a KV pair */
 
   /* Create fieldvalue div for value label/input pair */
+  let oldValueDiv = document.getElementById('field_' + number + '_value')
   let newValueDiv = document.createElement('div');
   newValueDiv.setAttribute('id', 'field_' + number + '_value');
   newValueDiv.setAttribute('class', 'fieldvalue');
@@ -243,21 +265,21 @@ function collapseLevel(caller) {
   newValueInput.setAttribute('type', 'text');
   newValueInput.setAttribute('name', 'field_' + number + '_value');
   newValueInput.setAttribute('value', value);
-  newValueDiv.appendChild(newValueLabel);
-  newValueDiv.appendChild(newValueInput);
+  oldValueDiv.appendChild(newValueLabel);
+  oldValueDiv.appendChild(newValueInput);
 
   /* Add back the value label and field */
   /* Add the necessary two buttons */
   let newExpandButton = createEditorButton('expandField');
   let newDeleteButton = createEditorButton('deleteField');
-  newValueDiv.appendChild(newExpandButton);
-  newValueDiv.appendChild(newDeleteButton);
+  oldValueDiv.appendChild(newExpandButton);
+  oldValueDiv.appendChild(newDeleteButton);
 
   /* Delete all children */
   document.querySelectorAll('[id^="datatier_' + number + '_"]')
     .forEach(el => el.remove(el.value));
   /* Append new value div to caller's parent */
-  caller.parentNode.parentNode.appendChild(newValueDiv);
+  //caller.parentNode.parentNode.appendChild(newValueDiv);
 
   /* Adjust corridor to reflect lack of children */
   if (caller.parentNode.parentNode.nextElementSibling) {
@@ -271,4 +293,8 @@ function collapseLevel(caller) {
   caller.nextElementSibling.remove();
   caller.remove();
 }
-function deleteLevel() {}
+function deleteLevel() {
+  /* Confirm the user that they want to delete a whole level */
+  /* Delete all children */
+  /* Call deleteField on the remaining field */
+}
