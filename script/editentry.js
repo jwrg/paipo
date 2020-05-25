@@ -228,8 +228,10 @@ function deleteField(caller) {
   } else if (caller.parentNode.parentNode.firstElementChild.lastElementChild.textContent == '└─') {
   /* If yes, change previous sibling's corridor
    * to reflect its new last-child status */
-    caller.parentNode.parentNode.previousElementSibling.firstElementChild.lastElementChild.textContent = '└─';
-  caller.parentNode.parentNode.remove();
+    caller.parentNode.parentNode.previousElementSibling.firstElementChild.lastElementChild.textContent = '└' + caller.parentNode.parentNode.previousElementSibling.firstElementChild.lastElementChild.textContent.substring(1);
+    document.querySelectorAll('[id^="' + caller.parentNode.parentNode.previousElementSibling.id + '_"]')
+      .forEach(tier => tier.firstElementChild.childNodes[caller.parentNode.parentNode.firstElementChild.childElementCount - 1].textContent = '\xa0');
+    caller.parentNode.parentNode.remove();
   } else {
     caller.parentNode.parentNode.remove();
   }
