@@ -215,7 +215,8 @@ function expandField(caller) {
 
 function deleteField(caller) {
   /* Check whether the caller is the only child */
-  if (caller.parentNode.parentNode.parentNode.childElementCount === 4) {
+  if (caller.parentNode.parentNode.parentNode.childElementCount === 4
+  && caller.parentNode.parentNode.parentNode.id !== 'datafields') {
   /* If yes, change parent corridor to no longer
    * branch off */
     if (caller.parentNode.parentNode.parentNode.nextElementSibling) {
@@ -225,7 +226,8 @@ function deleteField(caller) {
     }
     collapseLevel(caller.parentNode.parentNode.parentNode.firstElementChild.nextElementSibling.nextElementSibling.lastElementChild.previousElementSibling);
   /* Check whether the caller is the last child */
-  } else if (caller.parentNode.parentNode.firstElementChild.lastElementChild.textContent == '└─') {
+  } else if (caller.parentNode.parentNode.firstElementChild.lastElementChild.textContent == '└─'
+  && caller.parentNode.parentNode.parentNode.id !== 'datafields') {
   /* If yes, change previous sibling's corridor
    * to reflect its new last-child status */
     caller.parentNode.parentNode.previousElementSibling.firstElementChild.lastElementChild.textContent = '└' + caller.parentNode.parentNode.previousElementSibling.firstElementChild.lastElementChild.textContent.substring(1);
