@@ -132,24 +132,37 @@ function addField(caller) {
     number = nextIdentifier(caller);
   } else {
     parentDiv = document.getElementById('datafields');
-    number = (parseInt(parentDiv.lastElementChild.id.substring(9)) + 1).toString();
+    if (parentDiv.lastElementChild) {
+      number = (parseInt(parentDiv.lastElementChild.id.substring(9)) + 1).toString();
+    } else {
+      number = '1';
+    }
   }
 
   /* Create a new datatier with empty key and value */
   let newTier = createDatatier(number);
 
   /* Create corridor p and adjust immediately prior */
-  let oldCorridor = parentDiv.lastElementChild.firstElementChild;
-  let newCorridor = oldCorridor.cloneNode(true);
-  if (oldCorridor.lastElementChild.textContent == '└┬') {
-    newCorridor.lastElementChild.textContent = '└─';
-    /* Adjust children of child tier we're appending after 
-     * so they have corridors connecting to the new item */
-    document.querySelectorAll('[id^="' + parentDiv.lastElementChild.id + '_"]')
-      .forEach(tier => {tier.firstElementChild.childNodes[oldCorridor.childElementCount - 1].textContent ='│'});
-    oldCorridor.lastElementChild.textContent = '├┬';
+  let newCorridor;
+  if (caller || number !== '1') {
+    let oldCorridor = parentDiv.lastElementChild.firstElementChild;
+    newCorridor = oldCorridor.cloneNode(true);
+    if (oldCorridor.lastElementChild.textContent == '└┬') {
+      newCorridor.lastElementChild.textContent = '└─';
+      /* Adjust children of child tier we're appending after 
+       * so they have corridors connecting to the new item */
+      document.querySelectorAll('[id^="' + parentDiv.lastElementChild.id + '_"]')
+        .forEach(tier => {tier.firstElementChild.childNodes[oldCorridor.childElementCount - 1].textContent ='│'});
+      oldCorridor.lastElementChild.textContent = '├┬';
+    } else {
+      oldCorridor.lastElementChild.textContent = '├─';
+    }
   } else {
-    oldCorridor.lastElementChild.textContent = '├─';
+    newCorridor = document.createElement('p');
+    newCorridor.setAttribute('class', 'corridor');
+    let newCorridorTt = document.createElement('tt');
+    newCorridorTt.appendChild(document.createTextNode('└─'));
+    newCorridor.appendChild(newCorridorTt);
   }
   newTier.prepend(newCorridor);
 
