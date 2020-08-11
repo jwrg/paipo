@@ -287,20 +287,20 @@ function deleteField(caller) {
   caller.parentNode.parentNode.parentNode.querySelectorAll('div#' + caller.parentNode.parentNode.id + ' ~ div[id^="datatier"], div#' + caller.parentNode.parentNode.id + ' ~ div[id^="datatier"] div[id^="datatier"]').forEach(tier => decrementDatatier(tier, caller.parentNode.parentNode.id.split('_').length - 1));
   /* Check whether the caller is the only child */
   if (caller.parentNode.parentNode.parentNode.childElementCount === 4
-  && caller.parentNode.parentNode.parentNode.id !== 'datafields') {
-  /* If yes, change parent corridor to no longer
-   * branch off */
+    && caller.parentNode.parentNode.parentNode.id !== 'datafields') {
+    /* If yes, change parent corridor to no longer
+     * branch off */
     if (caller.parentNode.parentNode.parentNode.nextElementSibling) {
       caller.parentNode.parentNode.parentNode.firstElementChild.lastElementChild.textContent = '├─';
     } else {
       caller.parentNode.parentNode.parentNode.firstElementChild.lastElementChild.textContent = '└─';
     }
     collapseLevel(caller.parentNode.parentNode.parentNode.firstElementChild.nextElementSibling.nextElementSibling.lastElementChild.previousElementSibling);
-  /* Check whether the caller is the last child */
+    /* Check whether the caller is the last child */
   } else if (caller.parentNode.parentNode.firstElementChild.lastElementChild.textContent == '└─'
-  && caller.parentNode.parentNode.parentNode.id !== 'datafields') {
-  /* If yes, change previous sibling's corridor
-   * to reflect its new last-child status */
+    && caller.parentNode.parentNode.parentNode.id !== 'datafields') {
+    /* If yes, change previous sibling's corridor
+     * to reflect its new last-child status */
     caller.parentNode.parentNode.previousElementSibling.firstElementChild.lastElementChild.textContent = '└' + caller.parentNode.parentNode.previousElementSibling.firstElementChild.lastElementChild.textContent.substring(1);
     document.querySelectorAll('[id^="' + caller.parentNode.parentNode.previousElementSibling.id + '_"]')
       .forEach(tier => tier.firstElementChild.childNodes[caller.parentNode.parentNode.firstElementChild.childElementCount - 1].textContent = '\xa0');
@@ -368,8 +368,19 @@ function collapseLevel(caller) {
   caller.nextElementSibling.remove();
   caller.remove();
 }
-function deleteLevel() {
+function deleteLevel(caller) {
   /* Confirm the user that they want to delete a whole level */
-  /* Delete all children */
-  /* Call deleteField on the remaining field */
+  if (window.confirm("Are you sure you want to delete this level?")) {
+    /* Adjust all succeeding siblings and their childrens'
+     * identifiers to reflect the deletion */
+    caller.parentNode.parentNode.parentNode.querySelectorAll('div#' + caller.parentNode.parentNode.id + ' ~ div[id^="datatier"], div#' + caller.parentNode.parentNode.id + ' ~ div[id^="datatier"] div[id^="datatier"]').forEach(tier => decrementDatatier(tier, caller.parentNode.parentNode.id.split('_').length - 1));
+    /* Adjust corridor of previous sibling if the deleted
+     * datatier is the last child of its parent */
+    if (!caller.parentNode.parentNode.nextElementSibling) {
+      caller.parentNode.parentNode.previousElementSibling.firstElementChild.lastElementChild.textContent = '└─';
+    }
+    /* Call deleteField on the datatier, its children
+     * should follow it into death */
+    caller.parentNode.parentNode.remove();
+  }
 }
