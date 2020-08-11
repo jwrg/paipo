@@ -19,11 +19,66 @@ function incrementIdentifier(str) {
 function decrementIdentifier(str) {
   /* Split number into array of constituent levels */
   let numbers = str.toString().split('_');
-  /* Pop last number, increment and push it back */
+  /* Pop last number, decrement and push it back */
   let lastNumber = numbers.pop();
   numbers.push(--lastNumber);
   /* Make a new string to use in id attributes */
   return numbers.join('_');
+}
+
+function decrementLevel(str, level) {
+  /* Split number into array of constituent levels */
+  let numbers = str.toString().split('_');
+  /* Splice desired number, decrement and splice it back in */
+  let oldNumber = numbers.splice(level, 1);
+  oldNumber[0] = --oldNumber[0];
+  let newNumber = numbers.splice(level, 0, oldNumber[0]);
+  /* Make a new string to use in id attributes */
+  return numbers.join('_');
+}
+
+function decrementLevelTextNode(str, level) {
+  /* Split string into array of constituents */
+  let numbers = str.toString().split(/,? /);
+  /* Splice desired number, decrement and splice it back in */
+  let oldNumber = numbers.splice(level + 1, 1);
+  oldNumber[0] = --oldNumber[0];
+  let newNumber = numbers.splice(level + 1, 0, oldNumber[0]);
+  /* Make a new string to use as a textNode */
+  let prefix = numbers.splice(0, 2).join(' ') + ' ';
+  let suffix = ' ' + numbers.pop();
+  return prefix + numbers.join(', ') + suffix;
+}
+
+function decrementDatatier(datatier, level) {
+  /* Adjust all the identifiers in a datatier such
+   * that it reflects the deletion of a preceeding
+   * field */
+
+  /* First, adjust the datatier id */
+  datatier.setAttribute('id', decrementLevel(datatier.id, level));
+
+  /* Adjust the id's for the key and value divs */
+  datatier.firstElementChild.nextElementSibling.setAttribute('id', decrementLevel(datatier.firstElementChild.nextElementSibling.id, level));
+  datatier.firstElementChild.nextElementSibling.nextElementSibling.setAttribute('id', decrementLevel(datatier.firstElementChild.nextElementSibling.nextElementSibling.id, level));
+
+  /* Adjust the 'for' attribute and the textnode for
+   * the key and value labels */
+  datatier.firstElementChild.nextElementSibling.firstElementChild.setAttribute('for', decrementLevel(datatier.firstElementChild.nextElementSibling.firstElementChild.htmlFor, level))
+  datatier.firstElementChild.nextElementSibling.firstElementChild.textContent = decrementLevelTextNode(datatier.firstElementChild.nextElementSibling.firstElementChild.textContent, level)
+  if (datatier.firstElementChild.nextElementSibling.nextElementSibling.firstElementChild.tagName === 'LABEL') {
+    datatier.firstElementChild.nextElementSibling.nextElementSibling.firstElementChild.setAttribute('for', decrementLevel(datatier.firstElementChild.nextElementSibling.nextElementSibling.firstElementChild.htmlFor, level))
+    datatier.firstElementChild.nextElementSibling.nextElementSibling.firstElementChild.textContent = decrementLevelTextNode(datatier.firstElementChild.nextElementSibling.nextElementSibling.firstElementChild.textContent, level)
+  }
+
+  /* Adjust the 'id' and 'name' attributes for the
+   * key and value inputs */
+  datatier.firstElementChild.nextElementSibling.firstElementChild.nextElementSibling.setAttribute('id', decrementLevel(datatier.firstElementChild.nextElementSibling.firstElementChild.nextElementSibling.id, level))
+  datatier.firstElementChild.nextElementSibling.firstElementChild.nextElementSibling.setAttribute('name', decrementLevel(datatier.firstElementChild.nextElementSibling.firstElementChild.nextElementSibling.name, level))
+  if (datatier.firstElementChild.nextElementSibling.nextElementSibling.firstElementChild.tagName === 'LABEL') {
+    datatier.firstElementChild.nextElementSibling.nextElementSibling.firstElementChild.nextElementSibling.setAttribute('id', decrementLevel(datatier.lastChild.firstElementChild.nextElementSibling.id, level))
+    datatier.firstElementChild.nextElementSibling.nextElementSibling.firstElementChild.nextElementSibling.setAttribute('name', decrementLevel(datatier.lastChild.firstElementChild.nextElementSibling.name, level))
+  }
 }
 
 function createEditorButton(onclick) {
@@ -227,6 +282,9 @@ function expandField(caller) {
 }
 
 function deleteField(caller) {
+  /* Adjust all succeeding siblings and their childrens'
+   * identifiers to reflect the deletion */
+  caller.parentNode.parentNode.parentNode.querySelectorAll('div#' + caller.parentNode.parentNode.id + ' ~ div[id^="datatier"], div#' + caller.parentNode.parentNode.id + ' ~ div[id^="datatier"] div[id^="datatier"]').forEach(tier => decrementDatatier(tier, caller.parentNode.parentNode.id.split('_').length - 1));
   /* Check whether the caller is the only child */
   if (caller.parentNode.parentNode.parentNode.childElementCount === 4
   && caller.parentNode.parentNode.parentNode.id !== 'datafields') {
