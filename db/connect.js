@@ -6,4 +6,4 @@ const db = module.exports = {
    * Database client pool
    */
   pool: new Pool(cfg),
-}
+};

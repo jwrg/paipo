@@ -50,4 +50,4 @@ const queries = module.exports = {
       };
     }
   }
-}
+};

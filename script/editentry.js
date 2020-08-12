@@ -64,20 +64,20 @@ function decrementDatatier(datatier, level) {
 
   /* Adjust the 'for' attribute and the textnode for
    * the key and value labels */
-  datatier.firstElementChild.nextElementSibling.firstElementChild.setAttribute('for', decrementLevel(datatier.firstElementChild.nextElementSibling.firstElementChild.htmlFor, level))
-  datatier.firstElementChild.nextElementSibling.firstElementChild.textContent = decrementLevelTextNode(datatier.firstElementChild.nextElementSibling.firstElementChild.textContent, level)
+  datatier.firstElementChild.nextElementSibling.firstElementChild.setAttribute('for', decrementLevel(datatier.firstElementChild.nextElementSibling.firstElementChild.htmlFor, level));
+  datatier.firstElementChild.nextElementSibling.firstElementChild.textContent = decrementLevelTextNode(datatier.firstElementChild.nextElementSibling.firstElementChild.textContent, level);
   if (datatier.firstElementChild.nextElementSibling.nextElementSibling.firstElementChild.tagName === 'LABEL') {
-    datatier.firstElementChild.nextElementSibling.nextElementSibling.firstElementChild.setAttribute('for', decrementLevel(datatier.firstElementChild.nextElementSibling.nextElementSibling.firstElementChild.htmlFor, level))
-    datatier.firstElementChild.nextElementSibling.nextElementSibling.firstElementChild.textContent = decrementLevelTextNode(datatier.firstElementChild.nextElementSibling.nextElementSibling.firstElementChild.textContent, level)
+    datatier.firstElementChild.nextElementSibling.nextElementSibling.firstElementChild.setAttribute('for', decrementLevel(datatier.firstElementChild.nextElementSibling.nextElementSibling.firstElementChild.htmlFor, level));
+    datatier.firstElementChild.nextElementSibling.nextElementSibling.firstElementChild.textContent = decrementLevelTextNode(datatier.firstElementChild.nextElementSibling.nextElementSibling.firstElementChild.textContent, level);
   }
 
   /* Adjust the 'id' and 'name' attributes for the
    * key and value inputs */
-  datatier.firstElementChild.nextElementSibling.firstElementChild.nextElementSibling.setAttribute('id', decrementLevel(datatier.firstElementChild.nextElementSibling.firstElementChild.nextElementSibling.id, level))
-  datatier.firstElementChild.nextElementSibling.firstElementChild.nextElementSibling.setAttribute('name', decrementLevel(datatier.firstElementChild.nextElementSibling.firstElementChild.nextElementSibling.name, level))
+  datatier.firstElementChild.nextElementSibling.firstElementChild.nextElementSibling.setAttribute('id', decrementLevel(datatier.firstElementChild.nextElementSibling.firstElementChild.nextElementSibling.id, level));
+  datatier.firstElementChild.nextElementSibling.firstElementChild.nextElementSibling.setAttribute('name', decrementLevel(datatier.firstElementChild.nextElementSibling.firstElementChild.nextElementSibling.name, level));
   if (datatier.firstElementChild.nextElementSibling.nextElementSibling.firstElementChild.tagName === 'LABEL') {
-    datatier.firstElementChild.nextElementSibling.nextElementSibling.firstElementChild.nextElementSibling.setAttribute('id', decrementLevel(datatier.lastChild.firstElementChild.nextElementSibling.id, level))
-    datatier.firstElementChild.nextElementSibling.nextElementSibling.firstElementChild.nextElementSibling.setAttribute('name', decrementLevel(datatier.lastChild.firstElementChild.nextElementSibling.name, level))
+    datatier.firstElementChild.nextElementSibling.nextElementSibling.firstElementChild.nextElementSibling.setAttribute('id', decrementLevel(datatier.lastChild.firstElementChild.nextElementSibling.id, level));
+    datatier.firstElementChild.nextElementSibling.nextElementSibling.firstElementChild.nextElementSibling.setAttribute('name', decrementLevel(datatier.lastChild.firstElementChild.nextElementSibling.name, level));
   }
 }
 
@@ -207,7 +207,7 @@ function addField(caller) {
       /* Adjust children of child tier we're appending after 
        * so they have corridors connecting to the new item */
       document.querySelectorAll('[id^="' + parentDiv.lastElementChild.id + '_"]')
-        .forEach(tier => {tier.firstElementChild.childNodes[oldCorridor.childElementCount - 1].textContent ='│'});
+        .forEach(tier => {tier.firstElementChild.childNodes[oldCorridor.childElementCount - 1].textContent ='│';});
       oldCorridor.lastElementChild.textContent = '├┬';
     } else {
       oldCorridor.lastElementChild.textContent = '├─';
@@ -243,8 +243,8 @@ function expandField(caller) {
     let newCorridor = topCorridor.cloneNode(true);
     /* New corridor is contingent on old one, in
      * particular, whether it has children */
-    if (topCorridor.lastElementChild.textContent == '└─'
-      || topCorridor.lastElementChild.textContent == '└┬') {
+    if (topCorridor.lastElementChild.textContent == '└─' || 
+      topCorridor.lastElementChild.textContent == '└┬') {
       newCorridor.lastElementChild.textContent = '\xa0';
     } else {
       newCorridor.lastElementChild.textContent = '│';
@@ -286,8 +286,8 @@ function deleteField(caller) {
    * identifiers to reflect the deletion */
   caller.parentNode.parentNode.parentNode.querySelectorAll('div#' + caller.parentNode.parentNode.id + ' ~ div[id^="datatier"], div#' + caller.parentNode.parentNode.id + ' ~ div[id^="datatier"] div[id^="datatier"]').forEach(tier => decrementDatatier(tier, caller.parentNode.parentNode.id.split('_').length - 1));
   /* Check whether the caller is the only child */
-  if (caller.parentNode.parentNode.parentNode.childElementCount === 4
-    && caller.parentNode.parentNode.parentNode.id !== 'datafields') {
+  if (caller.parentNode.parentNode.parentNode.childElementCount === 4 && 
+    caller.parentNode.parentNode.parentNode.id !== 'datafields') {
     /* If yes, change parent corridor to no longer
      * branch off */
     if (caller.parentNode.parentNode.parentNode.nextElementSibling) {
@@ -297,8 +297,8 @@ function deleteField(caller) {
     }
     collapseLevel(caller.parentNode.parentNode.parentNode.firstElementChild.nextElementSibling.nextElementSibling.lastElementChild.previousElementSibling);
     /* Check whether the caller is the last child */
-  } else if (caller.parentNode.parentNode.firstElementChild.lastElementChild.textContent == '└─'
-    && caller.parentNode.parentNode.previousElementSibling) {
+  } else if (caller.parentNode.parentNode.firstElementChild.lastElementChild.textContent == '└─' && 
+    caller.parentNode.parentNode.previousElementSibling) {
     /* If yes, change previous sibling's corridor
      * to reflect its new last-child status */
     caller.parentNode.parentNode.previousElementSibling.firstElementChild.lastElementChild.textContent = '└' + caller.parentNode.parentNode.previousElementSibling.firstElementChild.lastElementChild.textContent.substring(1);
@@ -324,7 +324,7 @@ function collapseLevel(caller) {
   /* Turn the parent datatier back into a KV pair */
 
   /* Create fieldvalue div for value label/input pair */
-  let oldValueDiv = document.getElementById('field_' + number + '_value')
+  let oldValueDiv = document.getElementById('field_' + number + '_value');
   let newValueDiv = document.createElement('div');
   newValueDiv.setAttribute('id', 'field_' + number + '_value');
   newValueDiv.setAttribute('class', 'fieldvalue');
