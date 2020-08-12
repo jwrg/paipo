@@ -14,10 +14,11 @@
   %><input type="date" id="date" name="date" value="<%= datestring %>" />&nbsp;
   <label for="time">Entry Time (GMT):</label><% 
 
-  let timestring = entry.date.getHours() + ':' + entry.date.getMinutes();
+  let timestring = (entry.date.getHours() < 10 ? '0' : '' ) + entry.date.getHours() + ':';
+  timestring += (entry.date.getMinutes() < 10 ? '0' : '' ) + entry.date.getMinutes();
 
   %><input type="time" id="time" name="time" value="<%= timestring %>" />
-  <hr />
+  <hr class="corridor" />
   <div id="datafields">
     <!--<p class="corridor"><tt>│&nbsp;</tt></p>-->
     <%
@@ -60,13 +61,14 @@
       /* Always spit out a label, despite whether the data is an object */
      -%><div id="field_<%= numString %>_key" class="fieldkey"><%
      -%><label class="fieldkey" for="field_<%= numString %>_key">Data Field <%= numStringFormatted %> Key:</label><%
-     -%><input class="fieldkey" type="text" id="field_<%= numString %>_key" name="field_<%= numString %>_key" value="<%= key %>" /><%
+     -%><input class="fieldkey" type="text" id="field_<%= numString %>_key_input" name="field_<%= numString %>_key" value="<%= key %>" /><%
 
           /* If value is an object, call self on all constituents of value */
         if (value && typeof value === 'object' && value.constructor === Object) {
-        -%><input class="button" type="button" onclick="addField(this)" aria-label="Add a subfield" title="Add a subfield" value="&#x2203" /><%
-        -%><input class="button" type="button" onclick="collapseLevel(this)" aria-label="Collapse this level" title="Collapse this level" value="&#x21b0" /><%
-        -%><input class="button" type="button" onclick="deleteLevel(this)" aria-label="Delete this level" title="Delete this level" value="&#x232b;" /><%
+        -%></div><div id="field_<%= numString %>_value" class="fieldvalue"><%
+        -%><input class="button expand" type="button" onclick="addField(this)" aria-label="Add a subfield" title="Add a subfield" value="&#x2203" /><%
+        -%><input class="button delete" type="button" onclick="collapseLevel(this)" aria-label="Collapse this level" title="Collapse this level" value="&#x21b0" /><%
+        -%><input class="button delete" type="button" onclick="deleteLevel(this)" aria-label="Delete this level" title="Delete this level" value="&#x232b;" /><%
        -%></div><%
             let counter = 1;
           Object.keys(value).forEach(key => {
@@ -80,15 +82,14 @@
           /* Otherwise, just spit out the value to go with the key */
         } else { 
 
-        %></div><div id="field_<%= numString %>" class="fieldvalue">
-<label class="fieldvalue" for="field_<%= numString %>">Data Field <%= numStringFormatted %> Value:</label>
-<input class="fieldvalue" type="text" id="field_<%= numString %>" name="field_<%= numString %>" value="<%= value %>" />
-<input class="button" type="button" onclick="expandField(this)" aria-label="Expand this field" title="Expand this field" value="&#x21b3;" />
-<input class="button" type="button" onclick="deleteField(this)" aria-label="Delete this field" title="Delete this field" value="&#x232B;" />
-          </div> 
-          <%
+        -%></div><div id="field_<%= numString %>_value" class="fieldvalue"><%
+        -%><label class="fieldvalue" for="field_<%= numString %>_value_input">Data Field <%= numStringFormatted %> Value:</label><%
+        -%><input class="fieldvalue" type="text" id="field_<%= numString %>_value_input" name="field_<%= numString %>_value" value="<%= value %>" /><%
+        -%><input class="button expand" type="button" onclick="expandField(this)" aria-label="Expand this field" title="Expand this field" value="&#x21b3;" /><%
+        -%><input class="button delete" type="button" onclick="deleteField(this)" aria-label="Delete this field" title="Delete this field" value="&#x232B;" /><%
+      -%></div><%
           };
-          %></div><%
+         -%></div><%
 
     }
 let numData = 1;
@@ -102,7 +103,7 @@ Object.keys(entry.data).forEach(key => {
 
 %>
 </div>
-<input type="button" onclick="addField(this)" value="Add a datafield" />
+<input type="button" onclick="addField()" value="Add a datafield" />
 <input type="submit" id="submit" value="Save!" />
 <input type="button" id="cancel" onclick="window.history.back()" value="Cancel" />
   </div>

@@ -364,6 +364,14 @@ p.corridor {
   font-size: 48pt;
 }
 
+hr.corridor {
+  margin: 0;
+  padding: 0;
+  height: 6px;
+  color: var(--content-fg);
+  background-color: var(--content-fg);
+}
+
 div.fieldvalue, div.fieldkey {
   margin: 0;
   padding: 0;
@@ -387,6 +395,7 @@ div.fieldvalue input, div.fieldkey input {
 div.fieldvalue input.button, div.fieldkey input.button {
   margin: 0 1ex;
   font-size: 8pt;
+  font-weight: 500;
   width: 6ex;
   height: 6ex;
 }
