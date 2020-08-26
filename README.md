@@ -59,6 +59,13 @@ is included to be run using psql; this adds the necessary
 user, database, and tables.  The schema is left quite
 simple so that it can be easily adapted.
 
+### Testing
+
+End-to-end web app testing is achieved using Mocha and
+Puppeteer.  The structure of each test file conforms to
+Mocha so if one wishes to test using something other
+than Puppeteer one can just adapt test files as needed.
+
 ## Requirements
 
 The app, and by extension, the middleware stack, has 
