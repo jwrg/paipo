@@ -18,10 +18,24 @@ module.exports = function(grunt) {
         },
         src: ['test/**/*.js'],
       },
+      dashboard: {
+        options: {
+          color: true,
+          reporter: 'spec',
+        },
+        src: ['test/view/dashboard.js'],
+      },
+      calendar: {
+        options: {
+          color: true,
+          reporter: 'spec',
+        },
+        src: ['test/view/calendar.js'],
+      },
     },
     watch: {
       server: {
-        files: ['**/*.js'],
+        files: ['index.js', 'db/**/*.js', 'lib/**/*.js'],
         tasks: ['mochaTest', 'jshint'],
         options: {
           interval: 1023,
@@ -34,16 +48,16 @@ module.exports = function(grunt) {
           interval: 1023,
         },
       },
-      html: {
-        files: ['**/*.html'],
-        tasks: [],
+      dashboard: {
+        files: ['view/dashboard.ejs', 'test/view/dashboard.js'],
+        tasks: ['mochaTest:dashboard', 'jshint'],
         options: {
           interval: 1023,
         },
       },
-      css: {
-        files: ['**/*.css'],
-        tasks: [],
+      calendar: {
+        files: ['view/calendar.ejs', 'test/view/calendar.js'],
+        tasks: ['mochaTest:calendar', 'jshint'],
         options: {
           interval: 1023,
         },
