@@ -15,30 +15,51 @@ const queries = module.exports = {
   },
   calendar: {
     dates : (year, month) => {
-      return {
-        text: "SELECT DISTINCT EXTRACT(DAY FROM date) FROM json WHERE " +
-          "date >= '" + year + "-" + (Math.floor(parseInt(month)/10) ? (parseInt(month) + 1) : "0" + (parseInt(month) + 1)) + "-01' AND " +
-          "date <= '" + year + "-" + (Math.floor(parseInt(month)/10) ? (parseInt(month) + 2) : "0" + (parseInt(month) + 2)) + "-01'"
-      };
+      if (month == 11) {
+        return {
+          text: "SELECT DISTINCT EXTRACT(DAY FROM date) " +
+          "FROM json WHERE " +
+          "date >= '" + year + "-12" + "-01' AND " + 
+          "date <= '" + (year + 1) + "-01" + "-01'"
+        }; 
+      } else {
+        return {
+          text: "SELECT DISTINCT EXTRACT(DAY FROM date) " +
+          "FROM json WHERE " +
+          "date >= '" + year + "-" + 
+          (
+            Math.floor((month + 1)/10) ? 
+            (month + 1) : 
+            "0" + (month + 1)
+          ) + 
+          "-01' AND " + "date <= '" + year + "-" + 
+          (
+            Math.floor((month + 2)/10) ? 
+            (month + 2) : 
+            "0" + (month + 2)
+          ) + 
+          "-01'"
+        };
+      }
     }
   },
   list: {
     date: (year, month, day) => {
       return {
         text: "SELECT * FROM json WHERE " + 
-          "date >= '" + year + "-" + 
-          (Math.floor(parseInt(month)/10) ? 
-            (parseInt(month) + 1) : 
-            "0" + (parseInt(month) + 1)) + 
-          "-" + (Math.floor(parseInt(day)/10) ? day : "0" + day) +
-          "' AND " +
-          "date < '" + year + "-" + 
-          (Math.floor(parseInt(month)/10) ? 
-            (parseInt(month) + 1) : 
-            "0" + (parseInt(month) + 1)) +
-          "-" + (Math.floor(parseInt(day + 1)/10) ? 
-            parseInt(day) + 1 : 
-            "0" + (parseInt(day) + 1)) + "'"
+        "date >= '" + year + "-" + 
+        (Math.floor(parseInt(month)/10) ? 
+          (parseInt(month) + 1) : 
+          "0" + (parseInt(month) + 1)) + 
+        "-" + (Math.floor(parseInt(day)/10) ? day : "0" + day) +
+        "' AND " +
+        "date < '" + year + "-" + 
+        (Math.floor(parseInt(month)/10) ? 
+          (parseInt(month) + 1) : 
+          "0" + (parseInt(month) + 1)) +
+        "-" + (Math.floor(parseInt(day + 1)/10) ? 
+          parseInt(day) + 1 : 
+          "0" + (parseInt(day) + 1)) + "'"
       };
     }
   },
