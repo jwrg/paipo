@@ -16,7 +16,11 @@ module.exports = function(grunt) {
           color: true,
           reporter: 'spec',
         },
-        src: ['test/**/*.js'],
+        src: [
+          'test/view/dashboard.js',
+          'test/view/calendar.js',
+          'test/view/editentry.js',
+        ],
       },
       dashboard: {
         options: {
@@ -32,18 +36,25 @@ module.exports = function(grunt) {
         },
         src: ['test/view/calendar.js'],
       },
+      editEntry: {
+        options: {
+          color: true,
+          reporter: 'spec',
+        },
+        src: ['test/view/editentry.js'],
+      },
     },
     watch: {
       server: {
-        files: ['index.js', 'db/**/*.js', 'lib/**/*.js'],
-        tasks: ['mochaTest', 'jshint'],
+        files: ['Gruntfile.js', 'index.js', 'db/**/*.js', 'lib/**/*.js'],
+        tasks: ['mochaTest:test', 'jshint:all'],
         options: {
           interval: 1023,
         },
       },
       cfg: {
         files: ['cfg/**/*.json', 'package.json'],
-        tasks: ['mochaTest'],
+        tasks: ['mochaTest:test'],
         options: {
           interval: 1023,
         },
@@ -58,6 +69,13 @@ module.exports = function(grunt) {
       calendar: {
         files: ['view/calendar.ejs', 'test/view/calendar.js'],
         tasks: ['mochaTest:calendar', 'jshint'],
+        options: {
+          interval: 1023,
+        },
+      },
+      editEntry: {
+        files: ['view/editentry.ejs', 'test/view/editentry.js'],
+        tasks: ['mochaTest:editEntry', 'jshint'],
         options: {
           interval: 1023,
         },
