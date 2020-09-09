@@ -1,19 +1,51 @@
 # Paipo
 
-A Koa.js Web App Prototype
+Rapid web app development for Koa.js + Postgres
 
 This a springboard/scaffold/prototype web app stack
 built on Koa, middleware for said, and Postgres.  This 
 project seeks to provide a small codebase for starting a
 node web app using Koa and Postgres, and attempts to
-make a few sane choices for some starting middleware,
-without providing unnecessary bloat.  Hence, Paipo,
-a bodyboard; enough to keep you afloat and get you moving.
+make a few sane choices for some starting middleware
+and a few tools for rapid development and testing.  Hence, 
+Paipo, a bodyboard; enough to keep you afloat and get you 
+moving.
+
+## Usage
+
+To get started developing a Koa + Postgres web app,
+issue the following commands:
+
+```Shell
+# Clone repository and install dependencies
+git clone https://github.com/jwrg/paipo.git
+cd paipo
+npm install
+
+# Apply SQL files to local database.
+# NB Paipo requires a running postgres instance on port 6899
+# and the following assumes the superuser is named postgres
+psql -p 6899 -U postgres -h localhost -f sql/schema.sql
+psql -p 6899 -U paipo -h localhost -f sql/dummy.sql
+
+# Spin up the app server
+DEBUG=koa* node_modules/.bin/nodemon --inspect index.js
+
+# In another terminal, spin up auto-tests and linting.
+# This is optional but highly recommended
+./node_modules/.bin/grunt
+
+```
 
 ## Overview
 
 Currently, the scope of the project is indeterminate,
 but has the following goals in mind:
+
+* Provide a small springboard Koa.js + Postgres app
+* Make a few starting choices for basic middleware (which
+can be readily changed and adapted)
+* Pre-configure tools for rapid development and testing
 
 ### Goals
 
@@ -29,6 +61,14 @@ MVC lines, with a directory each for views/layouts,
 and js web scripts, with the backend in the root
 folder.
 
+Furthermore the project aims to facilitate rapid
+development by providing auto-testing and -linting, and 
+also support integration and end-to-end testing with
+Puppeteer, behaviour driven testing using Mocha and Chai,
+and by extension <abbr title="Test Driven Development">TDD
+</abbr>.  Some degree of code coverage reporting is also
+provided using Puppeteer and Istanbul.
+
 ### Views
 
 The views included by default are as follows:
@@ -37,10 +77,8 @@ The views included by default are as follows:
 * Calendar
   * Month View
   * Year View?
-* View Date
-* View ID Range (List view currently not implemented)
-* New Entry
-* Edit Entry
+* List Entries for Date
+* Edit Entry (JSON editor)
 * Settings
 * Elements (for display testing)
 
@@ -61,10 +99,11 @@ simple so that it can be easily adapted.
 
 ### Testing
 
-End-to-end web app testing is achieved using Mocha and
-Puppeteer.  The structure of each test file conforms to
-Mocha so if one wishes to test using something other
-than Puppeteer one can just adapt test files as needed.
+Behaviour-driven end-to-end web app testing is achieved 
+using Mocha, Chai and Puppeteer.  The structure of each 
+test file conforms to Mocha so if one wishes to test using 
+something other than Puppeteer (e.g., Selenium) one can 
+adapt test files as needed.
 
 ## Requirements
 
@@ -72,8 +111,8 @@ The app, and by extension, the middleware stack, has
 to do stuff, and each of those stuffs ought to require
 a component or components (i.e., middleware) to deal
 with and/or accomplish said stuffs.  Any and all middleware
-one adds are expected to be compatible with Koa v2.  Still
-nailing down a node version at this time.
+one adds are expected to be compatible with Koa v2 (still
+nailing down a strictly required node version at this time).
 
 ### Current Components
 
