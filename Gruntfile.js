@@ -2,6 +2,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-mocha-test');
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-contrib-jshint');
+  grunt.loadNpmTasks('grunt-simple-nyc');
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
     jshint: {
@@ -14,7 +15,7 @@ module.exports = function(grunt) {
       test: {
         options: {
           color: true,
-          reporter: 'spec',
+          reporter: 'nyan',
         },
         src: [
           'test/view/dashboard.js',
@@ -32,19 +33,32 @@ module.exports = function(grunt) {
       calendar: {
         options: {
           color: true,
-          reporter: 'spec',
+          reporter: 'dot',
         },
         src: ['test/view/calendar.js'],
       },
       editEntry: {
         options: {
           color: true,
-          reporter: 'spec',
+          reporter: 'dot',
         },
         src: ['test/view/editentry.js'],
       },
     },
+    nyc: {
+      report: {
+        options: {
+          reporter: ['text-summary', 'html'],
+        },
+      },
+    },
     watch: {
+      options: {
+        dateFormat: function(time) {
+          grunt.log.writeln(String('Task finished in ' + time + 's at ' + (new Date()).toISOString()).cyan);
+          grunt.log.writeln('Waiting...');
+        },
+      },
       server: {
         files: ['Gruntfile.js', 'index.js', 'db/**/*.js', 'lib/**/*.js'],
         tasks: ['mochaTest:test', 'jshint:all'],
@@ -61,21 +75,21 @@ module.exports = function(grunt) {
       },
       dashboard: {
         files: ['view/dashboard.ejs', 'test/view/dashboard.js'],
-        tasks: ['mochaTest:dashboard', 'jshint'],
+        tasks: ['mochaTest:dashboard', 'jshint', 'nyc:report'],
         options: {
           interval: 1023,
         },
       },
       calendar: {
         files: ['view/calendar.ejs', 'test/view/calendar.js'],
-        tasks: ['mochaTest:calendar', 'jshint'],
+        tasks: ['mochaTest:calendar', 'jshint', 'nyc:report'],
         options: {
           interval: 1023,
         },
       },
       editEntry: {
         files: ['view/editentry.ejs', 'test/view/editentry.js'],
-        tasks: ['mochaTest:editEntry', 'jshint'],
+        tasks: ['mochaTest:editEntry', 'jshint', 'nyc:report'],
         options: {
           interval: 1023,
         },

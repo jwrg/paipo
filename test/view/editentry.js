@@ -6,6 +6,7 @@ var should = chai.should();
 
 // Puppeteer for user-imitation in end-to-end tests
 const puppeteer = require('puppeteer');
+const pti = require('puppeteer-to-istanbul');
 
 // End to end tests for edit entry view
 describe('View: Edit entry', function() {
@@ -33,6 +34,7 @@ describe('View: Edit entry', function() {
       page.coverage.stopJSCoverage(),
       page.coverage.stopCSSCoverage(),
     ]);
+    pti.write([...jsCoverage, ...cssCoverage], { includeHostname: true , storagePath: './.nyc_output' });
     // Give promises time to resolve before starting
     // the next test
     await page.waitFor(1500);
