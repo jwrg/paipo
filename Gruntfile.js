@@ -75,21 +75,21 @@ module.exports = function(grunt) {
       },
       dashboard: {
         files: ['view/dashboard.ejs', 'test/view/dashboard.js'],
-        tasks: ['mochaTest:dashboard', 'jshint', 'nyc:report'],
+        tasks: ['mochaTest:dashboard', 'nyc:report', 'jshint'],
         options: {
           interval: 1023,
         },
       },
       calendar: {
         files: ['view/calendar.ejs', 'test/view/calendar.js'],
-        tasks: ['mochaTest:calendar', 'jshint', 'nyc:report'],
+        tasks: ['mochaTest:calendar', 'nyc:report', 'jshint'],
         options: {
           interval: 1023,
         },
       },
       editEntry: {
         files: ['view/editentry.ejs', 'script/editentry.js', 'test/view/editentry.js'],
-        tasks: ['mochaTest:editEntry', 'jshint', 'nyc:report'],
+        tasks: ['mochaTest:editEntry', 'nyc:report', 'jshint'],
         options: {
           interval: 1023,
         },
