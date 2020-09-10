@@ -40,7 +40,7 @@ module.exports = function(grunt) {
       editEntry: {
         options: {
           color: true,
-          reporter: 'dot',
+          reporter: 'spec',
         },
         src: ['test/view/editentry.js'],
       },
@@ -88,7 +88,7 @@ module.exports = function(grunt) {
         },
       },
       editEntry: {
-        files: ['view/editentry.ejs', 'test/view/editentry.js'],
+        files: ['view/editentry.ejs', 'script/editentry.js', 'test/view/editentry.js'],
         tasks: ['mochaTest:editEntry', 'jshint', 'nyc:report'],
         options: {
           interval: 1023,

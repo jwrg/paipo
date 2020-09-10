@@ -77,7 +77,7 @@ describe('View: Edit entry', function() {
   });
 
   describe('Display tests using L2 quadtrees', function() {
-    this.retries(4);
+    this.retries(2);
     beforeEach(async function() {
       this.timeout(10000);
       let multiClick = async (handle, count, delay = 0) => {
@@ -93,7 +93,7 @@ describe('View: Edit entry', function() {
       let tierCount = await page.$$('div.datatier');
       tierCount.length.should.eql(0);
       let addButton = await page.$('input[value="Add a datafield"]');
-      await multiClick(addButton, 4, 300);
+      await multiClick(addButton, 4, 100);
       tierCount = await page.$$('div.datatier');
       tierCount.length.should.eql(4);
       let expandButton = await page.$$('input[title="Expand this field"]');
@@ -106,12 +106,12 @@ describe('View: Edit entry', function() {
       let addSub = await page.$$('input[title="Add a subfield"]');
       addSub.length.should.eql(4);
       for (let i = addSub.length - 1; i >= 0; i--) {
-        await multiClick(addSub[i], 3, 300);
+        await multiClick(addSub[i], 3, 100);
       }
       tierCount = await page.$$('div.datatier');
       return tierCount.length.should.eql(20);
     });
-    it('Creates a complete quadtree and deletes all children but the last of each parent', async function() {
+    it('Takes a complete L2 quadtree and deletes all children but the last of each parent', async function() {
       for (let i = 3; i > 0; i--) {
         let deleteButton = await page.$$('div#datafields > div.datatier div.datatier:nth-of-type(3) input[title="Delete this field"]');
         for (let k = deleteButton.length - 1; k >= 0; k--) {
@@ -122,7 +122,7 @@ describe('View: Edit entry', function() {
       let tierCount = await page.$$('div.datatier');
       return tierCount.length.should.eql(8);
     }).timeout(20000);
-    it('Creates a complete quadtree and repeatedly deletes all second children of each parent', async function() {
+    it('Takes a complete L2 quadtree and repeatedly deletes all second children of each parent', async function() {
       for (let i = 3; i > 0; i--) {
         let deleteButton = await page.$$('div#datafields > div.datatier div.datatier:last-of-type input[title="Delete this field"]');
         for (let k = deleteButton.length - 1; k >= 0; k--) {
@@ -132,7 +132,34 @@ describe('View: Edit entry', function() {
       }
       let tierCount = await page.$$('div.datatier');
       return tierCount.length.should.eql(8);
-    });
+    }).timeout(20000);
+    it('Takes a complete L2 quadtree and repeatedly deletes the last subtree', async function() {
+      page.on('dialog', async dialog => {
+        await dialog.accept();
+      });
+      let deleteButton = await page.$$('div#datafields > div.datatier > div.fieldvalue input[title="Delete this level"]');
+      deleteButton.length.should.be.eql(4);
+      for (let i = deleteButton.length - 1; i >= 0; i--) {
+        await deleteButton[i].click();
+        await page.waitFor(100);
+      }
+      let tierCount = await page.$$('div.datatier');
+      return tierCount.length.should.eql(0);
+    }).timeout(20000);
+    it('Takes a complete L2 quadtree and repeatedly deletes the first subtree', async function() {
+      page.on('dialog', async dialog => {
+        await dialog.accept();
+      });
+      for (let i = 4; i > 0; i--) {
+        let deleteButton = await page.$('div#datafields > div.datatier > div.fieldvalue input[title="Delete this level"]');
+        deleteButton.should.not.be.null;
+        await deleteButton.click();
+        await page.waitFor(100);
+      }
+      let tierCount = await page.$$('div.datatier');
+      return tierCount.length.should.eql(0);
+    }).timeout(20000);
+    it('Takes a complete L2 quadtree, collapses all subtrees, and then uncollapses them');
   });
 
   describe('End-to-end tests', function() {
