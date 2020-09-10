@@ -1,7 +1,7 @@
 {
-  "user": "kcats",
+  "user": "paipo",
   "host": "localhost",
-  "database": "kcatsdb",
-  "password": "stackbackwards",
+  "database": "paipodb",
+  "password": "boardbackwards",
   "port": 6899
 }
