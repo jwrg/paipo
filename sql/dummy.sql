@@ -1,27 +1,34 @@
 INSERT INTO json (date, data) VALUES 
 ( 
-  '2020-05-25 19:50:50', 
+  NOW() + INTERVAL '1 DAY', 
  '{
     "name": "Person", 
     "age": "Ninety-nine"
   }' 
 ),
 ( 
-  '2020-05-26 20:20:20',
+  NOW() + INTERVAL '7 DAY',
  '{
     "name": "Person 2", 
-    "gender": "Szchklimayl"
+    "sport": "Murderball"
   }'
 ),
 ( 
-  '2020-05-26 21:20:20',
+  NOW() + INTERVAL '3 DAY',
  '{
     "name": "Person 3", 
     "schtick": "Ventriloquism"
   }'
 ),
 ( 
-  '2020-05-28 22:20:20',  
+  NOW() - INTERVAL '1 DAY',
+ '{
+    "name": "Person 4", 
+    "hates": "Mustard"
+  }'
+),
+( 
+  NOW() - INTERVAL '5 DAY',  
  '{
     "name": "Ric", 
     "nickname": "Nature Boy", 
@@ -29,7 +36,7 @@ INSERT INTO json (date, data) VALUES
   }'
 ),
 ( 
-  '2020-05-30 12:10:10',
+  NOW() - INTERVAL '3 DAY',
  '{
     "name": "Kuro-Chan", 
     "Eats": 
@@ -44,7 +51,7 @@ INSERT INTO json (date, data) VALUES
   }'
 ),
 ( 
-  '2020-05-29 08:29:29',
+  NOW() + INTERVAL '5 DAY',
  '{
     "name": "Ricky", 
     "Professions":
