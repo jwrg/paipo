@@ -152,14 +152,31 @@ describe('View: Edit entry', function() {
       });
       for (let i = 4; i > 0; i--) {
         let deleteButton = await page.$('div#datafields > div.datatier > div.fieldvalue input[title="Delete this level"]');
-        deleteButton.should.not.be.null;
+        deleteButton.should.not.eql(null);
         await deleteButton.click();
         await page.waitFor(100);
       }
       let tierCount = await page.$$('div.datatier');
       return tierCount.length.should.eql(0);
     }).timeout(20000);
-    it('Takes a complete L2 quadtree, collapses all subtrees, and then uncollapses them');
+    it('Takes a complete L2 quadtree, collapses all subtrees, and then uncollapses them', async function () {
+      let collapseButton = await page.$$('div#datafields > div.datatier > div.fieldvalue input[title="Collapse this level"]');
+      collapseButton.length.should.be.eql(4);
+      for (let i = collapseButton.length - 1; i >= 0; i--) {
+        await collapseButton[i].click();
+        await page.waitFor(100);
+      }
+      let tierCount = await page.$$('div.datatier');
+      tierCount.length.should.eql(4);
+      let expandButton = await page.$$('div#datafields > div.datatier > div.fieldvalue input[title="Expand this field"]');
+      expandButton.length.should.be.eql(4);
+      for (let i = expandButton.length - 1; i >= 0; i--) {
+        await expandButton[i].click();
+        await page.waitFor(100);
+      }
+      tierCount = await page.$$('div.datatier');
+      return tierCount.length.should.eql(20);
+    });
   });
 
   describe('End-to-end tests', function() {
