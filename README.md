@@ -1,21 +1,54 @@
 # Paipo
 
-A Koa.js Web App Prototype
+Rapid web app development for Koa.js + Postgres
 
-This a springboard/scaffold/prototype web app stack
+This a lightweight web app development and testing
+framework + springboard/scaffold/prototype stack
 built on Koa, middleware for said, and Postgres.  This 
 project seeks to provide a small codebase for starting a
 node web app using Koa and Postgres, and attempts to
-make a few sane choices for some starting middleware,
-without providing unnecessary bloat.  Hence, Paipo,
-a bodyboard; enough to keep you afloat and get you moving.
+make a few sane choices for some starting middleware
+and a few tools for rapid development and testing.  Hence, 
+Paipo, a bodyboard; enough to keep you afloat and get you 
+moving.
+
+## Usage
+
+To get started developing a Koa + Postgres web app,
+issue the following commands:
+
+```Shell
+# Clone repository and install dependencies
+git clone https://github.com/jwrg/paipo.git
+cd paipo
+npm install
+
+# Apply SQL files to local database.
+# NB Paipo requires a running postgres instance on port 6899
+# and the following assumes the superuser is named postgres
+psql -p 6899 -U postgres -h localhost -f sql/schema.sql
+psql -p 6899 -U paipo -h localhost -d paipodb -f sql/dummy.sql
+
+# Spin up the app server, listening on port 6891
+DEBUG=koa* node_modules/.bin/nodemon --inspect index.js
+
+# In another terminal, spin up auto-tests and linting.
+# This is optional but highly recommended
+./node_modules/.bin/grunt
+
+```
 
 ## Overview
 
 Currently, the scope of the project is indeterminate,
 but has the following goals in mind:
 
-### Goals
+* Pre-configure tools for rapid development and testing
+* Make a few starting choices for basic middleware (which
+can be readily changed and adapted)
+* Provide a small springboard Koa.js + Postgres app
+
+### Data Visualization and Entry App
 
 The project aims to be lightweight and OOTB is a simple
 data entry app with a calendar view and a means to create,
@@ -29,6 +62,14 @@ MVC lines, with a directory each for views/layouts,
 and js web scripts, with the backend in the root
 folder.
 
+Furthermore the project aims to facilitate rapid
+development by providing auto-testing and -linting, and 
+also support integration and end-to-end testing with
+Puppeteer, behaviour driven testing using Mocha and Chai,
+and by extension <abbr title="Test Driven Development">TDD
+</abbr>.  Some degree of code coverage reporting is also
+provided using Puppeteer and Istanbul.
+
 ### Views
 
 The views included by default are as follows:
@@ -36,12 +77,9 @@ The views included by default are as follows:
 * Dashboard
 * Calendar
   * Month View
-  * Year View?
-* View Date
-* View ID Range (List view currently not implemented)
-* New Entry
-* Edit Entry
-* Settings
+* List Entries for Date
+* Edit Entry (JSON editor)
+* Settings (not yet implemented)
 * Elements (for display testing)
 
 Minimal styling is included.  A system for swapping out
@@ -59,14 +97,22 @@ is included to be run using psql; this adds the necessary
 user, database, and tables.  The schema is left quite
 simple so that it can be easily adapted.
 
+### Testing
+
+Behaviour-driven end-to-end web app testing is achieved 
+using Mocha, Chai and Puppeteer.  The structure of each 
+test file conforms to Mocha so if one wishes to test using 
+something other than Puppeteer (e.g., Selenium) one can 
+adapt test files as needed.
+
 ## Requirements
 
 The app, and by extension, the middleware stack, has 
 to do stuff, and each of those stuffs ought to require
 a component or components (i.e., middleware) to deal
 with and/or accomplish said stuffs.  Any and all middleware
-one adds are expected to be compatible with Koa v2.  Still
-nailing down a node version at this time.
+one adds are expected to be compatible with Koa v2 (still
+nailing down a strictly required node version at this time).
 
 ### Current Components
 
@@ -127,6 +173,10 @@ Some configuration can be done within the app, but is
 minimal for now until authentication is implemented.
 Eventually database configuration may go here but for
 now minimalism is the driving philosophy.
+
+For now configuration is done in the cfg/ directory, 
+and *not* done in package.json.
+
 
 ## Directory Structure
 

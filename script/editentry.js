@@ -376,8 +376,14 @@ function deleteLevel(caller) {
     caller.parentNode.parentNode.parentNode.querySelectorAll('div#' + caller.parentNode.parentNode.id + ' ~ div[id^="datatier"], div#' + caller.parentNode.parentNode.id + ' ~ div[id^="datatier"] div[id^="datatier"]').forEach(tier => decrementDatatier(tier, caller.parentNode.parentNode.id.split('_').length - 1));
     /* Adjust corridor of previous sibling if the deleted
      * datatier is the last child of its parent */
-    if (!caller.parentNode.parentNode.nextElementSibling) {
-      caller.parentNode.parentNode.previousElementSibling.firstElementChild.lastElementChild.textContent = '└─';
+    if (!caller.parentNode.parentNode.nextElementSibling && caller.parentNode.parentNode.previousElementSibling) {
+      document.querySelectorAll('[id^="' + caller.parentNode.parentNode.previousElementSibling.id + '_"]')
+        .forEach(tier => tier.firstElementChild.childNodes[caller.parentNode.parentNode.firstElementChild.childElementCount - 1].textContent = '\xa0');
+      if (caller.parentNode.parentNode.previousElementSibling.firstElementChild.lastElementChild.textContent == '├┬') {
+        caller.parentNode.parentNode.previousElementSibling.firstElementChild.lastElementChild.textContent = '└┬';
+      } else {
+        caller.parentNode.parentNode.previousElementSibling.firstElementChild.lastElementChild.textContent = '└─';
+      }
     }
     /* Call deleteField on the datatier, its children
      * should follow it into death */
