@@ -2,7 +2,8 @@
 
 Rapid web app development for Koa.js + Postgres
 
-This a springboard/scaffold/prototype web app stack
+This a lightweight web app development and testing
+framework + springboard/scaffold/prototype stack
 built on Koa, middleware for said, and Postgres.  This 
 project seeks to provide a small codebase for starting a
 node web app using Koa and Postgres, and attempts to
@@ -26,9 +27,9 @@ npm install
 # NB Paipo requires a running postgres instance on port 6899
 # and the following assumes the superuser is named postgres
 psql -p 6899 -U postgres -h localhost -f sql/schema.sql
-psql -p 6899 -U paipo -h localhost -f sql/dummy.sql
+psql -p 6899 -U paipo -h localhost -d paipodb -f sql/dummy.sql
 
-# Spin up the app server
+# Spin up the app server, listening on port 6891
 DEBUG=koa* node_modules/.bin/nodemon --inspect index.js
 
 # In another terminal, spin up auto-tests and linting.
@@ -42,12 +43,12 @@ DEBUG=koa* node_modules/.bin/nodemon --inspect index.js
 Currently, the scope of the project is indeterminate,
 but has the following goals in mind:
 
-* Provide a small springboard Koa.js + Postgres app
+* Pre-configure tools for rapid development and testing
 * Make a few starting choices for basic middleware (which
 can be readily changed and adapted)
-* Pre-configure tools for rapid development and testing
+* Provide a small springboard Koa.js + Postgres app
 
-### Goals
+### Data Visualization and Entry App
 
 The project aims to be lightweight and OOTB is a simple
 data entry app with a calendar view and a means to create,
@@ -76,10 +77,9 @@ The views included by default are as follows:
 * Dashboard
 * Calendar
   * Month View
-  * Year View?
 * List Entries for Date
 * Edit Entry (JSON editor)
-* Settings
+* Settings (not yet implemented)
 * Elements (for display testing)
 
 Minimal styling is included.  A system for swapping out
@@ -173,6 +173,10 @@ Some configuration can be done within the app, but is
 minimal for now until authentication is implemented.
 Eventually database configuration may go here but for
 now minimalism is the driving philosophy.
+
+For now configuration is done in the cfg/ directory, 
+and *not* done in package.json.
+
 
 ## Directory Structure
 
