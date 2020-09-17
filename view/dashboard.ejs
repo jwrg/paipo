@@ -23,9 +23,9 @@ can be sorted easily by timestamp and visualized using a
   </tr>
   <% data.upcoming.forEach(datum => { %>
   <tr>
-    <td><%= datum.id %></td>
-    <td><%= datum.date %></td>
-    <td><%= JSON.stringify(datum.data) %></td>
+    <td><a href="/editentry/<%= datum.id %>"><%= datum.id %></a></td>
+    <td><a href="/editentry/<%= datum.id %>"><%= datum.date %></a></td>
+    <td><a href="/editentry/<%= datum.id %>"><%= JSON.stringify(datum.data) %></a></td>
   </tr>
   <% }); %>
 </table>
@@ -40,9 +40,9 @@ can be sorted easily by timestamp and visualized using a
   </tr>
   <% data.past.forEach(datum => { %>
   <tr>
-    <td><%= datum.id %></td>
-    <td><%= datum.date %></td>
-    <td><%= JSON.stringify(datum.data) %></td>
+    <td><a href="/editentry/<%= datum.id %>"><%= datum.id %></a></td>
+    <td><a href="/editentry/<%= datum.id %>"><%= datum.date %></a></td>
+    <td><a href="/editentry/<%= datum.id %>"><%= JSON.stringify(datum.data) %></a></td>
   </tr>
   <% }); %>
 </table>

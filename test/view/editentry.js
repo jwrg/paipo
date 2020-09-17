@@ -193,8 +193,20 @@ describe('View: Edit entry', function() {
       return page.$x('//h1[contains(., "New Entry")]')
         .should.not.eventually.be.eql([]); 
     });
+    it('From the root, directly access an existing document', async function() {
+      const [ response ] = await Promise.all([
+        page.goto('localhost:6891'),
+        page.waitForNavigation()
+      ]);
+      let links = await page.$$('td a');
+      await Promise.all([
+        links[Math.floor(Math.random() * links.length)].click(),
+        page.waitForNavigation({waitFor: 'networkIdle2'})
+      ]);
+      return page.$x('//h2[contains(., "Editing entry id number")]')
+        .should.not.eventually.be.eql([]);
+    });
     it('From the calendar, find and access a JSON document');
-    it('From the root, directly access an existing document');
     it('Add content to a JSON document and save said document');
   });
 }).timeout(20000);

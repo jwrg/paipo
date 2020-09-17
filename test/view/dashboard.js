@@ -43,11 +43,13 @@ describe('View: Dashboard', function() {
     await browser.close();
   });
 
-  it('Returns 200 when requesting app root', async function() {
-    const [ response ] = await Promise.all([
-      page.goto('localhost:6891'),
-      page.waitForNavigation()
-    ]);
-    response._status.should.eql(200);
-  }).timeout(20000);
+  describe('Integration tests', function() {
+    it('Returns 200 when requesting app root', async function() {
+      const [ response ] = await Promise.all([
+        page.goto('localhost:6891'),
+        page.waitForNavigation()
+      ]);
+      response._status.should.eql(200);
+    }).timeout(20000);
+  });
 }).timeout(20000);
