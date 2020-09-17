@@ -206,7 +206,35 @@ describe('View: Edit entry', function() {
       return page.$x('//h2[contains(., "Editing entry id number")]')
         .should.not.eventually.be.eql([]);
     });
-    it('From the calendar, find and access a JSON document');
+    it('From the calendar, find and access a JSON document', async function() {
+      const [ response ] = await Promise.all([
+        page.goto('localhost:6891'),
+        page.waitForNavigation()
+      ]);
+      let links = await page.$x('//a[contains(., "Calendar")]');
+      await Promise.all([
+        links[Math.floor(Math.random() * links.length)].click(),
+        page.waitForNavigation({waitFor: 'networkIdle2'})
+      ]);
+      for (let i = 5; i > 0; i--) {
+        links = await page.$$('li.hot a');
+        if (links.length == 0) {
+          await (await page.$('li.previous a')).click();
+        };
+      }
+      await Promise.all([
+        links[Math.floor(Math.random() * links.length)].click(),
+        page.waitForNavigation({waitFor: 'networkIdle2'})
+      ]);
+      links = await page.$$('td a');
+      await Promise.all([
+        links[Math.floor(Math.random() * links.length)].click(),
+        page.waitForNavigation({waitFor: 'networkIdle2'})
+      ]);
+      return page.$x('//h2[contains(., "Editing entry id number")]')
+        .should.not.eventually.be.eql([]);
+    });
     it('Add content to a JSON document and save said document');
+    it('Create a new JSON document, add to it, and save');
   });
 }).timeout(20000);
