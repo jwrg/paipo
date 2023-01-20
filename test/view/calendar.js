@@ -20,11 +20,13 @@ describe('View: Calendar', function() {
   let today = new Date();
   let month = months[today.getMonth()];
   let year = today.getFullYear();
+  let host = 'localhost:6891';
+  let resource = 'calendar';
 
   before(async () => {
     browser = await puppeteer.launch({
       "args": ["--no-sandbox"],
-      "headless": false,
+      "headless": true,
       "sloMo": 50,
     });
   });
@@ -56,26 +58,26 @@ describe('View: Calendar', function() {
     [...Array(12).keys()].forEach(el => {
       it('Month ' + months[el] + ' returns 200 for the current year', async function() {
         const [ response ] = await Promise.all([
-          page.goto('localhost:6891/calendar/' + year + '/' + el),
+          page.goto([host, resource, year, el].join('/')),
           page.waitForNavigation()
         ]);
         return response._status.should.eql(200);
       });
     });
 
-    [-2, -1, 12, 13, 14, 15].forEach(el => {
+    [-3000, -2, -1, 12, 13, 1400].forEach(el => {
       it('Requesting month number ' + el + ' returns 500', async function() {
         const [ response ] = await Promise.all([
-          page.goto('localhost:6891/calendar/' + year + '/' + el ),
+          page.goto([host, resource, year, el].join('/')),
           page.waitForNavigation()
         ]);
         return response._status.should.eql(500);
       });
     });
 
-    it('Requesting year zero returns 500', async function() {
+    it('Requesting year zero returns 500 (lol Y2K)', async function() {
       const [ response ] = await Promise.all([
-        page.goto('localhost:6891/calendar/0/1'),
+        page.goto([host, resource, 0, 1].join('/')),
         page.waitForNavigation()
       ]);
       return response._status.should.eql(500);
@@ -83,7 +85,7 @@ describe('View: Calendar', function() {
 
     it('Requesting a negative year returns 500 (sorry ancients)', async function() {
       const [ response ] = await Promise.all([
-        page.goto('localhost:6891/calendar/-81/1'),
+        page.goto([host, resource, -81, 1].join('/')),
         page.waitForNavigation()
       ]);
       return response._status.should.eql(500);
@@ -93,7 +95,7 @@ describe('View: Calendar', function() {
   describe('End-to-end tests', function() {
     it('When at the root, clicking on calendar view gets the current month (' + month + ')', async function() {
       const [ response ] = await Promise.all([
-        page.goto('localhost:6891'),
+        page.goto(host),
         page.waitForNavigation()
       ]);
       let links = await page.$x('//a[contains(., "calendar") or contains(., "Calendar")]');
@@ -107,7 +109,7 @@ describe('View: Calendar', function() {
 
     it('Clicking for the previous month on January wraps around to December of the previous year', async function() {
       const [ response ] = await Promise.all([
-        page.goto('localhost:6891/calendar/' + year + '/0'),
+        page.goto([host, resource, year, 0].join('/')),
         page.waitForNavigation()
       ]);
       let prevButton = await page.$('li.previous a');
@@ -121,7 +123,7 @@ describe('View: Calendar', function() {
 
     it('Clicking for the next month on December wraps around to January of the next year', async function() {
       const [ response ] = await Promise.all([
-        page.goto('localhost:6891/calendar/' + year + '/11'),
+        page.goto([host, resource, year, 11].join('/')),
         page.waitForNavigation()
       ]);
       let prevButton = await page.$('li.next a');

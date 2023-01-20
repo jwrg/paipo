@@ -15,7 +15,7 @@ module.exports = function(grunt) {
       test: {
         options: {
           color: true,
-          reporter: 'nyan',
+          reporter: 'spec',
         },
         src: [
           'test/view/dashboard.js',
@@ -33,7 +33,7 @@ module.exports = function(grunt) {
       calendar: {
         options: {
           color: true,
-          reporter: 'dot',
+          reporter: 'spec',
         },
         src: ['test/view/calendar.js'],
       },

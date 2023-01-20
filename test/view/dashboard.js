@@ -12,11 +12,12 @@ const pti = require('puppeteer-to-istanbul');
 describe('View: Dashboard', function() {
   let browser;
   let page;
+  let host = 'localhost:6891';
 
   before(async () => {
     browser = await puppeteer.launch({
       "args": ["--no-sandbox"],
-      "headless": false,
+      "headless": true,
     });
   });
   beforeEach(async () => {
@@ -45,7 +46,7 @@ describe('View: Dashboard', function() {
 
   it('Returns 200 when requesting app root', async function() {
     const [ response ] = await Promise.all([
-      page.goto('localhost:6891'),
+      page.goto(host),
       page.waitForNavigation()
     ]);
     response._status.should.eql(200);

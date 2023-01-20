@@ -12,11 +12,13 @@ const pti = require('puppeteer-to-istanbul');
 describe('View: Edit entry', function() {
   let browser;
   let page;
+  let host = 'localhost:6891';
+  let resource = 'editentry';
 
   before(async () => {
     browser = await puppeteer.launch({
       "args": ["--no-sandbox"],
-      "headless": false,
+      "headless": true,
       "sloMo": 100
     });
   });
@@ -47,7 +49,7 @@ describe('View: Edit entry', function() {
   describe('Integration tests', function() {
     it('Returns an editable document when requesting JSON datum with id equal to one', async function() {
       const [ response ] = await Promise.all([
-        page.goto('localhost:6891/editentry/1'),
+        page.goto([host, resource, 1].join('/')),
         page.waitForNavigation()
       ]);
       response._status.should.eql(200);
@@ -57,7 +59,7 @@ describe('View: Edit entry', function() {
 
     it('Returns a new editable document when requesting JSON datum with null id', async function() {
       const [ response ] = await Promise.all([
-        page.goto('localhost:6891/editentry/null'),
+        page.goto([host, resource, 'null'].join('/')),
         page.waitForNavigation()
       ]);
       response._status.should.eql(200);
@@ -67,7 +69,7 @@ describe('View: Edit entry', function() {
 
     it('Returns a new editable document when requesting JSON datum with a bogus id', async function() {
       const [ response ] = await Promise.all([
-        page.goto('localhost:6891/editentry/b0gus1D'),
+        page.goto([host, resource, 'b0gus1D'].join('/')),
         page.waitForNavigation()
       ]);
       response._status.should.eql(200);
@@ -87,7 +89,7 @@ describe('View: Edit entry', function() {
         }
       };
       const [ response ] = await Promise.all([
-        page.goto('localhost:6891/editentry/null'),
+        page.goto([host, resource, 'null'].join('/')),
         page.waitForNavigation()
       ]);
       let tierCount = await page.$$('div.datatier');
@@ -182,7 +184,7 @@ describe('View: Edit entry', function() {
   describe('End-to-end tests', function() {
     it('From the root, directly access a new editable document', async function() {
       const [ response ] = await Promise.all([
-        page.goto('localhost:6891'),
+        page.goto(host),
         page.waitForNavigation()
       ]);
       let links = await page.$x('//a[contains(., "New Data Entry")]');
