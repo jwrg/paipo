@@ -80,7 +80,7 @@ a:active {
 
 p, tr, td, th, h2, h3, h4, h5, h6, button, input, fieldset, textarea, select, label, legend, ol, ul, table, menu, dir, dl, address {
   margin: 16px 46px 12px 46px;
-  padding: 10px;
+  padding: 0px;
   border-color: var(--body-bg);
   border-radius: 4px;
   border-width: 1px;
@@ -141,7 +141,6 @@ th {
 }
 
 li {
-  padding: 5px;
   margin-left: 1em;
 }
 

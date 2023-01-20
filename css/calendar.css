@@ -1,6 +1,6 @@
 /* Calendar wrapper */
-.calendar {
-  width: 65%;
+div.calendar {
+  width: 55%;
   margin: auto;
   margin-top: 3em;
   margin-bottom: 3em;
@@ -8,27 +8,27 @@
 }
 
 /* Reset everything */
-.calendar ul li {
+div.calendar ul li {
   margin: 0;
-  padding: 0;
   list-style-type: none;
 }
 
 /* Month header */
-.month {
-  padding: 2em 0;
+div.month {
+  padding: 0.5px;
   width: 100%;
   background-color: var(--alt-bg);
   text-align: center;
 }
 
 /* Month list */
-.month ul {
+div.month ul {
   margin: 0;
   padding: 0;
 }
 
-.month ul li {
+div.month ul li {
+  margin: 1ex;
   color: var(--content-fg);
   font-size: 18pt;
   text-transform: uppercase;
@@ -37,19 +37,20 @@
 }
 
 /* Previous button inside month header */
-.month .previous {
-  margin: 0.5ex 0 0.5ex 2em;
+div.month ul li.previous {
+  margin: 0 0 0 2em;
   float: left;
   padding-left: 20px;
 }
-.month .previous a {
+div.month ul li.previous a {
+  display: block;
   text-decoration: none;
   color: var(--alt-fg);;
 }
 
 /* Next button */
 .month .next {
-  margin: 0.5ex 2em 0.5ex 0;
+  margin: 0 2em 0 0;
   float: right;
   padding-right: 20px;
 }
@@ -61,29 +62,32 @@
 /* Weekdays (Mon-Sun) */
 .weekdays {
   margin: 0;
-  padding: 1em 0;
+  font-size: 0;
   background-color: var(--header-bg);;
   border-radius: 0;
 }
 
 .weekdays li {
   display: inline-block;
+  padding: 1ex 0;
   width: 14.2857%;
   color: var(--alt-fg);
   text-align: center;
+  vertical-align: middle;
   font-size: 14pt;
 }
 
 /* Days (1-31) */
-.days {
+ul.days {
   margin: 1em 0;
   padding: 0;
+  font-size: 0;
 }
 
-.days li {
+ul.days li {
   display: inline-block;
   width: 14.2857%;
-  height: 4em;
+  height: 5em;
   text-align: center;
   font-size:12pt;
   color: var(--alt-bg);
@@ -91,28 +95,35 @@
   border: 4px solid var(--content-bg);
 }
 
-/* Highlight the "current" day */
-.days li.hot {
+/* Highlight "active" days */
+ul.days li.hot {
   background: var(--alt-bg);
 } 
 
 /* Better looking links */
-.days a {
+ul.days a {
+  display: block;
+  height: 100%;
   text-decoration: none;
 }
 
-.days a:visited {
+ul.days a strong {
+    display: block;
+    padding-top: 3.5ex;
+}
+
+ul.days a:visited {
   color: var(--link-fg);
 }
 
-.days a:hover {
+ul.days a:hover {
   color: var(--content-fg);
 }
 
-.days a:active {
+ul.days a:active {
   color: var(--link-active);
 }
 
-.days li.hot a {
+ul.days li.hot a {
   color: var(--content-fg);
 }

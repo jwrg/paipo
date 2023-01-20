@@ -1,33 +1,77 @@
-<h1>Calendar</h1>
-<h2>Month view</h2>
-<p>This is a basic calendar view which you can use to build
-something more impressive.  Use this view to visualize data
-which is date-stamped (most data is, anyway).</p>
-<p>Today is <%= now %></p>
-<p>There are <%= data.length %> days with associated datapoints for the following month:</p>
-<div class="calendar">
-  <div class="month">
-    <ul><% if (month == 0) { %>
-      <li class="previous"><a href="/calendar/<%= parseInt(year) - 1 %>/11">&#10094;</a></li>
-      <li class="next"><a href="/calendar/<%= parseInt(year) %>/1">&#10095;</a></li><% } else if (month == 11) { %>
-      <li class="previous"><a href="/calendar/<%= parseInt(year) %>/10">&#10094;</a></li>
-      <li class="next"><a href="/calendar/<%= parseInt(year) + 1 %>/0">&#10095;</a></li><% } else { %>
-      <li class="previous"><a href="/calendar/<%= parseInt(year) %>/<%= parseInt(month) - 1 %>">&#10094;</a></li>
-      <li class="next"><a href="/calendar/<%= parseInt(year) %>/<%= parseInt(month) + 1 %>">&#10095;</a></li><% }
-      let months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]; %>
-      <li><%= months[parseInt(month)] %><br><%= year %></li>
+  <h1>Calendar</h1>
+  <h2>Month view</h2>
+  <p>This is a basic calendar view which you can use to build
+  something more impressive.  Use this view to visualize data
+  which is date-stamped (most data is, anyway).</p>
+  <p>Today is <%= now %></p>
+  <p>There are <%= data.length %> days with associated datapoints for the following month:</p>
+  <div class="calendar">
+    <div class="month">
+      <ul>
+        <li class="previous">
+          <a href="/calendar/
+          <%_ if (month == 0) { %><%= parseInt(year) - 1 %>/11
+          <%_ } else { %><%= parseInt(year) %>/<%= parseInt(month) - 1 %>
+          <%_ } %>">&lsaquo;</a>
+        </li>
+        <li class="next">
+          <a href="/calendar/
+          <%_ if (month == 11) { %><%= parseInt(year) + 1 %>/0
+          <%_ } else { %><%= parseInt(year) %>/<%= parseInt(month) + 1 %>
+          <%_ } %>">&rsaquo;</a>
+        </li>
+      <%_ let months = [
+          "January",
+          "February",
+          "March",
+          "April",
+          "May",
+          "June",
+          "July",
+          "August",
+          "September",
+          "October",
+          "November",
+          "December"
+          ]; _%>
+        <li>
+          <%= months[parseInt(month)] %>&nbsp;<%= year %>
+        </li>
+      </ul>
+    </div>
+    <ul class="weekdays">
+      <li>S</li>
+      <li>M</li>
+      <li>T</li>
+      <li>W</li>
+      <li>T</li>
+      <li>F</li>
+      <li>S</li>
+    </ul>
+    <%_ let date = new Date(year,month); _%>
+    <ul class="days">
+    <%_ for (let j = 0; j < date.getDay(); j++) { _%>
+    <li>
+      <a><strong>&nbsp;</strong></a>
+    </li>
+    <%_ }
+    for (
+      let i = 1; 
+      i <= new Date(year,parseInt(month)+1,0).getDate(); 
+      i++, date.setDate(date.getDate() + 1)
+      ) {
+        let datapoints = false;
+        for (let k = 0; k < data.length; k++) {
+          if (data[k].date_part == i) datapoints = true;
+        }
+        if (datapoints) { _%>
+    <li class="hot">
+      <a href="/list/date/<%= year %>/<%= month %>/<%= i %>"><strong><%= i %></strong></a>
+    <%_ } else { _%>
+    <li>
+      <a href="/newentry/<%= year %>/<%= month %>/<%= i %>"><strong><%= i %></strong></a>
+    <%_ } _%>
+    </li>
+    <%_ } _%>
     </ul>
   </div>
-  <ul class="weekdays">
-    <li>S</li><li>M</li><li>T</li><li>W</li><li>T</li><li>F</li><li>S</li>
-  </ul><% let date = new Date(year,month); %>
-  <ul class="days">
-    <% for (let j = 0; j < date.getDay(); j++) { %><li><br/>&nbsp;</li><% }
-    for (let i = 1; i <= new Date(year,parseInt(month)+1,0).getDate(); i++, date.setDate(date.getDate() + 1)) {
-      let datapoints = false;
-      for (let k = 0; k < data.length; k++) {
-        if (data[k].date_part == i) datapoints = true;
-      }
-      if (datapoints) { %><li class="hot"><br/><a href="/list/date/<%= year %>/<%= month %>/<%= i %>"><%= i %></a></li><% } else { %><li><br/><a href="/newentry/<%= year %>/<%= month %>/<%= i %>"><%= i %></a></li><% } } %>
-  </ul>
-</div>

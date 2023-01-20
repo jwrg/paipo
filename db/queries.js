@@ -18,6 +18,7 @@ const queries = module.exports = {
       if (month == 11) {
         return {
           text: "SELECT DISTINCT EXTRACT(DAY FROM date) " +
+          "AS date_part " +
           "FROM json WHERE " +
           "date >= '" + year + "-12" + "-01' AND " + 
           "date <= '" + (year + 1) + "-01" + "-01'"
@@ -25,6 +26,7 @@ const queries = module.exports = {
       } else {
         return {
           text: "SELECT DISTINCT EXTRACT(DAY FROM date) " +
+          "AS date_part " +
           "FROM json WHERE " +
           "date >= '" + year + "-" + 
           (
