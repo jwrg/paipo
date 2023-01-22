@@ -1,62 +1,62 @@
-<h1>Dashboard</h1>
-<h2>Overview</h2>
-<p>The time and date are as follows: <%= now %></p>
-<p>This app scaffold supports basic timestamped JSON
-data stored in PostgreSQL in a bespoke database and
-data table.  The table is organized into three columns;
-one each for an ID, a timestamp, and the actual JSON
-data.  In this way, the data is uniquely ID'ed and
-can be sorted easily by timestamp and visualized using a
-<a href="/calendar/<%= now.getFullYear() %>/<%= now.getMonth() %>">
-  calendar view</a>.</p>
-<p>The following is a summary of the data:</p>
-<ul>
-  <li>Data in dataset: <%= count %></li>
-</ul>
-<% if (data.upcoming.length > 0) { %>
-<h3>Next (upcoming) 5 data</h3>
-<table>
-  <tr>
-    <th>ID</th>
-    <th>Timestamp</th>
-    <th>Data</th>
-  </tr>
-  <% data.upcoming.forEach(datum => { %>
-  <tr>
-    <td><%= datum.id %></td>
-    <td><%= datum.date %></td>
-    <td><%= JSON.stringify(datum.data) %></td>
-  </tr>
-  <% }); %>
-</table>
-<% } %>
-<% if (data.past.length > 0) { %>
-<h3>Past (previous) 5 data:</h3>
-<table>
-  <tr>
-    <th>ID</th>
-    <th>Timestamp</th>
-    <th>Data</th>
-  </tr>
-  <% data.past.forEach(datum => { %>
-  <tr>
-    <td><%= datum.id %></td>
-    <td><%= datum.date %></td>
-    <td><%= JSON.stringify(datum.data) %></td>
-  </tr>
-  <% }); %>
-</table>
-<% } %>
-<h2>Some Dummy Content:</h2>
-<h3>Every Map Has a Four-Colouring</h3>
-<p><small>Testing how an image looks</small></p>
-<p>Did you know that you can colour any map with four
-colours such that no two adjacent areas have the same
-colour?</p>
-<p>Here's a world map as a four-colouring:</p>
-<img src="https://upload.wikimedia.org/wikipedia/commons/4/4a/World_map_with_four_colours.svg" alt="Four-colouring the world" />
-<h3>Properties of One Seventh</h3>
-<p><small>Testing how math script looks</small></p>
-<h3>More Content for Display Testing</h3>
-<p>To see how more stuff displays, check out the
-<a href="/elements">elements</a> page.</p>
+      <h1>Dashboard</h1>
+      <h2>Overview</h2>
+      <p>The time and date are as follows: <%= now %></p>
+      <p>This app scaffold supports basic timestamped JSON
+      data stored in PostgreSQL in a bespoke database and
+      data table.  The table is organized into three columns;
+      one each for an ID, a timestamp, and the actual JSON
+      data.  In this way, the data is uniquely ID'ed and
+      can be sorted easily by timestamp and visualized using a
+      <a href="/calendar/<%= now.getFullYear() %>/<%= now.getMonth() %>">
+        calendar view</a>.</p>
+      <p>The following is a summary of the data:</p>
+      <ul>
+        <li>Data in dataset: <%= count %></li>
+      </ul>
+      <% if (data.upcoming.length > 0) { %>
+      <h3>Next (upcoming) 5 data</h3>
+      <table>
+        <tr>
+          <th>ID</th>
+          <th>Timestamp</th>
+          <th>Data</th>
+        </tr>
+        <% data.upcoming.forEach(datum => { %>
+        <tr>
+          <td><a href="/editentry/<%= datum.id %>"><%= datum.id %></a></td>
+          <td><a href="/editentry/<%= datum.id %>"><%= datum.date %></a></td>
+          <td><a href="/editentry/<%= datum.id %>"><%= JSON.stringify(datum.data) %></a></td>
+        </tr>
+        <% }); %>
+      </table>
+      <% } %>
+      <% if (data.past.length > 0) { %>
+      <h3>Past (previous) 5 data:</h3>
+      <table>
+        <tr>
+          <th>ID</th>
+          <th>Timestamp</th>
+          <th>Data</th>
+        </tr>
+        <% data.past.forEach(datum => { %>
+        <tr>
+          <td><a href="/editentry/<%= datum.id %>"><%= datum.id %></a></td>
+          <td><a href="/editentry/<%= datum.id %>"><%= datum.date %></a></td>
+          <td><a href="/editentry/<%= datum.id %>"><%= JSON.stringify(datum.data) %></a></td>
+        </tr>
+        <% }); %>
+      </table>
+      <% } %>
+      <h2>Some Dummy Content:</h2>
+      <h3>Every Map Has a Four-Colouring</h3>
+      <p><small>Testing how an image looks</small></p>
+      <p>Did you know that you can colour any map with four
+      colours such that no two adjacent areas have the same
+      colour?</p>
+      <p>Here's a world map as a four-colouring:</p>
+      <img src="https://upload.wikimedia.org/wikipedia/commons/4/4a/World_map_with_four_colours.svg" alt="Four-colouring the world" />
+      <h3>Properties of One Seventh</h3>
+      <p><small>Testing how math script looks</small></p>
+      <h3>More Content for Display Testing</h3>
+      <p>To see how more stuff displays, check out the
+      <a href="/elements">elements</a> page.</p>

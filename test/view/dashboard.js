@@ -51,4 +51,17 @@ describe('View: Dashboard', function() {
     ]);
     response._status.should.eql(200);
   }).timeout(20000);
+  it('From the root, directly access an existing document', async function () {
+    const [ response ] = await Promise.all([
+      page.goto(host),
+      page.waitForNavigation()
+    ]);
+    let links = await page.$$('td a');
+    await Promise.all([
+      links[Math.floor(Math.random() * links.length)].click(),
+      page.waitForNavigation({waitFor: 'networkIdle2'})
+    ]);
+    return page.$x('//h1[contains(., "Edit Entry")]')
+      .should.not.eventually.be.eql([]); 
+  });
 }).timeout(20000);
