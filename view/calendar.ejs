@@ -9,16 +9,20 @@
     <div class="month">
       <ul>
         <li class="previous">
-          <a href="/calendar/
-          <%_ if (month == 0) { %><%= parseInt(year) - 1 %>/11
-          <%_ } else { %><%= parseInt(year) %>/<%= parseInt(month) - 1 %>
-          <%_ } %>">&lsaquo;</a>
+          <a href="/calendar/<%
+          if (month == 0) {
+          %><%= parseInt(year) - 1 %>/11<%
+          } else {
+          %><%= parseInt(year) %>/<%= parseInt(month) - 1 %><%
+          } %>">&lsaquo;</a>
         </li>
         <li class="next">
-          <a href="/calendar/
-          <%_ if (month == 11) { %><%= parseInt(year) + 1 %>/0
-          <%_ } else { %><%= parseInt(year) %>/<%= parseInt(month) + 1 %>
-          <%_ } %>">&rsaquo;</a>
+          <a href="/calendar/<%
+          if (month == 11) {
+          %><%= parseInt(year) + 1 %>/0<%
+          } else {
+          %><%= parseInt(year) %>/<%= parseInt(month) + 1 %><%
+          } %>">&rsaquo;</a>
         </li>
       <%_ let months = [
           "January",
