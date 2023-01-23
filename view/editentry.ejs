@@ -1,111 +1,111 @@
-<% if (id != null) { %><h1>Edit Entry</h1>
-<h2>Editing entry id number <%= id %></h2>
-<% } else { %><h1>New Entry</h1><% } %>
-<script src="/js/editentry.js"></script>
-<form action="/saveentry" method="post">
-  <div id="main">
-    <input type="hidden" id="id" name="id" value="<%= entry.id %>" />
-    <label for="date">Entry Date:</label><% 
-
-  let datestring = entry.date.getFullYear() + 
-  (entry.date.getMonth() < 10 ? '-0' : '-') + 
-  (parseInt(entry.date.getMonth()) + 1) + 
-  (entry.date.getDate() < 10 ? '-0' : '-') + entry.date.getDate();
-
-  %><input type="date" id="date" name="date" value="<%= datestring %>" />&nbsp;
-  <label for="time">Entry Time (GMT):</label><% 
-
-  let timestring = (entry.date.getHours() < 10 ? '0' : '' ) + entry.date.getHours() + ':';
-  timestring += (entry.date.getMinutes() < 10 ? '0' : '' ) + entry.date.getMinutes();
-
-  %><input type="time" id="time" name="time" value="<%= timestring %>" />
-  <hr class="corridor" />
-  <div id="datafields">
-    <!--<p class="corridor"><tt>│&nbsp;</tt></p>-->
-    <%
-
-    function addDatum(levels, key, value, last = [false]) {
-      /* Initialize some strings for labels and whatnot */
-      let numString = '';
-      let numStringFormatted = '';
-      levels.forEach(level => numString = numString + '_' + level);
-      levels.forEach(level => numStringFormatted = numStringFormatted + ', ' + level);
-      numString = numString.substring(1);
-      numStringFormatted = numStringFormatted.substring(2);
-
-      /* Encase every (sub)level with a div */
-      %><div id="datatier_<%= numString %>" class="datatier">
-        <p class="corridor"><%
-        for (let i = 0; i < (levels.length - 1); i++) {
-          if (last[i]) {
-        %><tt>&nbsp;</tt><% ;
-          } else {
-        %><tt>│</tt><% ;
-          }
-        }
-
-      /* If the value is an object, branch off */
-      if (value && typeof value === 'object' && value.constructor === Object) {
-        if (last.slice(-1)[0]) {
-      %><tt>└┬</tt></p><% 
-        } else {
-      %><tt>├┬</tt></p><% 
-        }
-      } else { 
-        if (last.slice(-1)[0]) {
-      %><tt>└─</tt></p><%
-        } else {
-      %><tt>├─</tt></p><% 
-        }
-      }
-
-      /* Always spit out a label, despite whether the data is an object */
-     -%><div id="field_<%= numString %>_key" class="fieldkey"><%
-     -%><label class="fieldkey" for="field_<%= numString %>_key">Data Field <%= numStringFormatted %> Key:</label><%
-     -%><input class="fieldkey" type="text" id="field_<%= numString %>_key_input" name="field_<%= numString %>_key" value="<%= key %>" /><%
-
-          /* If value is an object, call self on all constituents of value */
-        if (value && typeof value === 'object' && value.constructor === Object) {
-        -%></div><div id="field_<%= numString %>_value" class="fieldvalue"><%
-        -%><input class="button expand" type="button" onclick="addField(this)" aria-label="Add a subfield" title="Add a subfield" value="&#x2203" /><%
-        -%><input class="button delete" type="button" onclick="collapseLevel(this)" aria-label="Collapse this level" title="Collapse this level" value="&#x21b0" /><%
-        -%><input class="button delete" type="button" onclick="deleteLevel(this)" aria-label="Delete this level" title="Delete this level" value="&#x232b;" /><%
-       -%></div><%
-            let counter = 1;
-          Object.keys(value).forEach(key => {
-            if (counter == Object.keys(value).length) {
-              addDatum(levels.concat([counter++]), key, value[key], last.concat([true]));
-            } else {
-              addDatum(levels.concat([counter++]), key, value[key], last.concat([false]));
+      <% if (id != null) { %><h1>Edit Entry</h1>
+      <h2>Editing entry id number <%= id %></h2>
+      <% } else { %><h1>New Entry</h1><% } %>
+      <script src="/js/editentry.js"></script>
+      <form action="/saveentry" method="post">
+        <div id="main">
+          <input type="hidden" id="id" name="id" value="<%= entry.id %>" />
+          <label for="date">Entry Date:</label><% 
+      
+        let datestring = entry.date.getFullYear() + 
+        (entry.date.getMonth() < 10 ? '-0' : '-') + 
+        (parseInt(entry.date.getMonth()) + 1) + 
+        (entry.date.getDate() < 10 ? '-0' : '-') + entry.date.getDate();
+      
+        %><input type="date" id="date" name="date" value="<%= datestring %>" />&nbsp;
+        <label for="time">Entry Time (GMT):</label><% 
+      
+        let timestring = (entry.date.getHours() < 10 ? '0' : '' ) + entry.date.getHours() + ':';
+        timestring += (entry.date.getMinutes() < 10 ? '0' : '' ) + entry.date.getMinutes();
+      
+        %><input type="time" id="time" name="time" value="<%= timestring %>" />
+        <hr class="corridor" />
+        <div id="datafields">
+          <!--<p class="corridor"><tt>│&nbsp;</tt></p>-->
+          <%
+      
+          function addDatum(levels, key, value, last = [false]) {
+            /* Initialize some strings for labels and whatnot */
+            let numString = '';
+            let numStringFormatted = '';
+            levels.forEach(level => numString = numString + '_' + level);
+            levels.forEach(level => numStringFormatted = numStringFormatted + ', ' + level);
+            numString = numString.substring(1);
+            numStringFormatted = numStringFormatted.substring(2);
+      
+            /* Encase every (sub)level with a div */
+            %><div id="datatier_<%= numString %>" class="datatier">
+            <p class="corridor"><%
+              for (let i = 0; i < (levels.length - 1); i++) {
+                if (last[i]) {
+              %><tt>&nbsp;</tt><% ;
+                } else {
+              %><tt>│</tt><% ;
+                }
+              }
+      
+            /* If the value is an object, branch off */
+            if (value && typeof value === 'object' && value.constructor === Object) {
+              if (last.slice(-1)[0]) {
+            %><tt>└┬</tt></p><% 
+              } else {
+            %><tt>├┬</tt></p><% 
+              }
+            } else { 
+              if (last.slice(-1)[0]) {
+            %><tt>└─</tt></p><%
+              } else {
+            %><tt>├─</tt></p><% 
+              }
             }
-          });
-              
-          /* Otherwise, just spit out the value to go with the key */
-        } else { 
-
-        -%></div><div id="field_<%= numString %>_value" class="fieldvalue"><%
-        -%><label class="fieldvalue" for="field_<%= numString %>_value_input">Data Field <%= numStringFormatted %> Value:</label><%
-        -%><input class="fieldvalue" type="text" id="field_<%= numString %>_value_input" name="field_<%= numString %>_value" value="<%= value %>" /><%
-        -%><input class="button expand" type="button" onclick="expandField(this)" aria-label="Expand this field" title="Expand this field" value="&#x21b3;" /><%
-        -%><input class="button delete" type="button" onclick="deleteField(this)" aria-label="Delete this field" title="Delete this field" value="&#x232B;" /><%
-      -%></div><%
-          };
-         -%></div><%
-
-    }
-let numData = 1;
-Object.keys(entry.data).forEach(key => {
-  if (numData == Object.keys(entry.data).length) {
-    addDatum([numData++], key, entry.data[key], [true])
-  } else {
-    addDatum([numData++], key, entry.data[key], [false])
-  }
-});
-
-%>
-</div>
-<input type="button" onclick="addField()" value="Add a datafield" />
-<input type="submit" id="submit" value="Save!" />
-<input type="button" id="cancel" onclick="window.history.back()" value="Cancel" />
-  </div>
-</form>
+      
+            /* Always spit out a label, despite whether the data is an object */
+           -%><div id="field_<%= numString %>_key" class="fieldkey"><%
+           -%><label class="fieldkey" for="field_<%= numString %>_key">Data Field <%= numStringFormatted %> Key:</label><%
+           -%><input class="fieldkey" type="text" id="field_<%= numString %>_key_input" name="field_<%= numString %>_key" value="<%= key %>" /><%
+      
+                /* If value is an object, call self on all constituents of value */
+              if (value && typeof value === 'object' && value.constructor === Object) {
+              -%></div><div id="field_<%= numString %>_value" class="fieldvalue"><%
+              -%><input class="button expand" type="button" onclick="addField(this)" aria-label="Add a subfield" title="Add a subfield" value="&#x2203" /><%
+              -%><input class="button delete" type="button" onclick="collapseLevel(this)" aria-label="Collapse this level" title="Collapse this level" value="&#x21b0" /><%
+              -%><input class="button delete" type="button" onclick="deleteLevel(this)" aria-label="Delete this level" title="Delete this level" value="&#x232b;" /><%
+             -%></div><%
+                  let counter = 1;
+                Object.keys(value).forEach(key => {
+                  if (counter == Object.keys(value).length) {
+                    addDatum(levels.concat([counter++]), key, value[key], last.concat([true]));
+                  } else {
+                    addDatum(levels.concat([counter++]), key, value[key], last.concat([false]));
+                  }
+                });
+                    
+                /* Otherwise, just spit out the value to go with the key */
+              } else { 
+      
+              -%></div><div id="field_<%= numString %>_value" class="fieldvalue"><%
+              -%><label class="fieldvalue" for="field_<%= numString %>_value_input">Data Field <%= numStringFormatted %> Value:</label><%
+              -%><input class="fieldvalue" type="text" id="field_<%= numString %>_value_input" name="field_<%= numString %>_value" value="<%= value %>" /><%
+              -%><input class="button expand" type="button" onclick="expandField(this)" aria-label="Expand this field" title="Expand this field" value="&#x21b3;" /><%
+              -%><input class="button delete" type="button" onclick="deleteField(this)" aria-label="Delete this field" title="Delete this field" value="&#x232B;" /><%
+            -%></div><%
+                };
+               -%></div><%
+      
+          }
+      let numData = 1;
+      Object.keys(entry.data).forEach(key => {
+        if (numData == Object.keys(entry.data).length) {
+          addDatum([numData++], key, entry.data[key], [true])
+        } else {
+          addDatum([numData++], key, entry.data[key], [false])
+        }
+      });
+      
+      %>
+          </div>
+          <input type="button" onclick="addField()" value="Add a datafield" />
+          <input type="submit" id="submit" value="Save!" />
+          <input type="button" id="cancel" onclick="window.history.back()" value="Cancel" />
+        </div>
+      </form>
