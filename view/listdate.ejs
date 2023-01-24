@@ -4,14 +4,14 @@
       <p>There are <%= data.length %> datapoint(s) associated with this date.</p>
       <table>
         <tr>
-          <th>ID</th>
-          <th>Date</th>
-          <th>JSON</th>
+          <th>Date posted:</th>
+          <th>Posted by:</th>
+          <th>JSON data:</th>
         </tr>
         <% data.forEach(datum => { %>
         <tr>
-          <td><a href="/editentry/<%= datum.id %>"><%= datum.id %></a></td>
           <td><a href="/editentry/<%= datum.id %>"><%= datum.date %></a></td>
+          <td><a href="/editentry/<%= datum.id %>"><%= datum.owner %></a></td>
           <td><a href="/editentry/<%= datum.id %>"><%= JSON.stringify(datum.data) %></a></td>
         </tr>
         <% }); %>

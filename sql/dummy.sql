@@ -1,5 +1,42 @@
-INSERT INTO json (date, data) VALUES 
+INSERT INTO roles (roleid, rolename, data) VALUES
+(
+  31,
+  'Unauthenticated',
+  '{}'
+),
+(
+  63,
+  'Consumer',
+  '{}'
+),
+(
+  127,
+  'Creator',
+  '{}'
+),
+(
+  255,
+  'Administrator',
+  '{}'
+)
+;
+INSERT INTO users (username, joindate, roleid, data) VALUES
+(
+  'paipo',
+  NOW(),
+  255,
+  '{"Country": "US"}'
+)
+;
+INSERT INTO pass (userid, locker) VALUES
+(
+  1,
+  crypt('gnidraob', gen_salt('bf'))
+)
+;
+INSERT INTO json (userid, date, data) VALUES 
 ( 
+  1,
   NOW() + INTERVAL '1 DAY', 
  '{
     "name": "Person", 
@@ -7,6 +44,7 @@ INSERT INTO json (date, data) VALUES
   }' 
 ),
 ( 
+  1,
   NOW() + INTERVAL '7 DAY',
  '{
     "name": "Person 2", 
@@ -14,6 +52,7 @@ INSERT INTO json (date, data) VALUES
   }'
 ),
 ( 
+  1,
   NOW() + INTERVAL '3 DAY',
  '{
     "name": "Person 3", 
@@ -21,6 +60,7 @@ INSERT INTO json (date, data) VALUES
   }'
 ),
 ( 
+  1,
   NOW() - INTERVAL '1 DAY',
  '{
     "name": "Person 4", 
@@ -28,6 +68,7 @@ INSERT INTO json (date, data) VALUES
   }'
 ),
 ( 
+  1,
   NOW() - INTERVAL '5 DAY',  
  '{
     "name": "Ric", 
@@ -36,6 +77,7 @@ INSERT INTO json (date, data) VALUES
   }'
 ),
 ( 
+  1,
   NOW() - INTERVAL '3 DAY',
  '{
     "name": "Kuro-Chan", 
@@ -51,6 +93,7 @@ INSERT INTO json (date, data) VALUES
   }'
 ),
 ( 
+  1,
   NOW() + INTERVAL '5 DAY',
  '{
     "name": "Ricky", 

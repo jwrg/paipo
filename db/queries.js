@@ -48,14 +48,15 @@ const queries = module.exports = {
   list: {
     date: (year, month, day) => {
       return {
-        text: "SELECT * FROM json WHERE " + 
-        "date >= '" + year + "-" + 
+        text: "SELECT users.userid, users.username AS owner, json.id, " +
+        "json.date, json.data FROM users JOIN json ON json.userid = users.userid " +
+        "WHERE json.date >= '" + year + "-" + 
         (Math.floor(parseInt(month)/10) ? 
           (parseInt(month) + 1) : 
           "0" + (parseInt(month) + 1)) + 
         "-" + (Math.floor(parseInt(day)/10) ? day : "0" + day) +
         "' AND " +
-        "date < '" + year + "-" + 
+        "json.date < '" + year + "-" + 
         (Math.floor(parseInt(month)/10) ? 
           (parseInt(month) + 1) : 
           "0" + (parseInt(month) + 1)) +
