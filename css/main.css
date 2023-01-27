@@ -61,6 +61,10 @@ body {
  * Link colours and decorations
  */
 
+a {
+  cursor: pointer;
+}
+
 a:link {
   color: var(--link-fg);
   text-decoration: none;
@@ -78,7 +82,29 @@ a:active {
  * Top-level elements
  */
 
-p, tr, td, th, h2, h3, h4, h5, h6, button, input, fieldset, textarea, select, label, legend, ol, ul, table, menu, dir, dl, address {
+section#content p,
+section#content tr,
+section#content td,
+section#content th,
+section#content h2,
+section#content h3,
+section#content h4,
+section#content h5,
+section#content h6,
+section#content button,
+section#content input,
+section#content fieldset,
+section#content textarea,
+section#content select,
+section#content label,
+section#content legend,
+section#content ol,
+section#content ul,
+section#content table,
+section#content menu,
+section#content dir,
+section#content dl,
+section#content address {
   margin: 16px 46px 12px 46px;
   padding: 0px;
   border-color: var(--body-bg);
@@ -169,7 +195,7 @@ img {
 .fixed-top, .fixed-bottom {
   position:fixed;
   width:100%;
-  z-index:1
+  z-index: 1;
   left: 0;
 }
 
@@ -185,64 +211,92 @@ img {
  * Anything that you want to confine to the same dimensions
  * as the content div can go/mimic here
  */
-div.content, div.header div {
+section#content, header div {
   max-width: 1200px;
   margin: auto;
 }
 
-div.content {
+section#content {
   background-color: var(--content-bg);
   border-left: 1px solid var(--content-border);
   border-right: 1px solid var(--content-border);
-  margin-top: 6em;
+  margin-top: 2rem;
+  position: relative;
+  z-index: 1;
 }
 
 /**
  * Make an object stick to the top of the window
  */
-div.sticky {
+.sticky {
   position: -webkit-sticky;
   position: sticky;
-  top: 0
+  top: 0;
+  z-index: 100;
 }
 
 /**
  * Some classes for specifying block widths
  */
 .half-width {
+  display: inline-block;
   width: 50%;
 }
 
 .quarter-width {
-  width: 25%;
+  display: inline-block;
+  width: 24%;
 }
 
+/**
+ * Modal dialog
+ */
+section#modal {
+  display: none;
+  margin: 20vw 25vw;
+  padding: 2em;
+  position: fixed;
+  z-index: 101;
+  background: rgba(255,255,255,0.5);
+  border: 1px solid white;
+  border-radius: 2rem;
+}
+
+section#modal label,
+section#modal h3 {
+  text-align: center;
+}
+
+section#modal button {
+  margin: 2em 20%;
+  padding: 1ex;
+}
 /**
  * Header and footer which stick to the top/bottom of the
  * content
  */
-.header, .footer {
+header, footer {
   margin: 0;
   padding: 0;
 }
 
-.header {
+header {
   background-color: var(--header-bg);
   min-height: 10px;
   border-bottom: 1px solid var(--header-border);
   box-shadow: 0 -1.5em 2em 2em var(--header-bg);
 }
 
-.header p {
+header p {
   display: inline-block;
   padding: 1ex;
 }
 
-.header a {
+header a {
   color: var(--alt-fg);
 }
 
-.header button.nav {
+header button.nav {
   background-color: var(--header-bg);
   border: 0;
   padding: 0;
@@ -257,8 +311,8 @@ div.sticky {
   border-radius: 0.12ex;
 }
 
-.header button.nav:before,
-.header button.nav:after {
+header button.nav:before,
+header button.nav:after {
   margin-top: 0.8ex;
   display: block;
   color: #000000;
@@ -268,27 +322,27 @@ div.sticky {
   content: "";
 }
 
-.header button.nav:after {
+header button.nav:after {
   margin-top: 0.7ex;
 }
 
-.header a:hover, 
-.header button:hover,
-.header button:hover:before,
-.header button:hover:after {
+header a:hover, 
+header button:hover,
+header button:hover:before,
+header button:hover:after {
   color: var(--link-hover);
   border-color: var(--link-hover);
 }
 
-.header a:active, 
-.header button:active,
-.header button:active:before,
-.header button:active:after {
+header a:active, 
+header button:active,
+header button:active:before,
+header button:active:after {
   color: var(--link-active);
   border-color: var(--link-active);
 }
 
-.footer {
+footer {
   background-color: var(--footer-bg);
   background-image: linear-gradient(#120225,var(--footer-bg));
   color: var(--alt-fg);
@@ -300,19 +354,19 @@ div.sticky {
   top: 0;
   bottom: 0;
 }
-.footer a:link, .footer a:visited {
+footer a:link, footer a:visited {
   color: var(--alt-fg);
 }
 
-.footer a:hover {
+footer a:hover {
   color: var(--link-hover);
 }
 
-.footer a:active {
+footer a:active {
   color: var(--link-active);
 }
 
-.footer div.vrule {
+footer div.vrule {
   display: inline-block;
   width: 1px;
   height: 300px;
@@ -320,7 +374,7 @@ div.sticky {
   margin-top: 50px;
 }
 
-.footer div.fgroup {
+footer div.fgroup {
   display: inline-block;
   width: 30%;
   min-height: 300px;
@@ -329,13 +383,13 @@ div.sticky {
   vertical-align: top;
 }
 
-.footer div.fgroup hr {
+footer div.fgroup hr {
   border: none;
   margin: 1em;
   margin-bottom: 2em;
 }
 
-.footer div.fgroup a {
+footer div.fgroup a {
   display: block;
   margin-top: 1em;
   text-align: left;
@@ -343,7 +397,7 @@ div.sticky {
   padding-right: 60px;
 }
 
-.footer div.credit {
+footer div.credit {
   padding: 10px;
   text-align: left;
 }
@@ -397,20 +451,4 @@ div.fieldvalue input.button, div.fieldkey input.button {
   font-weight: 500;
   width: 6ex;
   height: 6ex;
-}
-
-div.want {
-  margin-top: 40px;
-  display: flex;
-  flex-wrap: wrap;
-  align-content: space-between;
-}
-
-div.want div {
-  width: 50%
-}
-
-div.want div label,
-div.want div input {
-  width: 90%;
 }

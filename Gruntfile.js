@@ -19,7 +19,7 @@ module.exports = function(grunt) {
         },
         src: [
           'test/view/dashboard.js',
-          'test/view/calendar.js',
+          'test/view/month.js',
           'test/view/editentry.js',
         ],
       },
@@ -30,12 +30,12 @@ module.exports = function(grunt) {
         },
         src: ['test/view/dashboard.js'],
       },
-      calendar: {
+      month: {
         options: {
           color: true,
           reporter: 'spec',
         },
-        src: ['test/view/calendar.js'],
+        src: ['test/view/month.js'],
       },
       editEntry: {
         options: {
@@ -80,9 +80,9 @@ module.exports = function(grunt) {
           interval: 1023,
         },
       },
-      calendar: {
-        files: ['view/calendar.ejs', 'test/view/calendar.js'],
-        tasks: ['mochaTest:calendar', 'nyc:report', 'jshint'],
+      month: {
+        files: ['view/month.ejs', 'test/view/month.js'],
+        tasks: ['mochaTest:month', 'nyc:report', 'jshint'],
         options: {
           interval: 1023,
         },

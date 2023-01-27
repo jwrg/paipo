@@ -8,8 +8,8 @@ var should = chai.should();
 const puppeteer = require('puppeteer');
 const pti = require('puppeteer-to-istanbul');
 
-// End to end tests for calendar view
-describe('View: Calendar', function() {
+// End to end tests for month view
+describe('View: Month', function() {
   let browser;
   let page;
   let months = [
@@ -93,7 +93,7 @@ describe('View: Calendar', function() {
   });
 
   describe('End-to-end tests', function() {
-    it('When at the root, clicking on calendar view gets the current month (' + month + ')', async function() {
+    it('When at the root, clicking on month view gets the current month (' + month + ')', async function() {
       const [ response ] = await Promise.all([
         page.goto(host),
         page.waitForNavigation()
@@ -132,6 +132,40 @@ describe('View: Calendar', function() {
         page.waitForNavigation()
       ]);
       return page.$x('//li[contains(., "January")]')
+        .should.not.eventually.be.eql([]);
+    });
+
+    it('Clicking on the current month changes to a new month via a dialog', async function() {
+      const [ response ] = await Promise.all([
+        page.goto([host, resource, year, today.getMonth()].join('/')),
+        page.waitForSelector('a#current_month')
+      ]);
+      await page.click('a#current_month');
+      let years = await page.$$('section#modal select#select_year option');
+      let randomMonth = Math.floor(Math.random() * months.length);
+      let randomYear = 2023 - Math.floor(Math.random() * years.length);
+      await page.select('select#select_month', '' + randomMonth);
+      await page.select('select#select_year', '' + randomYear);
+      await Promise.all([
+          page.click('section#modal button.submit'),
+          page.waitForNavigation()
+      ]);
+      page.$x('//a[contains(., "' + randomYear + '")]')
+        .should.not.eventually.be.eql([]);
+      return page.$x('//a[contains(., "' + months[randomMonth] + '")]')
+        .should.not.eventually.be.eql([]);
+    });
+
+    it('Clicking on the current month and then on cancel does nothing', async function() {
+      const [ response ] = await Promise.all([
+        page.goto([host, resource, year, today.getMonth()].join('/')),
+        page.waitForSelector('a#current_month')
+      ]);
+      await page.click('a#current_month');
+      await page.click('section#modal button.cancel');
+      page.$x('//a[contains(., "' + year + '")]')
+        .should.not.eventually.be.eql([]);
+      return page.$x('//a[contains(., "' + month + '")]')
         .should.not.eventually.be.eql([]);
     });
   });

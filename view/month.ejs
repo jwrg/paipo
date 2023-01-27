@@ -1,12 +1,47 @@
+      <script src="/js/modal.js"></script>
+      <script src="/js/month.js"></script>
+      <%_ let months = [
+        "January",
+        "February",
+        "March",
+        "April",
+        "May",
+        "June",
+        "July",
+        "August",
+        "September",
+        "October",
+        "November",
+        "December"
+        ]; _%>
+      <section id="modal" class="half-width">
+        <h3>Select Month</h3>
+        <label class="quarter-width" for="month">Month:</label>
+        <select class="quarter-width" name="month" id="select_month"><%
+        for (let i = 0; i < months.length; ++i) {
+        %>
+          <option id="month_<%= i %>" value="<%= i %>"><%= months[i] %></option><%
+        } %>
+        </select>
+        <label class="quarter-width" for="year">Year:</label>
+        <select class="quarter-width" name="year" id="select_year"><%
+        for (let i = 2023; i > 2020; --i) {
+        %>
+          <option id="year_<%= i %>" value="<%= i %>"><%= i %></option><%
+        } %>
+        </select>
+        <button class="submit" onclick="submit()">Submit</button>
+        <button class="cancel" onclick="cancel()">Cancel</button>
+      </section>
       <h1>Calendar</h1>
       <h2>Month view</h2>
-      <p>This is a basic calendar view which you can use to build
+      <!--<p>This is a basic calendar view which you can use to build
       something more impressive.  Use this view to visualize data
-      which is date-stamped (most data is, anyway).</p>
+      which is date-stamped (most data is, anyway).</p>-->
       <p>Today is <%= now %></p>
       <p>There are <%= data.length %> days with associated datapoints for the following month:</p>
-      <div class="calendar">
-        <div class="month">
+      <section class="calendar">
+        <section class="month">
           <ul>
             <li class="previous">
               <a href="/calendar/<%
@@ -24,25 +59,11 @@
               %><%= parseInt(year) %>/<%= parseInt(month) + 1 %><%
               } %>">&rsaquo;</a>
             </li>
-          <%_ let months = [
-              "January",
-              "February",
-              "March",
-              "April",
-              "May",
-              "June",
-              "July",
-              "August",
-              "September",
-              "October",
-              "November",
-              "December"
-              ]; _%>
             <li>
-              <%= months[parseInt(month)] %>&nbsp;<%= year %>
+              <a id="current_month" onclick="activateModal()"><%= months[parseInt(month)] %>&nbsp;<%= year %></a>
             </li>
           </ul>
-        </div>
+        </section>
         <ul class="weekdays">
           <li>S</li>
           <li>M</li>
@@ -78,4 +99,4 @@
         </li>
         <%_ } _%>
         </ul>
-      </div>
+      </section>
