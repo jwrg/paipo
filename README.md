@@ -24,8 +24,8 @@ cd paipo
 npm install
 
 # Apply SQL files to local database.
-# NB Paipo requires a running postgres instance on port 6899
-# and the following assumes the superuser is named postgres
+# NB Paipo by default looks for a localhost postgres instance on port 6899.
+# The following command assumes the superuser is named postgres.
 psql -p 6899 -U postgres -h localhost -f sql/schema.sql
 psql -p 6899 -U paipo -h localhost -d paipodb -f sql/dummy.sql
 
@@ -130,7 +130,7 @@ The following should provide a basic workable web app:
 
 Requirement | Middleware | Dependencies
 --- | --- | ---
-Content served is contingent on the request made | Router | koa-tree-router
+Content served via (reasonable) web API | Router | koa-tree-router
 Content can be served from any logical path | Mounter | koa-mount
 Request queries are parsed properly | Body parser | koa-bodyparser
 Web content is generated using templates | Template system | koa-ejs
