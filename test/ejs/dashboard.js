@@ -12,6 +12,7 @@ const pti = require('puppeteer-to-istanbul');
 describe('View: Dashboard', function() {
   let browser;
   let page;
+  let status;
   let host = 'localhost:6891';
 
   before(async () => {
@@ -22,6 +23,10 @@ describe('View: Dashboard', function() {
   });
   beforeEach(async () => {
     page = await browser.newPage();
+    // Response status interception
+    await page.setRequestInterception(true);
+    page.on('request', (request) => { request.continue(); });
+    page.on('response', (response) => { status = response.status(); });
     // Enable CSS and JS coverage
     await Promise.all([
       page.coverage.startJSCoverage(),
@@ -37,7 +42,7 @@ describe('View: Dashboard', function() {
     pti.write([...jsCoverage, ...cssCoverage], { includeHostname: true , storagePath: './.nyc_output' });
     // Give promises time to resolve before starting
     // the next test
-    await page.waitFor(1500);
+    await page.waitForTimeout(1000);
     await page.close();
   });
   after(async () => {
@@ -45,11 +50,8 @@ describe('View: Dashboard', function() {
   });
 
   it('Returns 200 when requesting app root', async function() {
-    const [ response ] = await Promise.all([
-      page.goto(host),
-      page.waitForNavigation()
-    ]);
-    response._status.should.eql(200);
+    await page.goto(host);
+    return status.should.be.eql(200);
   }).timeout(20000);
   it('From the root, directly access an existing document', async function () {
     const [ response ] = await Promise.all([

@@ -12,6 +12,7 @@ const pti = require('puppeteer-to-istanbul');
 describe('View: Month', function() {
   let browser;
   let page;
+  let status;
   let months = [
     'January', 'February', 'March', 'April',
     'May', 'June', 'July', 'August', 'September',
@@ -32,6 +33,10 @@ describe('View: Month', function() {
   });
   beforeEach(async () => {
     page = await browser.newPage();
+    // Response status interception
+    await page.setRequestInterception(true);
+    page.on('request', (request) => { request.continue(); });
+    page.on('response', (response) => { status = response.status(); });
     // Enable CSS and JS coverage
     await Promise.all([
       page.coverage.startJSCoverage(),
@@ -47,7 +52,7 @@ describe('View: Month', function() {
     pti.write([...jsCoverage, ...cssCoverage], { includeHostname: true , storagePath: './.nyc_output' });
     // Give promises time to resolve before starting
     // the next test
-    await page.waitFor(1500);
+    await page.waitForTimeout(1000);
     await page.close();
   });
   after(async () => {
@@ -57,44 +62,44 @@ describe('View: Month', function() {
   describe('Integration tests', function() {
     [...Array(12).keys()].forEach(el => {
       it('Month ' + months[el] + ' returns 200 for the current year', async function() {
-        const [ response ] = await Promise.all([
+        await Promise.all([
           page.goto([host, resource, year, el].join('/')),
           page.waitForNavigation()
         ]);
-        return response._status.should.eql(200);
+        return status.should.eql(200);
       });
     });
 
     [-3000, -2, -1, 12, 13, 1400].forEach(el => {
       it('Requesting month number ' + el + ' returns 500', async function() {
-        const [ response ] = await Promise.all([
+        await Promise.all([
           page.goto([host, resource, year, el].join('/')),
           page.waitForNavigation()
         ]);
-        return response._status.should.eql(500);
+        return status.should.eql(500);
       });
     });
 
     it('Requesting year zero returns 500 (lol Y2K)', async function() {
-      const [ response ] = await Promise.all([
+      await Promise.all([
         page.goto([host, resource, 0, 1].join('/')),
         page.waitForNavigation()
       ]);
-      return response._status.should.eql(500);
+      return status.should.eql(500);
     });
 
     it('Requesting a negative year returns 500 (sorry ancients)', async function() {
-      const [ response ] = await Promise.all([
+      await Promise.all([
         page.goto([host, resource, -81, 1].join('/')),
         page.waitForNavigation()
       ]);
-      return response._status.should.eql(500);
+      return status.should.eql(500);
     });
   });
 
   describe('End-to-end tests', function() {
     it('When at the root, clicking on month view gets the current month (' + month + ')', async function() {
-      const [ response ] = await Promise.all([
+      await Promise.all([
         page.goto(host),
         page.waitForNavigation()
       ]);
@@ -108,7 +113,7 @@ describe('View: Month', function() {
     });
 
     it('Clicking for the previous month on January wraps around to December of the previous year', async function() {
-      const [ response ] = await Promise.all([
+      await Promise.all([
         page.goto([host, resource, year, 0].join('/')),
         page.waitForNavigation()
       ]);
@@ -122,7 +127,7 @@ describe('View: Month', function() {
     });
 
     it('Clicking for the next month on December wraps around to January of the next year', async function() {
-      const [ response ] = await Promise.all([
+      await Promise.all([
         page.goto([host, resource, year, 11].join('/')),
         page.waitForNavigation()
       ]);
@@ -136,7 +141,7 @@ describe('View: Month', function() {
     });
 
     it('Clicking on the current month changes to a new month via a dialog', async function() {
-      const [ response ] = await Promise.all([
+      await Promise.all([
         page.goto([host, resource, year, today.getMonth()].join('/')),
         page.waitForSelector('a#current_month')
       ]);
@@ -157,7 +162,7 @@ describe('View: Month', function() {
     });
 
     it('Clicking on the current month and then on cancel does nothing', async function() {
-      const [ response ] = await Promise.all([
+      await Promise.all([
         page.goto([host, resource, year, today.getMonth()].join('/')),
         page.waitForSelector('a#current_month')
       ]);

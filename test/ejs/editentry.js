@@ -12,6 +12,10 @@ const pti = require('puppeteer-to-istanbul');
 describe('View: Edit entry', function() {
   let browser;
   let page;
+  let status;
+  let today = new Date();
+  let month = today.getMonth();
+  let year = today.getFullYear();
   let host = 'localhost:6891';
   let resource = 'editentry';
 
@@ -24,6 +28,10 @@ describe('View: Edit entry', function() {
   });
   beforeEach(async () => {
     page = await browser.newPage();
+    // Response status interception
+    await page.setRequestInterception(true);
+    page.on('request', (request) => { request.continue(); });
+    page.on('response', (response) => { status = response.status(); });
     // Enable CSS and JS coverage
     await Promise.all([
       page.coverage.startJSCoverage(),
@@ -39,7 +47,7 @@ describe('View: Edit entry', function() {
     pti.write([...jsCoverage, ...cssCoverage], { includeHostname: true , storagePath: './.nyc_output' });
     // Give promises time to resolve before starting
     // the next test
-    await page.waitFor(1500);
+    await page.waitForTimeout(1000);
     await page.close();
   });
   after(async () => {
@@ -48,31 +56,31 @@ describe('View: Edit entry', function() {
 
   describe('Integration tests', function() {
     it('Returns an editable document when requesting JSON datum with id equal to one', async function() {
-      const [ response ] = await Promise.all([
+      await Promise.all([
         page.goto([host, resource, 1].join('/')),
         page.waitForNavigation()
       ]);
-      response._status.should.eql(200);
+      status.should.eql(200);
       return page.$x('//h1[contains(., "Edit Entry")]')
         .should.not.eventually.be.eql([]);
     });
 
     it('Returns a new editable document when requesting JSON datum with null id', async function() {
-      const [ response ] = await Promise.all([
+      await Promise.all([
         page.goto([host, resource, 'null'].join('/')),
         page.waitForNavigation()
       ]);
-      response._status.should.eql(200);
+      status.should.eql(200);
       return page.$x('//h1[contains(., "New Entry")]')
         .should.not.eventually.be.eql([]);
     });
 
     it('Returns a new editable document when requesting JSON datum with a bogus id', async function() {
-      const [ response ] = await Promise.all([
+      await Promise.all([
         page.goto([host, resource, 'b0gus1D'].join('/')),
         page.waitForNavigation()
       ]);
-      response._status.should.eql(200);
+      status.should.eql(200);
       return page.$x('//h1[contains(., "New Entry")]')
         .should.not.eventually.be.eql([]);
     });
@@ -85,7 +93,7 @@ describe('View: Edit entry', function() {
       let multiClick = async (handle, count, delay = 0) => {
         for (count; count > 0; count--) {
           await handle.click();
-          await page.waitFor(delay);
+          await page.waitForTimeout(delay);
         }
       };
       const [ response ] = await Promise.all([
@@ -118,7 +126,7 @@ describe('View: Edit entry', function() {
         let deleteButton = await page.$$('div#datafields > div.datatier div.datatier:nth-of-type(3) input[title="Delete this field"]');
         for (let k = deleteButton.length - 1; k >= 0; k--) {
           await deleteButton[k].click();
-          await page.waitFor(100);
+          await page.waitForTimeout(100);
         }
       }
       let tierCount = await page.$$('div.datatier');
@@ -129,7 +137,7 @@ describe('View: Edit entry', function() {
         let deleteButton = await page.$$('div#datafields > div.datatier div.datatier:last-of-type input[title="Delete this field"]');
         for (let k = deleteButton.length - 1; k >= 0; k--) {
           await deleteButton[k].click();
-          await page.waitFor(100);
+          await page.waitForTimeout(100);
         }
       }
       let tierCount = await page.$$('div.datatier');
@@ -143,7 +151,7 @@ describe('View: Edit entry', function() {
       deleteButton.length.should.be.eql(4);
       for (let i = deleteButton.length - 1; i >= 0; i--) {
         await deleteButton[i].click();
-        await page.waitFor(100);
+        await page.waitForTimeout(100);
       }
       let tierCount = await page.$$('div.datatier');
       return tierCount.length.should.eql(0);
@@ -156,7 +164,7 @@ describe('View: Edit entry', function() {
         let deleteButton = await page.$('div#datafields > div.datatier > div.fieldvalue input[title="Delete this level"]');
         deleteButton.should.not.eql(null);
         await deleteButton.click();
-        await page.waitFor(100);
+        await page.waitForTimeout(100);
       }
       let tierCount = await page.$$('div.datatier');
       return tierCount.length.should.eql(0);
@@ -166,7 +174,7 @@ describe('View: Edit entry', function() {
       collapseButton.length.should.be.eql(4);
       for (let i = collapseButton.length - 1; i >= 0; i--) {
         await collapseButton[i].click();
-        await page.waitFor(100);
+        await page.waitForTimeout(100);
       }
       let tierCount = await page.$$('div.datatier');
       tierCount.length.should.eql(4);
@@ -174,7 +182,7 @@ describe('View: Edit entry', function() {
       expandButton.length.should.be.eql(4);
       for (let i = expandButton.length - 1; i >= 0; i--) {
         await expandButton[i].click();
-        await page.waitFor(100);
+        await page.waitForTimeout(100);
       }
       tierCount = await page.$$('div.datatier');
       return tierCount.length.should.eql(20);
@@ -183,10 +191,11 @@ describe('View: Edit entry', function() {
 
   describe('End-to-end tests', function() {
     it('From the root, directly access a new editable document', async function() {
-      const [ response ] = await Promise.all([
+      await Promise.all([
         page.goto(host),
         page.waitForNavigation()
       ]);
+      status.should.eql(200);
       let links = await page.$x('//a[contains(., "New Data Entry")]');
       await Promise.all([
         links[Math.floor(Math.random() * links.length)].click(),
@@ -195,8 +204,30 @@ describe('View: Edit entry', function() {
       return page.$x('//h1[contains(., "New Entry")]')
         .should.not.eventually.be.eql([]); 
     });
-    it('From the calendar, find and access a JSON document');
-    it('From the root, directly access an existing document');
-    it('Add content to a JSON document and save said document');
+    it('From the calendar, find and access a JSON document', async function() {
+      await Promise.all([
+        page.goto([host, 'calendar', year, month].join('/')),
+        page.waitForNavigation()
+      ]);
+      status.should.eql(200);
+      page.$x('//h1[contains(., "Calendar")]')
+        .should.not.eventually.be.eql([]); 
+      let hotlink = await page.$$('li.hot a');
+      await Promise.all([
+        hotlink[0].click(),
+        page.waitForNavigation({waitFor: 'networkIdle2'})
+      ]);
+      hotlink = await page.$$('td a');
+      await Promise.all([
+        hotlink[0].click(),
+        page.waitForNavigation({waitFor: 'networkIdle2'})
+      ]);
+      return page.$x('//h1[contains(., "Edit Entry")]')
+        .should.not.eventually.be.eql([]); 
+    });
+    it('Add content to a new JSON document and save said document');
+    it('Add content to an existing JSON document and save said document');
+    it('Remove content from an existing JSON document and save said document');
+    it('Delete the previously created test document');
   });
 }).timeout(20000);
