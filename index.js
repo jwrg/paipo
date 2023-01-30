@@ -1,6 +1,6 @@
 const Koa = require('koa');
 const Router = require('koa-tree-router');
-const render = require('koa-ejs');
+const render = require('@koa/ejs');
 const serve = require('koa-static');
 const mount = require('koa-mount');
 const parse = require('koa-bodyparser');
