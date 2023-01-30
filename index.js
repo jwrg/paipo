@@ -17,8 +17,8 @@ const view = require('./lib/view.js');
  * Configure default layout for views
  */
 render(app, {
-  root: path.join(__dirname,'view'),
-  layout: 'template',
+  root: path.join(__dirname,'ejs'),
+  layout: 'layout/regular',
   viewExt: 'ejs',
   cache: false,
   debug: false
