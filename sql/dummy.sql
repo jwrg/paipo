@@ -1,39 +1,3 @@
-INSERT INTO roles (roleid, rolename, data) VALUES
-(
-  31,
-  'Unauthenticated',
-  '{}'
-),
-(
-  63,
-  'Consumer',
-  '{}'
-),
-(
-  127,
-  'Creator',
-  '{}'
-),
-(
-  255,
-  'Administrator',
-  '{}'
-)
-;
-INSERT INTO users (username, joindate, roleid, data) VALUES
-(
-  'paipo',
-  NOW(),
-  255,
-  '{"Country": "US"}'
-)
-;
-INSERT INTO pass (userid, locker) VALUES
-(
-  1,
-  crypt('gnidraob', gen_salt('bf'))
-)
-;
 INSERT INTO json (userid, date, data) VALUES 
 ( 
   1,

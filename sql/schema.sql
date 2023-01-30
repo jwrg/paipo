@@ -26,3 +26,39 @@ CREATE TABLE json (
 );
 GRANT ALL PRIVILEGES ON json, users, pass, roles TO paipo;
 GRANT USAGE, SELECT ON SEQUENCE json_id_seq, users_userid_seq TO paipo;
+INSERT INTO roles (roleid, rolename, data) VALUES
+(
+  31,
+  'Unauthenticated',
+  '{}'
+),
+(
+  63,
+  'Consumer',
+  '{}'
+),
+(
+  127,
+  'Creator',
+  '{}'
+),
+(
+  255,
+  'Administrator',
+  '{}'
+)
+;
+INSERT INTO users (username, joindate, roleid, data) VALUES
+(
+  'paipo',
+  NOW(),
+  255,
+  '{"Country": "US"}'
+)
+;
+INSERT INTO pass (userid, locker) VALUES
+(
+  1,
+  crypt('gnidraob', gen_salt('bf'))
+)
+;
