@@ -54,6 +54,8 @@ router.post('/saveentry', view.saveEntry);
 async function initNamespace(ctx, next) {
   ctx.state = ctx.state || {};
   ctx.state.now = new Date();
+  ctx.state.user = 1;
+  ctx.state.userName = 'Fake User';
   return next();
 }
 

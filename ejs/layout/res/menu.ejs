@@ -1,0 +1,30 @@
+        <nav>
+          <p><strong>Views</strong></p>
+          <hr />
+          <a href="/">Dashboard View</a>
+          <a href="/calendar/<%= now.getFullYear() %>/<%= now.getMonth() %>">Calendar View</a>
+          <a href="/list/date/<%= now.getFullYear() %>/<%= now.getMonth() %>/<%= now.getDate() %>">Date View</a>
+          <a href="/editentry/null">New Data Entry</a>
+        </nav>
+        <aside></aside>
+        <nav>
+          <p><strong>Display</strong></p>
+          <hr />
+          <a href="/elements">Headings</a>
+          <a href="/elements#lists">Lists</a>
+          <a href="/elements#markup">Text-level Markup</a>
+          <a href="/elements#links">Links</a>
+          <a href="/elements#forms">Forms</a>
+          <a href="/elements#tables">Tables</a>
+          <a href="/elements#characters">Characters</a>
+          <a href="/elements#hyphenation">Hyphenation</a>
+        </nav>
+        <aside></aside>
+        <nav>
+          <p><strong>User</strong></p>
+          <hr /><%_ if (user !== 0) { %>
+<%- include('logout-menu.ejs') _%>
+          <%_ } else { _%>
+<%- include('login-menu.ejs') _%>
+          <%_ } _%>
+        </nav>

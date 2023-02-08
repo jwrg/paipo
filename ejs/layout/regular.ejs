@@ -7,10 +7,27 @@
     <link rel="stylesheet" type="text/css" href="/css/calendar.css">
   </head>
   <body>
-<%- include('html/header.html') %>
+    <header class="fixed-top">
+      <section id="controls">
+        <script src="/js/menu.js"></script>
+        <a href="/">Paipo Web App</a>
+        <button id="menu-open" onclick="menuOpen()" aria-label="Navigation menu">&cudarrr; Menu</button>
+        <button id="menu-close" onclick="menuClose()" aria-label="Navigation menu">&#10548; Menu</button>
+      </section>
+      <section id="navigation">
+<%- include('res/menu.ejs') _%>
+      </section>
+    </header>
     <section id="content">
-<%- body %>
-<%- include('html/footer.html') %>
+<%- body _%>
+      <footer>
+<%- include('res/menu.ejs') _%>
+        <section id="credit">
+          <p>This app is built using 
+          <a href="https://github.com/jwrg/paipo/">Paipo</a></p>
+          <p>&copy;2023 <a href="https://github.com/jwrg/">jwrg</a></p>
+        </section>
+      </footer>
     </section>
   </body>
 </html>
