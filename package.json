@@ -31,6 +31,10 @@
     "nyc": "*",
     "puppeteer-to-istanbul": "*"
   },
+  "scripts": {
+    "grunt": "grunt ",
+    "server": "DEBUG=koa* nodemon --inspect index.js"
+  },
   "engines": {
     "node": ">= 7.6.0",
     "npm": ">= 3.0.0"

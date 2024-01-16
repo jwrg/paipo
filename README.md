@@ -30,11 +30,11 @@ psql -p 6899 -U postgres -h localhost -f sql/schema.sql
 psql -p 6899 -U paipo -h localhost -d paipodb -f sql/dummy.sql
 
 # Spin up the app server, listening on port 6891
-DEBUG=koa* node_modules/.bin/nodemon --inspect index.js
+npm run server
 
 # In another terminal, spin up auto-tests and linting.
 # This is optional but highly recommended
-./node_modules/.bin/grunt
+npm run grunt
 
 ```
 
@@ -136,6 +136,7 @@ Request queries are parsed properly | Body parser | koa-bodyparser
 Web content is generated using templates | Template system | koa-ejs
 Content can be served via remote store | Database | node-postgresql
 Users can log in to access more content | Authentication |
+Multimedia (e.g., video) content served | Multimedia |
 
 #### Low Priority
 
