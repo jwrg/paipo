@@ -82,29 +82,29 @@ a:active {
  * Top-level elements
  */
 
-section#content p,
-section#content tr,
-section#content td,
-section#content th,
-section#content h2,
-section#content h3,
-section#content h4,
-section#content h5,
-section#content h6,
-section#content button,
-section#content input,
-section#content fieldset,
-section#content textarea,
-section#content select,
-section#content label,
-section#content legend,
-section#content ol,
-section#content ul,
-section#content table,
-section#content menu,
-section#content dir,
-section#content dl,
-section#content address {
+main p,
+main tr,
+main td,
+main th,
+main h2,
+main h3,
+main h4,
+main h5,
+main h6,
+main button,
+main input,
+main fieldset,
+main textarea,
+main select,
+main label,
+main legend,
+main ol,
+main ul,
+main table,
+main menu,
+main dir,
+main dl,
+main address {
   margin: 16px 46px 12px 46px;
   padding: 0px;
   border-color: var(--body-bg);
@@ -209,14 +209,14 @@ img {
 
 /**
  * Anything that you want to confine to the same dimensions
- * as the content div can go/mimic here
+ * as the content section can go/mimic here
  */
-section#content, header section {
+main, header section {
   max-width: 1200px;
   margin: auto;
 }
 
-section#content {
+main {
   background-color: var(--content-bg);
   border-left: 1px solid var(--content-border);
   border-right: 1px solid var(--content-border);
@@ -416,19 +416,21 @@ footer section#credit {
 /**
  * Input styling
  */
-div.datatier {
+section.datatier {
   display: block;
   width: 100%;
 }
 
-p.corridor {
+main section.datatier tt.corridor,
+main section.datatier p.corridor {
   display: inline-block;
+  height: 0;
   margin: 0;
   padding: 0;
   font-size: 48pt;
 }
 
-hr.corridor {
+main section.datatier hr.corridor {
   margin: 0;
   padding: 0;
   height: 6px;
@@ -436,7 +438,7 @@ hr.corridor {
   background-color: var(--content-fg);
 }
 
-div.fieldvalue, div.fieldkey {
+main section.datatier section.fieldvalue, section.fieldkey {
   margin: 0;
   padding: 0;
   display: inline-block;
@@ -444,19 +446,22 @@ div.fieldvalue, div.fieldkey {
   vertical-align: 1em;
 }
 
-div.fieldvalue label, div.fieldkey label {
+main section.datatier section.fieldvalue label,
+main section.datatier section.fieldkey label {
   margin: 0 1ex;
   font-size: 8pt;
   text-align: right;
 }
 
-div.fieldvalue input, div.fieldkey input {
+main section.datatier section.fieldvalue input,
+main section.datatier section.fieldkey input {
   margin: 0 1ex;
   font-size: 8pt;
   width: 12em;
 }
 
-div.fieldvalue input.button, div.fieldkey input.button {
+main section.datatier section.fieldvalue input.button,
+main section.datatier section.fieldkey input.button {
   margin: 0 1ex;
   font-size: 8pt;
   font-weight: 500;

@@ -2,8 +2,8 @@
       <h2>Editing entry id number <%= id %></h2>
       <% } else { %><h1>New Entry</h1><% } %>
       <script src="/js/editentry.js"></script>
-      <form action="/saveentry" method="post">
-        <div id="main">
+      <section id="form">
+        <form action="/saveentry" method="post">
           <input type="hidden" id="id" name="id" value="<%= entry.id %>" />
           <label for="date">Entry Date:</label><% 
       
@@ -20,7 +20,7 @@
       
         %><input type="time" id="time" name="time" value="<%= timestring %>" />
         <hr class="corridor" />
-        <div id="datafields">
+        <section id="datafields">
           <!--<p class="corridor"><tt>│&nbsp;</tt></p>-->
           <%
       
@@ -33,8 +33,8 @@
             numString = numString.substring(1);
             numStringFormatted = numStringFormatted.substring(2);
       
-            /* Encase every (sub)level with a div */
-            %><div id="datatier_<%= numString %>" class="datatier">
+            /* Encase every (sub)level with a section */
+            %><section id="datatier_<%= numString %>" class="datatier">
             <p class="corridor"><%
               for (let i = 0; i < (levels.length - 1); i++) {
                 if (last[i]) {
@@ -60,17 +60,17 @@
             }
       
             /* Always spit out a label, despite whether the data is an object */
-           -%><div id="field_<%= numString %>_key" class="fieldkey"><%
+           -%><section id="field_<%= numString %>_key" class="fieldkey"><%
            -%><label class="fieldkey" for="field_<%= numString %>_key">Data Field <%= numStringFormatted %> Key:</label><%
            -%><input class="fieldkey" type="text" id="field_<%= numString %>_key_input" name="field_<%= numString %>_key" value="<%= key %>" /><%
       
                 /* If value is an object, call self on all constituents of value */
               if (value && typeof value === 'object' && value.constructor === Object) {
-              -%></div><div id="field_<%= numString %>_value" class="fieldvalue"><%
+              -%></section><section id="field_<%= numString %>_value" class="fieldvalue"><%
               -%><input class="button expand" type="button" onclick="addField(this)" aria-label="Add a subfield" title="Add a subfield" value="&#x2203" /><%
               -%><input class="button delete" type="button" onclick="collapseLevel(this)" aria-label="Collapse this level" title="Collapse this level" value="&#x21b0" /><%
               -%><input class="button delete" type="button" onclick="deleteLevel(this)" aria-label="Delete this level" title="Delete this level" value="&#x232b;" /><%
-             -%></div><%
+             -%></section><%
                   let counter = 1;
                 Object.keys(value).forEach(key => {
                   if (counter == Object.keys(value).length) {
@@ -83,14 +83,14 @@
                 /* Otherwise, just spit out the value to go with the key */
               } else { 
       
-              -%></div><div id="field_<%= numString %>_value" class="fieldvalue"><%
+              -%></section><section id="field_<%= numString %>_value" class="fieldvalue"><%
               -%><label class="fieldvalue" for="field_<%= numString %>_value_input">Data Field <%= numStringFormatted %> Value:</label><%
               -%><input class="fieldvalue" type="text" id="field_<%= numString %>_value_input" name="field_<%= numString %>_value" value="<%= value %>" /><%
               -%><input class="button expand" type="button" onclick="expandField(this)" aria-label="Expand this field" title="Expand this field" value="&#x21b3;" /><%
               -%><input class="button delete" type="button" onclick="deleteField(this)" aria-label="Delete this field" title="Delete this field" value="&#x232B;" /><%
-            -%></div><%
+            -%></section><%
                 };
-               -%></div><%
+               -%></section><%
       
           }
       let numData = 1;
@@ -103,9 +103,9 @@
       });
       
       %>
-          </div>
+          </section>
           <input type="button" onclick="addField()" value="Add a datafield" />
           <input type="submit" id="submit" value="Save!" />
           <input type="button" id="cancel" onclick="window.history.back()" value="Cancel" />
-        </div>
-      </form>
+        </form>
+      </section>

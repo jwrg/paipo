@@ -58,7 +58,7 @@ function decrementDatatier(datatier, level) {
   /* First, adjust the datatier id */
   datatier.setAttribute('id', decrementLevel(datatier.id, level));
 
-  /* Adjust the id's for the key and value divs */
+  /* Adjust the id's for the key and value sections */
   datatier.firstElementChild.nextElementSibling.setAttribute('id', decrementLevel(datatier.firstElementChild.nextElementSibling.id, level));
   datatier.firstElementChild.nextElementSibling.nextElementSibling.setAttribute('id', decrementLevel(datatier.firstElementChild.nextElementSibling.nextElementSibling.id, level));
 
@@ -109,17 +109,17 @@ function createEditorButton(onclick) {
 }
 
 function createDatatier(number, key = '', value = '') {
-  /* Create datatier div to encase KV pair */
-  let newTier = document.createElement('div');
+  /* Create datatier section to encase KV pair */
+  let newTier = document.createElement('section');
   newTier.setAttribute('id', 'datatier_' + number);
   newTier.setAttribute('class', 'datatier');
 
-  /* Create fieldkey div for key label/input pair */
-  let newKeyDiv = document.createElement('div');
+  /* Create fieldkey section for key label/input pair */
+  let newKeyDiv = document.createElement('section');
   newKeyDiv.setAttribute('id', 'field_' + number + '_key');
   newKeyDiv.setAttribute('class', 'fieldkey');
 
-  /* Create label/input pair and append to fieldkey div */
+  /* Create label/input pair and append to fieldkey section */
   let newKeyLabel = document.createElement('label');
   newKeyLabel.setAttribute('class', 'fieldkey');
   newKeyLabel.setAttribute('for', 'field_' + number + '_key');
@@ -133,12 +133,12 @@ function createDatatier(number, key = '', value = '') {
   newKeyDiv.appendChild(newKeyLabel);
   newKeyDiv.appendChild(newKeyInput);
 
-  /* Create fieldvalue div for value label/input pair */
-  let newValueDiv = document.createElement('div');
+  /* Create fieldvalue section for value label/input pair */
+  let newValueDiv = document.createElement('section');
   newValueDiv.setAttribute('id', 'field_' + number + '_value');
   newValueDiv.setAttribute('class', 'fieldvalue');
 
-  /* Create label/input pair and append to fieldvalue div */
+  /* Create label/input pair and append to fieldvalue section */
   let newValueLabel = document.createElement('label');
   newValueLabel.setAttribute('class', 'fieldvalue');
   newValueLabel.setAttribute('for', 'field_' + number + '_value');
@@ -153,7 +153,7 @@ function createDatatier(number, key = '', value = '') {
   newValueDiv.appendChild(newValueInput);
 
   /* Create buttons for data manipulation and append
-   * to fieldvalue div*/
+   * to fieldvalue section*/
   let newExpandButton = document.createElement('input');
   newExpandButton.setAttribute('class','button');
   newExpandButton.setAttribute('type','button');
@@ -235,7 +235,7 @@ function expandField(caller) {
 
   let counter = 1;
   values.forEach(value => {
-    /* Create datatier div to encase new KV pair */
+    /* Create datatier section to encase new KV pair */
     let newTier = createDatatier(number + '_' + counter++, value, '');
 
     /* Duplicate and adjust parent's corridor */
@@ -265,7 +265,7 @@ function expandField(caller) {
     caller.parentNode.parentNode.appendChild(newTier);
 
   });
-  /* Create buttons for key div and append */
+  /* Create buttons for key section and append */
   let newAddButton = createEditorButton('addField');
   let newCollapseButton = createEditorButton('collapseLevel');
   let newDeleteButton = createEditorButton('deleteLevel');
@@ -274,7 +274,7 @@ function expandField(caller) {
   caller.parentNode.appendChild(newDeleteButton);
   /* Change old value to be new sub-key */
 
-  /* Delete old value div (and children) */
+  /* Delete old value section (and children) */
   caller.nextElementSibling.remove();
   caller.previousElementSibling.remove();
   caller.previousElementSibling.remove();
@@ -284,7 +284,7 @@ function expandField(caller) {
 function deleteField(caller) {
   /* Adjust all succeeding siblings and their childrens'
    * identifiers to reflect the deletion */
-  caller.parentNode.parentNode.parentNode.querySelectorAll('div#' + caller.parentNode.parentNode.id + ' ~ div[id^="datatier"], div#' + caller.parentNode.parentNode.id + ' ~ div[id^="datatier"] div[id^="datatier"]').forEach(tier => decrementDatatier(tier, caller.parentNode.parentNode.id.split('_').length - 1));
+  caller.parentNode.parentNode.parentNode.querySelectorAll('section#' + caller.parentNode.parentNode.id + ' ~ section[id^="datatier"], section#' + caller.parentNode.parentNode.id + ' ~ section[id^="datatier"] section[id^="datatier"]').forEach(tier => decrementDatatier(tier, caller.parentNode.parentNode.id.split('_').length - 1));
   /* Check whether the caller is the only child */
   if (caller.parentNode.parentNode.parentNode.childElementCount === 4 && 
     caller.parentNode.parentNode.parentNode.id !== 'datafields') {
@@ -323,13 +323,13 @@ function collapseLevel(caller) {
 
   /* Turn the parent datatier back into a KV pair */
 
-  /* Create fieldvalue div for value label/input pair */
+  /* Create fieldvalue section for value label/input pair */
   let oldValueDiv = document.getElementById('field_' + number + '_value');
-  let newValueDiv = document.createElement('div');
+  let newValueDiv = document.createElement('section');
   newValueDiv.setAttribute('id', 'field_' + number + '_value');
   newValueDiv.setAttribute('class', 'fieldvalue');
 
-  /* Create label/input pair and append to fieldvalue div */
+  /* Create label/input pair and append to fieldvalue section */
   let newValueLabel = document.createElement('label');
   newValueLabel.setAttribute('class', 'fieldvalue');
   newValueLabel.setAttribute('for', 'field_' + number + '_value');
@@ -353,7 +353,7 @@ function collapseLevel(caller) {
   /* Delete all children */
   document.querySelectorAll('[id^="datatier_' + number + '_"]')
     .forEach(el => el.remove(el.value));
-  /* Append new value div to caller's parent */
+  /* Append new value section to caller's parent */
   //caller.parentNode.parentNode.appendChild(newValueDiv);
 
   /* Adjust corridor to reflect lack of children */
@@ -373,7 +373,7 @@ function deleteLevel(caller) {
   if (window.confirm("Are you sure you want to delete this level?")) {
     /* Adjust all succeeding siblings and their childrens'
      * identifiers to reflect the deletion */
-    caller.parentNode.parentNode.parentNode.querySelectorAll('div#' + caller.parentNode.parentNode.id + ' ~ div[id^="datatier"], div#' + caller.parentNode.parentNode.id + ' ~ div[id^="datatier"] div[id^="datatier"]').forEach(tier => decrementDatatier(tier, caller.parentNode.parentNode.id.split('_').length - 1));
+    caller.parentNode.parentNode.parentNode.querySelectorAll('section#' + caller.parentNode.parentNode.id + ' ~ section[id^="datatier"], section#' + caller.parentNode.parentNode.id + ' ~ section[id^="datatier"] section[id^="datatier"]').forEach(tier => decrementDatatier(tier, caller.parentNode.parentNode.id.split('_').length - 1));
     /* Adjust corridor of previous sibling if the deleted
      * datatier is the last child of its parent */
     if (!caller.parentNode.parentNode.nextElementSibling && caller.parentNode.parentNode.previousElementSibling) {

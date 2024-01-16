@@ -1,7 +1,7 @@
       <h1>List Data Entries</h1>
       <h2>Query Date</h2>
       <p>The date queried is <%= year %>/<%= parseInt(month) + 1 %>/<%= day %>.</p>
-      <p>There are <%= data.length %> datapoint(s) associated with this date.</p>
+      <p>There <% if (data.length === 1) { _%>is one datapoint<%_ } else { _%>are <%= data.length %> datapoints<%_ } %> associated with this date.</p>
       <table>
         <tr>
           <th>Date posted:</th>

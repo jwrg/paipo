@@ -1,5 +1,5 @@
 /* Calendar wrapper */
-section#content section.calendar {
+main section.calendar {
   width: 55%;
   margin: auto;
   margin-top: 3em;
@@ -8,13 +8,13 @@ section#content section.calendar {
 }
 
 /* Reset everything */
-section#content section.calendar ul li {
+main section.calendar ul li {
   margin: 0;
   list-style-type: none;
 }
 
 /* Month header */
-section#content section.calendar section.month {
+main section.calendar section.month {
   padding: 0.5px;
   width: 100%;
   background-color: var(--alt-bg);
@@ -22,12 +22,12 @@ section#content section.calendar section.month {
 }
 
 /* Month list */
-section#content section.calendar section.month ul {
+main section.calendar section.month ul {
   margin: 0;
   padding: 0;
 }
 
-section#content section.calendar section.month ul li {
+main section.calendar section.month ul li {
   margin: 1ex;
   color: var(--content-fg);
   font-size: 18pt;
@@ -37,37 +37,37 @@ section#content section.calendar section.month ul li {
 }
 
 /* Previous button inside month header */
-section#content section.calendar section.month ul li.previous {
+main section.calendar section.month ul li.previous {
   margin: 0 0 0 2em;
   float: left;
   padding-left: 20px;
 }
-section#content section.calendar section.month ul li.previous a {
+main section.calendar section.month ul li.previous a {
   display: block;
   text-decoration: none;
   color: var(--alt-fg);;
 }
 
 /* Next button */
-section#content section.calendar section.month .next {
+main section.calendar section.month .next {
   margin: 0 2em 0 0;
   float: right;
   padding-right: 20px;
 }
-section#content section.calendar section.month .next a {
+main section.calendar section.month .next a {
   text-decoration: none;
   color: var(--alt-fg);;
 }
 
 /* Weekdays (Mon-Sun) */
-section#content section.calendar ul.weekdays {
+main section.calendar ul.weekdays {
   margin: 0;
   font-size: 0;
   background-color: var(--header-bg);;
   border-radius: 0;
 }
 
-section#content section.calendar ul.weekdays li {
+main section.calendar ul.weekdays li {
   display: inline-block;
   padding: 1ex 0;
   width: 14.2857%;
@@ -78,13 +78,13 @@ section#content section.calendar ul.weekdays li {
 }
 
 /* Days (1-31) */
-section#content section.calendar ul.days {
+main section.calendar ul.days {
   margin: 1em 0;
   padding: 0;
   font-size: 0;
 }
 
-section#content section.calendar ul.days li {
+main section.calendar ul.days li {
   display: inline-block;
   width: 14.2857%;
   height: 5em;
@@ -96,34 +96,34 @@ section#content section.calendar ul.days li {
 }
 
 /* Highlight "active" days */
-section#content section.calendar ul.days li.hot {
+main section.calendar ul.days li.hot {
   background: var(--alt-bg);
 } 
 
 /* Better looking links */
-section#content section.calendar ul.days a {
+main section.calendar ul.days a {
   display: block;
   height: 100%;
   text-decoration: none;
 }
 
-section#content section.calendar ul.days a strong {
+main section.calendar ul.days a strong {
     display: block;
     padding-top: 3.5ex;
 }
 
-section#content section.calendar ul.days a:visited {
+main section.calendar ul.days a:visited {
   color: var(--link-fg);
 }
 
-section#content section.calendar ul.days a:hover {
+main section.calendar ul.days a:hover {
   color: var(--content-fg);
 }
 
-section#content section.calendar ul.days a:active {
+main section.calendar ul.days a:active {
   color: var(--link-active);
 }
 
-section#content section.calendar ul.days li.hot a {
+main section.calendar ul.days li.hot a {
   color: var(--content-fg);
 }
