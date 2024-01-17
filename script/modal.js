@@ -1,9 +1,9 @@
 function blurPage() {
-  document.getElementById('content').style.filter = 'blur(0.5rem)';
+  document.getElementsByTagName('main')[0].style.filter = 'blur(0.5rem)';
 }
 
 function unblurPage() {
-  document.getElementById('content').style.filter = '';
+  document.getElementsTagName('main')[0].style.filter = '';
 }
 
 function activateModal () {
