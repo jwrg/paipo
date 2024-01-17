@@ -12,6 +12,7 @@ CREATE TABLE users (
   username TEXT UNIQUE NOT NULL,
   joindate TIMESTAMP NOT NULL,
   roleid SMALLINT REFERENCES roles (roleid),
+  active BOOLEAN NOT NULL,
   data JSONB
 );
 CREATE TABLE pass (
