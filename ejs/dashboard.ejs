@@ -12,42 +12,57 @@
       <p>The following is a summary of the data:</p>
       <ul>
         <li>Data in dataset: <%= count %></li>
-      </ul>
-      <% if (data.upcoming.length > 0) { %>
-      <h3>Next (upcoming) 5 data</h3>
+      </ul><%
+
+      if (data.upcoming.length > 0) {
+
+      -%><h3>Next (upcoming) 5 data</h3>
       <table>
         <tr>
           <th>ID</th>
           <th>Timestamp</th>
           <th>Data</th>
-        </tr>
-        <% data.upcoming.forEach(datum => { %>
-        <tr>
+        </tr><%
+
+        data.upcoming.forEach(datum => {
+
+        -%><tr>
           <td><a href="/editentry/<%= datum.id %>"><%= datum.id %></a></td>
           <td><a href="/editentry/<%= datum.id %>"><%= datum.date %></a></td>
           <td><a href="/editentry/<%= datum.id %>"><%= JSON.stringify(datum.data) %></a></td>
-        </tr>
-        <% }); %>
-      </table>
-      <% } %>
-      <% if (data.past.length > 0) { %>
-      <h3>Past (previous) 5 data:</h3>
+        </tr><%
+
+        });
+
+      -%></table><%
+
+      }
+
+      if (data.past.length > 0) {
+
+      -%><h3>Past (previous) 5 data:</h3>
       <table>
         <tr>
           <th>ID</th>
           <th>Timestamp</th>
           <th>Data</th>
-        </tr>
-        <% data.past.forEach(datum => { %>
-        <tr>
+        </tr><%
+        
+        data.past.forEach(datum => {
+
+        -%><tr>
           <td><a href="/editentry/<%= datum.id %>"><%= datum.id %></a></td>
           <td><a href="/editentry/<%= datum.id %>"><%= datum.date %></a></td>
           <td><a href="/editentry/<%= datum.id %>"><%= JSON.stringify(datum.data) %></a></td>
-        </tr>
-        <% }); %>
-      </table>
-      <% } %>
-      <h2>Some Dummy Content:</h2>
+        </tr><%
+
+        });
+
+      -%></table><%
+
+      }
+
+      -%><h2>Some Dummy Content:</h2>
       <h3>Every Map Has a Four-Colouring</h3>
       <p><small>Testing how an image looks</small></p>
       <p>Did you know that you can colour any map with four
