@@ -8,8 +8,8 @@ var should = chai.should();
 const puppeteer = require('puppeteer');
 const pti = require('puppeteer-to-istanbul');
 
-// End to end tests for edit entry view
-describe('View: Edit entry', function() {
+// End to end tests for details view
+describe('The details view', function() {
   let browser;
   let page;
   let status;
@@ -17,13 +17,13 @@ describe('View: Edit entry', function() {
   let month = today.getMonth();
   let year = today.getFullYear();
   let host = 'localhost:6891';
-  let resource = 'editentry';
+  let resource = 'details';
 
   before(async () => {
     browser = await puppeteer.launch({
       "args": ["--no-sandbox"],
       "headless": true,
-      "sloMo": 100
+      "sloMo": 25
     });
   });
   beforeEach(async () => {

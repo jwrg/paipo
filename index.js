@@ -41,7 +41,7 @@ router.get('/list/range/:start/:end', view.list.range);
  * Routes for editing data
  */
 router.get('/newentry/:year/:month/:day', view.newEntry);
-router.get('/editentry/:id', view.editEntry);
+router.get('/details/:id', view.details);
 router.post('/saveentry', view.saveEntry);
 
 /**

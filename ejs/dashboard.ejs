@@ -27,9 +27,9 @@
         data.upcoming.forEach(datum => {
 
         -%><tr>
-          <td><a href="/editentry/<%= datum.id %>"><%= datum.id %></a></td>
-          <td><a href="/editentry/<%= datum.id %>"><%= datum.date %></a></td>
-          <td><a href="/editentry/<%= datum.id %>"><%= JSON.stringify(datum.data) %></a></td>
+          <td><a href="/details/<%= datum.id %>"><%= datum.id %></a></td>
+          <td><a href="/details/<%= datum.id %>"><%= datum.date %></a></td>
+          <td><a href="/details/<%= datum.id %>"><%= JSON.stringify(datum.data) %></a></td>
         </tr><%
 
         });
@@ -51,9 +51,9 @@
         data.past.forEach(datum => {
 
         -%><tr>
-          <td><a href="/editentry/<%= datum.id %>"><%= datum.id %></a></td>
-          <td><a href="/editentry/<%= datum.id %>"><%= datum.date %></a></td>
-          <td><a href="/editentry/<%= datum.id %>"><%= JSON.stringify(datum.data) %></a></td>
+          <td><a href="/details/<%= datum.id %>"><%= datum.id %></a></td>
+          <td><a href="/details/<%= datum.id %>"><%= datum.date %></a></td>
+          <td><a href="/details/<%= datum.id %>"><%= JSON.stringify(datum.data) %></a></td>
         </tr><%
 
         });

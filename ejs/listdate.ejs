@@ -10,9 +10,9 @@
         </tr>
         <% data.forEach(datum => { %>
         <tr>
-          <td><a href="/editentry/<%= datum.id %>"><%= datum.date %></a></td>
-          <td><a href="/editentry/<%= datum.id %>"><%= datum.owner %></a></td>
-          <td><a href="/editentry/<%= datum.id %>"><%= JSON.stringify(datum.data) %></a></td>
+          <td><a href="/details/<%= datum.id %>"><%= datum.date %></a></td>
+          <td><a href="/details/<%= datum.id %>"><%= datum.owner %></a></td>
+          <td><a href="/details/<%= datum.id %>"><%= JSON.stringify(datum.data) %></a></td>
         </tr>
         <% }); %>
       </table>

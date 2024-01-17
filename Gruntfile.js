@@ -20,7 +20,7 @@ module.exports = function(grunt) {
         src: [
           'test/ejs/dashboard.js',
           'test/ejs/month.js',
-          'test/ejs/editentry.js',
+          'test/ejs/details.js',
         ],
       },
       dashboard: {
@@ -37,12 +37,12 @@ module.exports = function(grunt) {
         },
         src: ['test/ejs/month.js'],
       },
-      editEntry: {
+      details: {
         options: {
           color: true,
           reporter: 'spec',
         },
-        src: ['test/ejs/editentry.js'],
+        src: ['test/ejs/details.js'],
       },
     },
     nyc: {
@@ -87,9 +87,9 @@ module.exports = function(grunt) {
           interval: 1023,
         },
       },
-      editEntry: {
-        files: ['ejs/editentry.ejs', 'script/editentry.js', 'test/ejs/editentry.js'],
-        tasks: ['mochaTest:editEntry', 'nyc:report', 'jshint'],
+      details: {
+        files: ['ejs/details.ejs', 'script/details.js', 'test/ejs/details.js'],
+        tasks: ['mochaTest:details', 'nyc:report', 'jshint'],
         options: {
           interval: 1023,
         },

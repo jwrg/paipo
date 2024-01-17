@@ -1,7 +1,7 @@
       <% if (id != null) { %><h1>Edit Entry</h1>
       <h2>Editing entry id number <%= id %></h2>
       <% } else { %><h1>New Entry</h1><% } %>
-      <script src="/js/editentry.js"></script>
+      <script src="/js/details.js"></script>
       <section id="form">
         <form action="/saveentry" method="post">
           <input type="hidden" id="id" name="id" value="<%= entry.id %>" />
